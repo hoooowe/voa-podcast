@@ -1,0 +1,20 @@
+site:
+  title: "Daily English Listening"
+  description: >
+    Personal VOA Learning English listening practice.
+  github_username: "hoooowe"
+  repository: "voa-podcast"
+  base_url: "https://hoooowe.github.io/voa-podcast"
+  language: "en-us"
+
+podcast:
+  author: "Private English Learner"
+  explicit: false
+  block_public_directory: true
+
+translation:
+  max_chars_per_request: 4000
+  temperature: 0.2
+
+audio:
+  storage: "github_pages"

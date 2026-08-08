@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Daily English Listening</title>
+    <link>https://hoooowe.github.io/voa-podcast/</link>
+    <description>Personal VOA Learning English listening practice.</description>
+    <language>en-us</language>
+    <itunes:image href="https://hoooowe.github.io/voa-podcast/cover.jpg"/>
+    <itunes:author>Private English Learner</itunes:author>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:category text="Education"/>
+    <itunes:owner><itunes:name>Private English Learner</itunes:name></itunes:owner>
+    <itunes:block>Yes</itunes:block>
+    <image><url>https://hoooowe.github.io/voa-podcast/cover.jpg</url><title>Daily English Listening</title><link>https://hoooowe.github.io/voa-podcast/</link></image>
+  </channel>
+</rss>

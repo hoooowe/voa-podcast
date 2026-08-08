@@ -1,0 +1,50 @@
+name: Update Podcast
+
+on:
+  workflow_dispatch:
+    inputs:
+      voa_url:
+        description: "VOA Learning English article URL"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  add-episode:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Add episode
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: python scripts/add_episode.py "${{ github.event.inputs.voa_url }}"
+
+      - name: Validate feed
+        run: python scripts/validate_feed.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs data .cache
+          # Read the new episode title for the commit message.
+          TITLE=$(python -c "import json; eps=json.load(open('data/episodes.json')); print(eps[-1]['title'])" 2>/dev/null || echo "VOA episode")
+          git commit -m "Add VOA episode: ${TITLE}" || echo "Nothing to commit"
+          git push
