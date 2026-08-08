@@ -11,7 +11,7 @@
     <itunes:category text="Education"/>
     <itunes:summary>Personal English listening practice with VOA Learning English. English audio with sentence-by-sentence Chinese translation and click-to-seek transcripts.</itunes:summary>
     <itunes:owner><itunes:name>Private English Learner</itunes:name><itunes:email>hoooowe@users.noreply.github.com</itunes:email></itunes:owner>
-    <itunes:block>Yes</itunes:block>
+    <itunes:block>No</itunes:block>
     <image><url>https://hoooowe.github.io/voa-podcast/cover.jpg</url><title>Daily English Listening</title><link>https://hoooowe.github.io/voa-podcast/</link></image>
     <item>
       <title>Beach, Coast, Shore</title>
@@ -21,7 +21,7 @@
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/008-beach-coast-shore.mp3" length="1132268" type="audio/mpeg"/>
       <description>VOA Learning English - Beach, Coast, Shore. This week on Ask a Teacher, we answer a question from Doyeon in Korea about the usage of three similar words.  Here is the question:  Hello.  I want to know the differences between  the beach, . . . c... English original and Chinese translation in full notes.</description>
       <itunes:duration>4:43</itunes:duration>
-      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/beach-coast-shore.vtt" type="text/vtt" language="en" rel="captions"/>
+      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/beach-coast-shore.en.vtt" type="text/vtt" language="en" rel="captions"/>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>This week on Ask a Teacher, we answer a question from Doyeon in Korea about the usage of three similar words.</strong><br/>本周的《名师答疑》中，我们回答来自韩国Doyeon关于三个相似单词用法的问题。</p>
@@ -68,7 +68,7 @@
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/007-sew-and-knit.mp3" length="904899" type="audio/mpeg"/>
       <description>VOA Learning English - Sew and Knit. This week on Ask a Teacher, we answer a question from Rohullah in Afghanistan about using the words &quot;sew&quot; and &quot;knit&quot; and related terms.  Dear VOA Learning English,  I am sending this email to know wha... English original and Chinese translation in full notes.</description>
       <itunes:duration>3:46</itunes:duration>
-      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/sew-and-knit.vtt" type="text/vtt" language="en" rel="captions"/>
+      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/sew-and-knit.en.vtt" type="text/vtt" language="en" rel="captions"/>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>This week on Ask a Teacher, we answer a question from Rohullah in Afghanistan about using the words &quot;sew&quot; and &quot;knit&quot; and related terms.</strong><br/>本周在《问老师》节目中，我们回答来自阿富汗的Rohullah提出的关于使用“缝”和“织”及相关词汇的问题。</p>
@@ -113,7 +113,7 @@
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/006-how-physical-therapists-can-prevent-future-health-problems.mp3" length="1633961" type="audio/mpeg"/>
       <description>VOA Learning English - How Physical Therapists Can Prevent Future Health Problems. Many of us might only seek out physical therapists if we are recovering from accidental injuries or surgery.  However, medical experts say these specialists can also help prevent many health problems ... English original and Chinese translation in full notes.</description>
       <itunes:duration>6:48</itunes:duration>
-      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/how-physical-therapists-can-prevent-future-health-problems.vtt" type="text/vtt" language="en" rel="captions"/>
+      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/how-physical-therapists-can-prevent-future-health-problems.en.vtt" type="text/vtt" language="en" rel="captions"/>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>Many of us might only seek out physical therapists if we are recovering from accidental injuries or surgery.</strong><br/>我们很多人可能只有在从意外受伤或手术中恢复时才会寻求物理治疗师。</p>
@@ -151,7 +151,7 @@
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/005-methods-for-protecting-earth-against-an-asteroid-strike.mp3" length="1267006" type="audio/mpeg"/>
       <description>VOA Learning English - Methods for Protecting Earth against an Asteroid Strike. Astronomers following asteroid activity in space estimate there is a very small chance an object large enough to destroy a whole city could strike Earth in 2032.  But space agency officials say even i... English original and Chinese translation in full notes.</description>
       <itunes:duration>5:17</itunes:duration>
-      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/methods-for-protecting-earth-against-an-asteroid-strike.vtt" type="text/vtt" language="en" rel="captions"/>
+      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/methods-for-protecting-earth-against-an-asteroid-strike.en.vtt" type="text/vtt" language="en" rel="captions"/>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>Astronomers following asteroid activity in space estimate there is a very small chance an object large enough to destroy a whole city could strike Earth in 2032.</strong><br/>跟踪太空中小行星活动的天文学家估计，一个足以摧毁整座城市的物体在2032年撞击地球的可能性非常小。</p>
@@ -186,7 +186,7 @@
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/004-total-lunar-eclipse-to-turn-moon-red.mp3" length="1108027" type="audio/mpeg"/>
       <description>VOA Learning English - Total Lunar Eclipse to Turn Moon Red. A total lunar eclipse is about to make the moon appear a reddish color across the Western Hemisphere.  The event will happen Thursday night into Friday morning.  The best places to see the eclipse wil... English original and Chinese translation in full notes.</description>
       <itunes:duration>4:37</itunes:duration>
-      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/total-lunar-eclipse-to-turn-moon-red.vtt" type="text/vtt" language="en" rel="captions"/>
+      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/total-lunar-eclipse-to-turn-moon-red.en.vtt" type="text/vtt" language="en" rel="captions"/>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>A total lunar eclipse is about to make the moon appear a reddish color across the Western Hemisphere.</strong><br/>一场月全食即将使西半球的月亮呈现红色。</p>
@@ -229,7 +229,7 @@
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/003-how-daylight-savings-time-affects-health.mp3" length="1725562" type="audio/mpeg"/>
       <description>VOA Learning English - How Daylight Savings Time Affects Health. Much of the United States &quot;springs forward&quot; on Sunday, March 9th, for daylight saving time.  Worldwide, many other countries also observe daylight saving time, starting and ending on different dates. ... English original and Chinese translation in full notes.</description>
       <itunes:duration>7:11</itunes:duration>
-      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/how-daylight-savings-time-affects-health.vtt" type="text/vtt" language="en" rel="captions"/>
+      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/how-daylight-savings-time-affects-health.en.vtt" type="text/vtt" language="en" rel="captions"/>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>Much of the United States &quot;springs forward&quot; on Sunday, March 9th, for daylight saving time.</strong><br/>美国大部分地区将于3月9日周日“提前”进入夏令时。</p>
@@ -271,7 +271,7 @@
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/002-a-short-history-of-spacecraft-landings-on-the.mp3" length="1329622" type="audio/mpeg"/>
       <description>VOA Learning English - A Short History of Spacecraft Landings on the Moon. Many years have passed since the first spacecraft landed on the moon in 1966.  From then until now, there have been many additional attempts with some succeeding and others failing.  Here is a short h... English original and Chinese translation in full notes.</description>
       <itunes:duration>5:32</itunes:duration>
-      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/a-short-history-of-spacecraft-landings-on-the.vtt" type="text/vtt" language="en" rel="captions"/>
+      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/a-short-history-of-spacecraft-landings-on-the.en.vtt" type="text/vtt" language="en" rel="captions"/>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>Many years have passed since the first spacecraft landed on the moon in 1966.</strong><br/>自1966年第一艘航天器登陆月球以来，许多年过去了。</p>
@@ -310,7 +310,7 @@
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/001-wilbur-and-orville-wright-the-first-airplane.mp3" length="1066649" type="audio/mpeg"/>
       <description>VOA Learning English - Wilbur and Orville Wright: The First Airplane. Wilbur and Orville Wright are the American inventors who made a small engine-powered flying machine.  They proved that flight without the aid of gas-filled balloons was possible.  Wilbur Wright was bo... English original and Chinese translation in full notes.</description>
       <itunes:duration>4:27</itunes:duration>
-      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/wilbur-and-orville-wright-the-first-airplane.vtt" type="text/vtt" language="en" rel="captions"/>
+      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/wilbur-and-orville-wright-the-first-airplane.en.vtt" type="text/vtt" language="en" rel="captions"/>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>Wilbur and Orville Wright are the American inventors who made a small engine-powered flying machine.</strong><br/>威尔伯·莱特和奥维尔·莱特是发明了小型发动机驱动飞行器的美国发明家。</p>

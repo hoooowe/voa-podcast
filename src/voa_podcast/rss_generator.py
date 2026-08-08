@@ -127,7 +127,7 @@ class RSSGenerator:
         if duration:
             lines.append(f"      <itunes:duration>{_escape(duration)}</itunes:duration>")
         if ep.sentences:
-            vtt_url = f"{base}/transcripts/{ep.slug}.vtt"
+            vtt_url = f"{base}/transcripts/{ep.slug}.en.vtt"
             lines.append(
                 f'      <podcast:transcript url="{_attr(vtt_url)}" '
                 f'type="text/vtt" language="en" rel="captions"/>'

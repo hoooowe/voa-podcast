@@ -37,7 +37,7 @@ def _cue_ends(sentences, duration: float) -> list[float]:
 
 
 def generate_vtt(episode: Episode, duration: float = 0.0) -> str:
-    """Return WebVTT transcript text for an episode."""
+    """Return bilingual WebVTT transcript text (English + Chinese)."""
     lines = ["WEBVTT", ""]
     ends = _cue_ends(episode.sentences, duration)
     for i, s in enumerate(episode.sentences):
@@ -45,6 +45,21 @@ def generate_vtt(episode: Episode, duration: float = 0.0) -> str:
         lines.append(s.en)
         if s.zh:
             lines.append(s.zh)
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+def generate_vtt_en(episode: Episode, duration: float = 0.0) -> str:
+    """Return English-only WebVTT transcript for Apple Podcasts.
+
+    Apple Podcasts transcript does not support Chinese, so this variant
+    strips the Chinese translation line.
+    """
+    lines = ["WEBVTT", ""]
+    ends = _cue_ends(episode.sentences, duration)
+    for i, s in enumerate(episode.sentences):
+        lines.append(f"{format_vtt_time(s.start)} --> {format_vtt_time(ends[i])}")
+        lines.append(s.en)
         lines.append("")
     return "\n".join(lines).rstrip() + "\n"
 
@@ -84,6 +99,9 @@ class TranscriptGenerator:
             duration = probe_duration(audio_path, ep.audio_size)
             (out_dir / f"{ep.slug}.vtt").write_text(
                 generate_vtt(ep, duration), encoding="utf-8"
+            )
+            (out_dir / f"{ep.slug}.en.vtt").write_text(
+                generate_vtt_en(ep, duration), encoding="utf-8"
             )
             (out_dir / f"{ep.slug}.srt").write_text(
                 generate_srt(ep, duration), encoding="utf-8"
