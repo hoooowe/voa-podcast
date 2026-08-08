@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:podcast="https://podcastindex.org/namespace/1.0">
   <channel>
     <title>Daily English Listening</title>
     <link>https://hoooowe.github.io/voa-podcast/</link>
@@ -21,6 +21,7 @@
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/001-wilbur-and-orville-wright-the-first-airplane.mp3" length="1066649" type="audio/mpeg"/>
       <description>VOA Learning English - Wilbur and Orville Wright: The First Airplane. Wilbur and Orville Wright are the American inventors who made a small engine-powered flying machine.  They proved that flight without the aid of gas-filled balloons was possible.  Wilbur Wright was bo... English original and Chinese translation in full notes.</description>
       <itunes:duration>4:27</itunes:duration>
+      <podcast:transcript url="https://hoooowe.github.io/voa-podcast/transcripts/wilbur-and-orville-wright-the-first-airplane.vtt" type="text/vtt" language="en" rel="captions"/>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>Wilbur and Orville Wright are the American inventors who made a small engine-powered flying machine.</strong><br/>威尔伯·莱特和奥维尔·莱特是发明了小型发动机驱动飞行器的美国发明家。</p>

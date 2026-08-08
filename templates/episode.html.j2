@@ -227,6 +227,13 @@
     <p class="source">
       Original VOA Article: <a href="{{ episode.source_url }}">{{ episode.source_url }}</a>
     </p>
+    {% if episode.sentences %}
+    <p class="source">
+      Transcript (字幕):
+      <a href="../transcripts/{{ episode.slug }}.vtt">VTT</a> ·
+      <a href="../transcripts/{{ episode.slug }}.srt">SRT</a>
+    </p>
+    {% endif %}
   </section>
 
   <footer>For personal study use only · {{ episode.source }}</footer>

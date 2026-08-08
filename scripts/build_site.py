@@ -19,6 +19,7 @@ from voa_podcast.config import load_config
 from voa_podcast.episode_repository import EpisodeRepository
 from voa_podcast.rss_generator import RSSGenerator
 from voa_podcast.site_generator import SiteGenerator
+from voa_podcast.transcript_generator import TranscriptGenerator
 
 logger = logging.getLogger("build_site")
 
@@ -31,6 +32,7 @@ def main() -> int:
     episodes = repo.load_all()
 
     SiteGenerator(config).generate(episodes)
+    TranscriptGenerator(config).generate_all(episodes)
     RSSGenerator(config).generate(episodes)
 
     print(f"Site rebuilt with {len(episodes)} episode(s).")
