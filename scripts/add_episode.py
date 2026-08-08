@@ -22,7 +22,7 @@ from voa_podcast.config import load_config
 from voa_podcast.content_parser import VOAParseError
 from voa_podcast.copyright_checker import CopyrightChecker
 from voa_podcast.episode_repository import EpisodeRepository, audio_filename, make_slug
-from voa_podcast.models import CopyrightStatus
+from voa_podcast.models import CopyrightStatus, Sentence
 from voa_podcast.rss_generator import RSSGenerator
 from voa_podcast.site_generator import SiteGenerator
 from voa_podcast.translator import OpenAICompatibleTranslator, TranslationError
@@ -48,6 +48,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Force processing even when copyright status is UNKNOWN.",
     )
+    parser.add_argument(
+        "--update",
+        action="store_true",
+        help="Re-process an existing episode (deletes the old one and its audio first).",
+    )
     return parser.parse_args()
 
 
@@ -56,7 +61,7 @@ def main() -> int:
     args = parse_args()
 
     try:
-        return run_pipeline(args.url, force=args.force)
+        return run_pipeline(args.url, force=args.force, update=args.update)
     except (
         VOAFetchError,
         VOAParseError,
@@ -70,17 +75,23 @@ def main() -> int:
         return 1
 
 
-def run_pipeline(url: str, force: bool = False) -> int:
+def run_pipeline(url: str, force: bool = False, update: bool = False) -> int:
     config = load_config()
 
-    # 1. Duplicate detection.
+    # 1. Duplicate detection / update.
     repo = EpisodeRepository(config.episodes_file)
     existing = repo.find_by_url(url)
     if existing is not None:
-        print("Episode already exists.")
-        print(f"  Title: {existing.title}")
-        print(f"  GUID:  {existing.guid}")
-        return 0
+        if not update:
+            print("Episode already exists.")
+            print(f"  Title: {existing.title}")
+            print(f"  GUID:  {existing.guid}")
+            print("  Use --update to re-process it.")
+            return 0
+        logger.info("[UPDATE] Removing existing episode #%d (%s).", existing.id, existing.guid)
+        repo.remove_by_url(url)
+        # Remove the old audio file; stale episode page is overwritten later.
+        (config.docs_dir / existing.audio_file).unlink(missing_ok=True)
 
     # 2. Fetch + parse.
     fetcher = VOAContentFetcher()
@@ -128,7 +139,18 @@ def run_pipeline(url: str, force: bool = False) -> int:
         max_chars_per_request=config.llm.max_chars_per_request,
         cache_dir=config.cache_dir,
     )
-    chinese_text = translator.translate(article.english_text)
+
+    episode_sentences: list[Sentence] = []
+    if article.sentences:
+        en_list = [s.en for s in article.sentences]
+        zh_list = translator.translate_sentences(en_list)
+        episode_sentences = [
+            Sentence(start=s.start, en=s.en, zh=zh)
+            for s, zh in zip(article.sentences, zh_list)
+        ]
+        chinese_text = "\n\n".join(s.zh for s in episode_sentences)
+    else:
+        chinese_text = translator.translate(article.english_text)
 
     # 6. Create episode.
     audio_rel = f"audio/{filename}"
@@ -145,6 +167,7 @@ def run_pipeline(url: str, force: bool = False) -> int:
         audio_type=audio_meta.mime_type,
         audio_sha256=audio_meta.sha256,
         copyright_status=result.status.value,
+        sentences=episode_sentences,
     )
 
     # 7. Rebuild site + RSS.

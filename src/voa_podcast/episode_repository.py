@@ -59,6 +59,16 @@ class EpisodeRepository:
                 return ep
         return None
 
+    def remove_by_url(self, source_url: str) -> Episode | None:
+        """Remove and return the episode with the given source_url, if any."""
+        episodes = self.load_all()
+        for i, ep in enumerate(episodes):
+            if ep.source_url == source_url:
+                del episodes[i]
+                self.save_all(episodes)
+                return ep
+        return None
+
     def next_id(self) -> int:
         """Return the next episode id (1-based)."""
         episodes = self.load_all()
@@ -88,6 +98,7 @@ class EpisodeRepository:
         audio_sha256: str,
         copyright_status: str,
         source: str = "VOA Learning English",
+        sentences: list | None = None,
     ) -> Episode:
         """Build a new Episode with a stable id, GUID, and slug."""
         episode_id = self.next_id()
@@ -114,6 +125,7 @@ class EpisodeRepository:
             audio_type=audio_type,
             audio_sha256=audio_sha256,
             copyright_status=copyright_status,
+            sentences=sentences or [],
         )
         self.add(episode)
         return episode

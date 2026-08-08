@@ -10,6 +10,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import re
 from pathlib import Path
 from typing import Protocol
 
@@ -32,6 +33,18 @@ Requirements:
 6. Produce only Simplified Chinese translation."""
 
 DEFAULT_TIMEOUT = 120
+
+SENTENCE_SYSTEM_PROMPT = """You are an English-to-Chinese translator for language learners.
+
+You will receive a JSON array of English sentences. Translate EACH sentence
+into natural Simplified Chinese and return a JSON array of translations, in the
+SAME ORDER and with the SAME COUNT as the input.
+
+Rules:
+- Output ONLY the JSON array. No markdown fences, no commentary.
+- One translation per input sentence.
+- Keep names, organizations and technical terms accurate.
+- Do not add explanations or merge/split sentences."""
 
 
 class TranslationError(Exception):
@@ -89,6 +102,125 @@ class OpenAICompatibleTranslator:
         full_translation = "\n\n".join(translated_batches)
         self._save_cache(text, full_translation)
         return full_translation
+
+    def translate_sentences(self, sentences: list[str]) -> list[str]:
+        """Translate a list of English sentences to Chinese, 1:1 aligned.
+
+        Uses per-sentence SHA256 caching and batches uncached sentences into
+        JSON-array requests. If a batch returns a mismatched number of
+        translations, falls back to translating those sentences one by one.
+        """
+        results: list[str | None] = [None] * len(sentences)
+        todo: list[tuple[int, str]] = []
+        for i, s in enumerate(sentences):
+            if not s.strip():
+                results[i] = ""
+                continue
+            cached = self._load_cache(s)
+            if cached is not None:
+                results[i] = cached
+            else:
+                todo.append((i, s))
+
+        if not todo:
+            logger.info("[TRANSLATE] All %d sentences cached.", len(sentences))
+            return [r or "" for r in results]
+
+        batches = self._build_sentence_batches(todo)
+        logger.info(
+            "[TRANSLATE] Translating %d sentences in %d batches...",
+            len(todo), len(batches),
+        )
+        for batch in batches:
+            ens = [s for _, s in batch]
+            try:
+                zhs = self._call_api_sentences(ens)
+            except TranslationError as exc:
+                logger.warning("[TRANSLATE] Batch JSON failed (%s); translating one-by-one.", exc)
+                zhs = [self._translate_single(s) for s in ens]
+            if len(zhs) != len(ens):
+                logger.warning(
+                    "[TRANSLATE] Batch length mismatch (%d vs %d); translating one-by-one.",
+                    len(zhs), len(ens),
+                )
+                zhs = [self._translate_single(s) for s in ens]
+            for (idx, s), zh in zip(batch, zhs):
+                results[idx] = zh
+                self._save_cache(s, zh)
+        return [r or "" for r in results]
+
+    def _build_sentence_batches(
+        self, todo: list[tuple[int, str]]
+    ) -> list[list[tuple[int, str]]]:
+        batches: list[list[tuple[int, str]]] = []
+        current: list[tuple[int, str]] = []
+        current_len = 0
+        for item in todo:
+            s_len = len(item[1])
+            if current and current_len + s_len + 8 > self._max_chars:
+                batches.append(current)
+                current = [item]
+                current_len = s_len
+            else:
+                current.append(item)
+                current_len += s_len + 8
+        if current:
+            batches.append(current)
+        return batches
+
+    def _call_api_sentences(self, sentences: list[str]) -> list[str]:
+        """Translate a batch of sentences via a JSON-array request."""
+        if not self._api_key:
+            raise TranslationError(
+                "LLM_API_KEY is not configured. Set it in .env or repository secrets."
+            )
+        if not self._model:
+            raise TranslationError("LLM_MODEL is not configured.")
+
+        url = f"{self._base_url}/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {self._api_key}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": self._model,
+            "temperature": self._temperature,
+            "messages": [
+                {"role": "system", "content": SENTENCE_SYSTEM_PROMPT},
+                {"role": "user", "content": json.dumps(sentences, ensure_ascii=False)},
+            ],
+        }
+        try:
+            resp = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
+        except requests.RequestException as exc:
+            raise TranslationError(f"LLM API request failed: {exc}") from exc
+        if resp.status_code != 200:
+            raise TranslationError(
+                f"LLM API returned HTTP {resp.status_code}: {resp.text[:300]}"
+            )
+        try:
+            data = resp.json()
+            content = data["choices"][0]["message"]["content"].strip()
+        except (KeyError, IndexError, ValueError) as exc:
+            raise TranslationError(f"Unexpected LLM API response: {exc}") from exc
+
+        cleaned = _strip_code_fences(content)
+        try:
+            arr = json.loads(cleaned)
+        except json.JSONDecodeError as exc:
+            raise TranslationError(f"LLM did not return valid JSON: {exc}") from exc
+        if not isinstance(arr, list):
+            raise TranslationError("LLM JSON was not an array.")
+        return [str(x) for x in arr]
+
+    def _translate_single(self, sentence: str) -> str:
+        """Translate one sentence as plain text (fallback for bad batches)."""
+        cached = self._load_cache(sentence)
+        if cached is not None:
+            return cached
+        result = self._call_api(sentence)
+        self._save_cache(sentence, result)
+        return result
 
     # ------------------------------------------------------------------ #
     # Batching
@@ -187,3 +319,15 @@ class OpenAICompatibleTranslator:
             )
         except OSError as exc:
             logger.warning("[TRANSLATE] Failed to write cache: %s", exc)
+
+
+_CODE_FENCE_RE = re.compile(r"^```[a-zA-Z]*\s*\n?|\n?```\s*$")
+
+
+def _strip_code_fences(content: str) -> str:
+    """Remove surrounding markdown code fences from an LLM response."""
+    stripped = content.strip()
+    if stripped.startswith("```"):
+        # Drop the opening fence (with optional language) and trailing fence.
+        stripped = _CODE_FENCE_RE.sub("", stripped).strip()
+    return stripped

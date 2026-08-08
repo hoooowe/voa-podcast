@@ -17,7 +17,7 @@ from urllib.parse import urljoin, quote
 
 from bs4 import BeautifulSoup, Tag
 
-from .models import VOAArticle
+from .models import VOAArticle, Sentence
 
 logger = logging.getLogger(__name__)
 
@@ -365,17 +365,34 @@ class VOASEContentParser:
     .txt for the body (real paragraphs) and fall back to <li> sentences.
     """
 
-    def parse(self, url: str, soup: BeautifulSoup, txt_text: str | None = None) -> VOAArticle:
+    def parse(
+        self,
+        url: str,
+        soup: BeautifulSoup,
+        txt_text: str | None = None,
+        lrc_text: str | None = None,
+    ) -> VOAArticle:
         title = self._extract_title(soup)
         date_str, published_at = self._extract_date(soup)
         category = self._extract_category(soup, title)
         audio_url = self._extract_audio(url, soup)
 
-        if txt_text:
+        sentences: list[Sentence] | None = None
+        english_text = ""
+
+        # Prefer .lrc: it gives per-sentence audio timestamps (click-to-seek).
+        if lrc_text:
+            timed = parse_lrc(lrc_text)
+            if timed:
+                sentences = [Sentence(start=start, en=text) for start, text in timed]
+                english_text = "\n\n".join(s.en for s in sentences)
+
+        # Fall back to .txt (clean paragraphs, no timestamps).
+        if not english_text and txt_text:
             english_text = self._parse_txt_body(txt_text, title, date_str)
-            if not english_text:
-                english_text = self._extract_body_from_li(soup)
-        else:
+
+        # Last resort: <li> sentences.
+        if not english_text:
             english_text = self._extract_body_from_li(soup)
 
         if not english_text:
@@ -383,6 +400,8 @@ class VOASEContentParser:
 
         logger.info("[PARSE] Title found.")
         logger.info("[PARSE] Audio found.")
+        if sentences:
+            logger.info("[PARSE] %d timestamped sentences from .lrc.", len(sentences))
 
         return VOAArticle(
             title=title,
@@ -393,11 +412,19 @@ class VOASEContentParser:
             category=category,
             author="VOA Special English",
             copyright_source="VOA",
+            sentences=sentences,
         )
 
     def extract_txt_url(self, base_url: str, soup: BeautifulSoup) -> str | None:
         """Return the absolute .txt download URL, if present."""
         a = soup.find("a", id="btndl-txt")
+        if not a or not a.get("href"):
+            return None
+        return _join_url(base_url, a["href"])
+
+    def extract_lrc_url(self, base_url: str, soup: BeautifulSoup) -> str | None:
+        """Return the absolute .lrc download URL, if present."""
+        a = soup.find("a", id="btndl-lrc")
         if not a or not a.get("href"):
             return None
         return _join_url(base_url, a["href"])
@@ -491,3 +518,31 @@ def _join_url(base_url: str, href: str) -> str:
     be percent-encoded before joining.
     """
     return urljoin(base_url, quote(href, safe="/"))
+
+
+# Matches a leading LRC timestamp like [00:17.72] or [01:03.76].
+_LRC_TIME_RE = re.compile(r"\[(\d+):(\d{2}(?:\.\d+)?)\]")
+# Metadata ID tags like [ti:...], [al:...], [ar:...], [by:...], [offset:...].
+_LRC_META_RE = re.compile(r"^\s*\[[a-z]+:", re.IGNORECASE)
+
+
+def parse_lrc(lrc_text: str) -> list[tuple[float, str]]:
+    """Parse an LRC transcript into a list of ``(start_seconds, text)``.
+
+    Skips metadata header lines (``[ti:...]``, ``[al:...]``, etc.) and any
+    timestamped lines with no text.
+    """
+    sentences: list[tuple[float, str]] = []
+    for line in lrc_text.splitlines():
+        if _LRC_META_RE.match(line):
+            continue
+        m = _LRC_TIME_RE.match(line)
+        if not m:
+            continue
+        minutes = int(m.group(1))
+        seconds = float(m.group(2))
+        start = minutes * 60 + seconds
+        text = line[m.end():].strip()
+        if text:
+            sentences.append((start, text))
+    return sentences

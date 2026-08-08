@@ -129,30 +129,21 @@ class RSSGenerator:
 
     def _build_description(self, ep: Episode, page_url: str) -> str:
         """Build the HTML shown in Apple Podcasts episode description."""
-        english_paras = _split_paragraphs(ep.english_text)
-        chinese_paras = _split_paragraphs(ep.chinese_text)
-
-        def render_block(title: str, paras: list[str]) -> str:
-            parts = [f"<h2>{title}</h2>"]
-            for p in paras:
-                parts.append(f"<p>{_escape(p)}</p>")
-            return "\n".join(parts)
-
-        full = (
-            render_block("English Original", english_paras)
-            + "\n"
-            + render_block("中文翻译", chinese_paras)
-            + "\n<hr/>"
+        if ep.sentences:
+            full = self._render_sentences_description(ep)
+        else:
+            full = self._render_paragraphs_description(ep)
+        full += (
+            "\n<hr/>"
             + f"\n<p>Source: {_escape(ep.source)}</p>"
             + f"\n<p>Original: <a href=\"{_attr(ep.source_url)}\">{_escape(ep.source_url)}</a></p>"
+            + f"\n<p><a href=\"{_attr(page_url)}\">Open interactive transcript →</a></p>"
         )
-
         if len(full) <= MAX_DESCRIPTION_CHARS:
             return "\n" + full + "\n"
 
         # Truncate: keep as much as possible, then link out.
         truncated = full[: MAX_DESCRIPTION_CHARS - 200]
-        # Cut at the last paragraph boundary for cleanliness.
         last_p = truncated.rfind("</p>")
         if last_p > 0:
             truncated = truncated[: last_p + 4]
@@ -161,6 +152,32 @@ class RSSGenerator:
             f"\n<p><a href=\"{_attr(page_url)}\">Read full transcript →</a></p>"
         )
         return "\n" + truncated + "\n"
+
+    def _render_sentences_description(self, ep: Episode) -> str:
+        """Render bilingual sentence pairs (English + Chinese) per row."""
+        parts = ["<h2>English &amp; 中文</h2>"]
+        for s in ep.sentences:
+            parts.append(
+                f"<p><strong>{_escape(s.en)}</strong><br/>{_escape(s.zh)}</p>"
+            )
+        return "\n".join(parts)
+
+    def _render_paragraphs_description(self, ep: Episode) -> str:
+        """Render English and Chinese as separate paragraph blocks."""
+        english_paras = _split_paragraphs(ep.english_text)
+        chinese_paras = _split_paragraphs(ep.chinese_text)
+
+        def render_block(title: str, paras: list[str]) -> str:
+            block = [f"<h2>{title}</h2>"]
+            for p in paras:
+                block.append(f"<p>{_escape(p)}</p>")
+            return "\n".join(block)
+
+        return (
+            render_block("English Original", english_paras)
+            + "\n"
+            + render_block("中文翻译", chinese_paras)
+        )
 
     def _build_summary_text(self, ep: Episode) -> str:
         """Plain-text <description> fallback (short)."""

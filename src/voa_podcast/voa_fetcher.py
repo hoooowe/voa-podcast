@@ -90,14 +90,29 @@ class VOAContentFetcher:
         return self._parser.parse(url, soup)
 
     def _fetch_voase(self, url: str, soup: BeautifulSoup) -> VOAArticle:
-        """Parse a voase.cn article, downloading its .txt transcript if available."""
-        txt_text: str | None = None
-        txt_url = self._voase_parser.extract_txt_url(url, soup)
-        if txt_url:
+        """Parse a voase.cn article, downloading .lrc/.txt transcripts.
+
+        Priority: .lrc (per-sentence audio timestamps) > .txt (clean paragraphs).
+        """
+        lrc_text: str | None = None
+        lrc_url = self._voase_parser.extract_lrc_url(url, soup)
+        if lrc_url:
             try:
-                txt_text = self.fetch_text(txt_url)
-                logger.info("[FETCH] Transcript .txt downloaded.")
+                lrc_text = self.fetch_text(lrc_url)
+                logger.info("[FETCH] Timestamped .lrc transcript downloaded.")
             except VOAFetchError as exc:
-                logger.warning("[FETCH] Could not download .txt transcript: %s", exc)
-                txt_text = None
-        return self._voase_parser.parse(url, soup, txt_text=txt_text)
+                logger.warning("[FETCH] Could not download .lrc transcript: %s", exc)
+                lrc_text = None
+
+        txt_text: str | None = None
+        if not lrc_text:
+            txt_url = self._voase_parser.extract_txt_url(url, soup)
+            if txt_url:
+                try:
+                    txt_text = self.fetch_text(txt_url)
+                    logger.info("[FETCH] Transcript .txt downloaded.")
+                except VOAFetchError as exc:
+                    logger.warning("[FETCH] Could not download .txt transcript: %s", exc)
+                    txt_text = None
+
+        return self._voase_parser.parse(url, soup, txt_text=txt_text, lrc_text=lrc_text)

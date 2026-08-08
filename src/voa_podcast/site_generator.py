@@ -88,6 +88,10 @@ class SiteGenerator:
             "audio_url": self._audio_url(ep.audio_file),
             "english_paragraphs": _split_paragraphs(ep.english_text),
             "chinese_paragraphs": _split_paragraphs(ep.chinese_text),
+            "sentences": [
+                {"start": round(s.start, 3), "en": s.en, "zh": s.zh}
+                for s in ep.sentences
+            ],
         }
 
     # ------------------------------------------------------------------ #

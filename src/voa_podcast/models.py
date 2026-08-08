@@ -15,6 +15,26 @@ class CopyrightStatus(str, Enum):
 
 
 @dataclass
+class Sentence:
+    """A single timestamped sentence (English + Chinese translation).
+
+    ``start`` is the audio offset in seconds (from the .lrc file). Sentences
+    parsed from sources without timestamps use ``start = 0.0``.
+    """
+
+    start: float
+    en: str
+    zh: str = ""
+
+    def to_dict(self) -> dict:
+        return {"start": round(self.start, 3), "en": self.en, "zh": self.zh}
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "Sentence":
+        return cls(start=float(data.get("start", 0.0)), en=data["en"], zh=data.get("zh", ""))
+
+
+@dataclass
 class VOAArticle:
     """Raw article extracted from a VOA Learning English page."""
 
@@ -26,6 +46,9 @@ class VOAArticle:
     category: str | None = None
     author: str | None = None
     copyright_source: str | None = None
+    # When the source provides an .lrc transcript, sentences carry the
+    # per-sentence audio timestamps (start, en). Translation fills ``zh`` later.
+    sentences: list[Sentence] | None = None
 
 
 @dataclass
@@ -67,6 +90,7 @@ class Episode:
     audio_type: str
     audio_sha256: str = ""
     copyright_status: str = CopyrightStatus.VOA_ORIGINAL.value
+    sentences: list[Sentence] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
@@ -86,6 +110,7 @@ class Episode:
             "audio_type": self.audio_type,
             "audio_sha256": self.audio_sha256,
             "copyright_status": self.copyright_status,
+            "sentences": [s.to_dict() for s in self.sentences],
         }
 
     @classmethod
@@ -94,6 +119,7 @@ class Episode:
         if data.get("published_at"):
             published_at = datetime.fromisoformat(data["published_at"])
         created_at = datetime.fromisoformat(data["created_at"])
+        sentences = [Sentence.from_dict(s) for s in data.get("sentences", [])]
         return cls(
             id=data["id"],
             guid=data["guid"],
@@ -111,4 +137,5 @@ class Episode:
             audio_type=data["audio_type"],
             audio_sha256=data.get("audio_sha256", ""),
             copyright_status=data.get("copyright_status", CopyrightStatus.VOA_ORIGINAL.value),
+            sentences=sentences,
         )
