@@ -119,14 +119,22 @@ site:
 
 ## 5. 添加 Episode
 
+支持两个文章来源：
+
+- **官方 VOA**：`https://learningenglish.voanews.com/a/...`（国内通常无法直连）
+- **voase.cn 镜像**：`https://www.voase.cn/...`（国内可访问，附带干净 .txt 正文）
+
 ```bash
+# 官方 VOA
 python scripts/add_episode.py "https://learningenglish.voanews.com/a/your-article/1234567.html"
+# voase.cn（国内推荐）
+python scripts/add_episode.py "https://www.voase.cn/2025/03/your-article.html"
 ```
 
 程序会依次：
 
-1. 校验 URL 是否来自 `learningenglish.voanews.com`
-2. 抓取并解析页面（标题、发布时间、正文、音频）
+1. 校验 URL 是否来自官方 VOA 或 voase.cn
+2. 抓取并解析页面（标题、发布时间、正文、音频）；voase.cn 额外下载 .txt 取干净段落正文
 3. 版权检查
 4. 重复检测（按 `source_url`，辅助按音频 SHA256）
 5. 下载英文 MP3

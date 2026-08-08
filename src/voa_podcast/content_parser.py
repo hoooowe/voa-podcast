@@ -13,7 +13,7 @@ import json
 import logging
 import re
 from datetime import datetime
-from urllib.parse import urljoin
+from urllib.parse import urljoin, quote
 
 from bs4 import BeautifulSoup, Tag
 
@@ -351,3 +351,143 @@ def _parse_datetime(raw: str) -> datetime | None:
         except ValueError:
             continue
     return None
+
+
+# ---------------------------------------------------------------------- #
+# voase.cn parser (CN-accessible mirror of VOA Special English)
+# ---------------------------------------------------------------------- #
+class VOASEContentParser:
+    """Parser for voase.cn article pages.
+
+    voase.cn stores each article as an HTML page (with <h2> title, <h3> date,
+    sentence-level <li> body, and download links for .txt/.lrc/.mp3) plus a
+    downloadable .txt file containing clean paragraph text. We prefer the
+    .txt for the body (real paragraphs) and fall back to <li> sentences.
+    """
+
+    def parse(self, url: str, soup: BeautifulSoup, txt_text: str | None = None) -> VOAArticle:
+        title = self._extract_title(soup)
+        date_str, published_at = self._extract_date(soup)
+        category = self._extract_category(soup, title)
+        audio_url = self._extract_audio(url, soup)
+
+        if txt_text:
+            english_text = self._parse_txt_body(txt_text, title, date_str)
+            if not english_text:
+                english_text = self._extract_body_from_li(soup)
+        else:
+            english_text = self._extract_body_from_li(soup)
+
+        if not english_text:
+            raise VOAParseError("Unable to extract VOA article text.")
+
+        logger.info("[PARSE] Title found.")
+        logger.info("[PARSE] Audio found.")
+
+        return VOAArticle(
+            title=title,
+            source_url=url,
+            published_at=published_at,
+            english_text=english_text,
+            audio_url=audio_url,
+            category=category,
+            author="VOA Special English",
+            copyright_source="VOA",
+        )
+
+    def extract_txt_url(self, base_url: str, soup: BeautifulSoup) -> str | None:
+        """Return the absolute .txt download URL, if present."""
+        a = soup.find("a", id="btndl-txt")
+        if not a or not a.get("href"):
+            return None
+        return _join_url(base_url, a["href"])
+
+    def _extract_title(self, soup: BeautifulSoup) -> str:
+        h2 = soup.find("h2")
+        if h2:
+            text = _clean_text(h2.get_text())
+            if text:
+                return text
+        tag = soup.find("title")
+        if tag:
+            # title looks like: "2025-03-18 [Category] Article Title"
+            text = _clean_text(tag.get_text())
+            text = re.sub(r"^\d{4}-\d{2}-\d{2}\s*", "", text)
+            text = re.sub(r"^\[[^\]]*\]\s*", "", text)
+            if text:
+                return text
+        raise VOAParseError("Unable to extract VOA article title.")
+
+    def _extract_date(self, soup: BeautifulSoup) -> tuple[str | None, datetime | None]:
+        h3 = soup.find("h3")
+        raw = _clean_text(h3.get_text()) if h3 else None
+        if not raw:
+            tag = soup.find("title")
+            if tag:
+                m = re.search(r"(\d{4}-\d{2}-\d{2})", tag.get_text())
+                raw = m.group(1) if m else None
+        return raw, _parse_datetime(raw) if raw else None
+
+    def _extract_category(self, soup: BeautifulSoup, title: str) -> str | None:
+        # Category appears in brackets in the page <title>, e.g. [Health and Lifestyle].
+        tag = soup.find("title")
+        text = tag.get_text() if tag else title
+        m = re.search(r"\[([^\]]+)\]", text)
+        if m:
+            return _clean_text(m.group(1))
+        return None
+
+    def _extract_audio(self, base_url: str, soup: BeautifulSoup) -> str:
+        a = soup.find("a", id="btndl-mp3")
+        if a and a.get("href"):
+            return _join_url(base_url, a["href"])
+        # Fallback: any .mp3 link on the page.
+        for a_tag in soup.find_all("a", href=True):
+            if ".mp3" in a_tag["href"].lower():
+                return _join_url(base_url, a_tag["href"])
+        raise VOAParseError("Unable to locate VOA audio file.")
+
+    def _extract_body_from_li(self, soup: BeautifulSoup) -> str:
+        sentences = [
+            _clean_text(li.get_text())
+            for li in soup.find_all("li")
+            if _clean_text(li.get_text())
+        ]
+        return "\n\n".join(sentences) if sentences else ""
+
+    @staticmethod
+    def _parse_txt_body(txt: str, title: str, date_str: str | None) -> str:
+        """Parse a voase.cn .txt file into clean paragraph text.
+
+        The .txt starts with a title line and a date line, followed by blank
+        lines and the article paragraphs (separated by blank lines).
+        """
+        lines = txt.splitlines()
+        body_lines: list[str] = []
+        skipping_header = True
+        for line in lines:
+            s = line.strip()
+            if skipping_header:
+                if (
+                    s == ""
+                    or s == title
+                    or s == date_str
+                    or re.fullmatch(r"\d{4}-\d{2}-\d{2}", s)
+                ):
+                    continue
+                skipping_header = False
+            body_lines.append(line)
+        text = "\n".join(body_lines).strip()
+        if not text:
+            return ""
+        paragraphs = [p.strip() for p in re.split(r"\n\s*\n", text) if p.strip()]
+        return "\n\n".join(paragraphs)
+
+
+def _join_url(base_url: str, href: str) -> str:
+    """Join a (possibly space/bracket-containing) relative href onto base_url.
+
+    voase.cn download filenames contain spaces and brackets, so the href must
+    be percent-encoded before joining.
+    """
+    return urljoin(base_url, quote(href, safe="/"))
