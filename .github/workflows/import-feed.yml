@@ -1,0 +1,64 @@
+name: Import from Feed
+
+on:
+  workflow_dispatch:
+    inputs:
+      feed:
+        description: "Which feed to import from"
+        required: true
+        type: choice
+        default: all
+        options:
+          - all
+          - american-stories
+          - learning-english-podcast
+      limit:
+        description: "Max new episodes per feed"
+        required: false
+        default: "3"
+        type: string
+  schedule:
+    # Run weekly on Monday at 08:00 UTC (16:00 Beijing time).
+    - cron: "0 8 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  import-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -e .
+
+      - name: Import episodes from feed
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
+          LLM_MODEL: ${{ secrets.LLM_MODEL }}
+        run: |
+          python scripts/import_from_feed.py \
+            --feed "${{ github.event.inputs.feed || 'all' }}" \
+            --limit "${{ github.event.inputs.limit || '3' }}"
+
+      - name: Validate feed
+        run: python scripts/validate_feed.py
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs data .cache
+          git commit -m "Import VOA episodes from RSS feed" || echo "Nothing to commit"
+          git push
