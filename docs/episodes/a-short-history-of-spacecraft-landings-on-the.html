@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>A Short History of Spacecraft Landings on the Moon - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .word {
+    border-radius: 3px;
+    transition: background 0.08s, color 0.08s;
+  }
+  .word.active {
+    background: var(--active-border);
+    color: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .word.active { color: #fff; }
+  }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>A Short History of Spacecraft Landings on the Moon</h1>
+  <p class="meta">
+    Mar 10, 2025 · Science and Technology
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/002-a-short-history-of-spacecraft-landings-on-the.mp3"></audio>
+  </div>
+
+  <section class="bilingual">
+    <h2>English &amp; 中文（点击句子跳转音频）</h2>
+    <p class="hint">Click any sentence to jump to that point in the audio. The current sentence highlights as it plays.</p>
+    <ul class="sentence-list">
+      <li class="sentence" data-start="0.0">
+        <p class="en"><span class="time-tag">0:00</span>Many years have passed since the first spacecraft landed on the moon in 1966.</p>
+        <p class="zh">自1966年第一艘航天器登陆月球以来，许多年过去了。</p>
+      </li>
+      <li class="sentence" data-start="10.19">
+        <p class="en"><span class="time-tag">0:10</span>From then until now, there have been many additional attempts with some succeeding and others failing.</p>
+        <p class="zh">从那时到现在，又进行了多次尝试，有的成功，有的失败。</p>
+      </li>
+      <li class="sentence" data-start="20.38">
+        <p class="en"><span class="time-tag">0:20</span>Here is a short history of some of these attempts.</p>
+        <p class="zh">以下是其中一些尝试的简短历史。</p>
+      </li>
+      <li class="sentence" data-start="25.48">
+        <p class="en"><span class="time-tag">0:25</span>The Soviet Union's Luna 9 spacecraft was the first to land on the moon.</p>
+        <p class="zh">苏联的月球9号航天器是第一个登陆月球的。</p>
+      </li>
+      <li class="sentence" data-start="32.97">
+        <p class="en"><span class="time-tag">0:33</span>It touched down on the lunar surface in 1966.</p>
+        <p class="zh">它于1966年降落在月球表面。</p>
+      </li>
+      <li class="sentence" data-start="38.54">
+        <p class="en"><span class="time-tag">0:39</span>The landing came after several other Soviet spacecraft either did not reach the moon or crashed on the surface.</p>
+        <p class="zh">这次登陆之前，其他几艘苏联航天器要么未能到达月球，要么坠毁在月球表面。</p>
+      </li>
+      <li class="sentence" data-start="49.1">
+        <p class="en"><span class="time-tag">0:49</span>The American space agency NASA says Luna 9 was the first spacecraft to carry out a soft landing on the moon.</p>
+        <p class="zh">美国航天局NASA表示，月球9号是第一个在月球上实现软着陆的航天器。</p>
+      </li>
+      <li class="sentence" data-start="60.77">
+        <p class="en"><span class="time-tag">1:01</span>It was also the first to send "photographic data" from the moon's surface to Earth.</p>
+        <p class="zh">它也是第一个将月球表面的“摄影数据”传回地球的航天器。</p>
+      </li>
+      <li class="sentence" data-start="69.18">
+        <p class="en"><span class="time-tag">1:09</span>Luna 9's landing proved "the lunar surface could support the weight of a lander and that an object would not sink into a loose layer of dust as some models predicted," NASA said.</p>
+        <p class="zh">NASA称，月球9号的着陆证明“月球表面能够承受着陆器的重量，并且物体不会像某些模型预测的那样陷入松散的尘埃层”。</p>
+      </li>
+      <li class="sentence" data-start="87.55">
+        <p class="en"><span class="time-tag">1:28</span>In May 1966, the United States followed with its Surveyor 1 mission.</p>
+        <p class="zh">1966年5月，美国紧随其后执行了勘测者1号任务。</p>
+      </li>
+      <li class="sentence" data-start="96.19">
+        <p class="en"><span class="time-tag">1:36</span>NASA describes this effort as "the first of a series of seven robotic spacecraft sent to the moon to gather data in preparation for NASA's Apollo missions."</p>
+        <p class="zh">NASA将这次任务描述为“为准备NASA阿波罗任务而发送到月球收集数据的七架机器人航天器系列中的第一架”。</p>
+      </li>
+      <li class="sentence" data-start="110.87">
+        <p class="en"><span class="time-tag">1:51</span>The successful soft landing of Surveyor 1 "was one of the great successes of NASA's early lunar and interplanetary program."</p>
+        <p class="zh">勘测者1号的成功软着陆“是NASA早期月球和行星际计划中的重大成功之一”。</p>
+      </li>
+      <li class="sentence" data-start="122.83">
+        <p class="en"><span class="time-tag">2:03</span>Both the U.S. and Soviet Union had other successful robotic landings.</p>
+        <p class="zh">美国和苏联都曾实现过其他成功的机器人着陆。</p>
+      </li>
+      <li class="sentence" data-start="130.68">
+        <p class="en"><span class="time-tag">2:11</span>Next, the countries aimed to be the first to land humans on the moon.</p>
+        <p class="zh">接下来，两国都力争成为第一个将人类送上月球的国家。</p>
+      </li>
+      <li class="sentence" data-start="137.93">
+        <p class="en"><span class="time-tag">2:18</span>In 1969, NASA successfully landed Apollo 11 astronauts Neil Armstrong and Buzz Aldrin on the moon.</p>
+        <p class="zh">1969年，NASA成功将阿波罗11号宇航员尼尔·阿姆斯特朗和巴兹·奥尔德林送上月球。</p>
+      </li>
+      <li class="sentence" data-start="149.69">
+        <p class="en"><span class="time-tag">2:30</span>The U.S. Apollo program sent 12 astronauts to explore the moon over six missions.</p>
+        <p class="zh">美国的阿波罗计划通过六次任务共派遣了12名宇航员探索月球。</p>
+      </li>
+      <li class="sentence" data-start="158.12">
+        <p class="en"><span class="time-tag">2:38</span>Apollo 17 was the last in 1972.</p>
+        <p class="zh">阿波罗17号是1972年的最后一次任务。</p>
+      </li>
+      <li class="sentence" data-start="163.31">
+        <p class="en"><span class="time-tag">2:43</span>The U.S. is still the only country to land humans on the moon.</p>
+        <p class="zh">美国仍然是唯一一个将人类送上月球的国家。</p>
+      </li>
+      <li class="sentence" data-start="169.4">
+        <p class="en"><span class="time-tag">2:49</span>NASA officials say the agency's Artemis program aims to return astronauts to the lunar surface possibly by the end of 2026.</p>
+        <p class="zh">NASA官员表示，该机构的阿尔忒弥斯计划目标是在2026年底前将宇航员送回月球表面。</p>
+      </li>
+      <li class="sentence" data-start="182.46">
+        <p class="en"><span class="time-tag">3:02</span>In 2013, China became the third country to successfully land a spacecraft on the moon.</p>
+        <p class="zh">2013年，中国成为第三个成功将航天器送上月球的国家。</p>
+      </li>
+      <li class="sentence" data-start="191.3">
+        <p class="en"><span class="time-tag">3:11</span>China landed an exploring vehicle, or rover named Yutu that year.</p>
+        <p class="zh">同年，中国投放了一辆名为“玉兔”的探测车（即月球车）。</p>
+      </li>
+      <li class="sentence" data-start="198.59">
+        <p class="en"><span class="time-tag">3:19</span>China followed with the Yutu-2 rover in 2019, this time touching down on the moon's unexplored far side.</p>
+        <p class="zh">2019年，中国又发射了玉兔二号月球车，此次降落在月球未被探索的背面。</p>
+      </li>
+      <li class="sentence" data-start="210.34">
+        <p class="en"><span class="time-tag">3:30</span>In 2020, China successfully returned samples of rock and dirt collected by the rovers.</p>
+        <p class="zh">2020年，中国成功将月球车采集的岩石和土壤样本带回地球。</p>
+      </li>
+      <li class="sentence" data-start="219.08">
+        <p class="en"><span class="time-tag">3:39</span>The mission returned about 1.7 kilograms of lunar material collected from the near side of the moon.</p>
+        <p class="zh">该任务带回了约1.7公斤从月球正面收集的月球物质。</p>
+      </li>
+      <li class="sentence" data-start="228.96">
+        <p class="en"><span class="time-tag">3:49</span>Then in 2024, another mission returned rock and soil samples from the less explored far side of the moon.</p>
+        <p class="zh">随后在2024年，另一次任务从较少被探索的月球背面带回了岩石和土壤样本。</p>
+      </li>
+      <li class="sentence" data-start="239.26">
+        <p class="en"><span class="time-tag">3:59</span>China has said it aims to land its astronauts on the moon by 2030.</p>
+        <p class="zh">中国表示，计划在2030年前将宇航员送上月球。</p>
+      </li>
+      <li class="sentence" data-start="246.58">
+        <p class="en"><span class="time-tag">4:07</span>In 2023, Russia tried its first moon landing in nearly 50 years.</p>
+        <p class="zh">2023年，俄罗斯尝试了近50年来的首次月球着陆。</p>
+      </li>
+      <li class="sentence" data-start="253.92">
+        <p class="en"><span class="time-tag">4:14</span>The Luna 25 spacecraft was attempting to land near the lunar south pole.</p>
+        <p class="zh">月球25号航天器试图在月球南极附近着陆。</p>
+      </li>
+      <li class="sentence" data-start="261.45">
+        <p class="en"><span class="time-tag">4:21</span>But it is believed to have crash landed on the moon's surface.</p>
+        <p class="zh">但它据信已坠毁在月球表面。</p>
+      </li>
+      <li class="sentence" data-start="266.93">
+        <p class="en"><span class="time-tag">4:27</span>The country's last effort before that, Luna 24 in 1976, landed successfully and returned moon rocks to Earth.</p>
+        <p class="zh">在此之前，该国最后一次尝试是1976年的月球24号，它成功着陆并将月球岩石带回地球。</p>
+      </li>
+      <li class="sentence" data-start="279.22">
+        <p class="en"><span class="time-tag">4:39</span>After its first lander crashed into the moon in 2019, India made its second attempt in 2023.</p>
+        <p class="zh">在2019年首个月球着陆器坠毁后，印度于2023年进行了第二次尝试。</p>
+      </li>
+      <li class="sentence" data-start="289.82">
+        <p class="en"><span class="time-tag">4:50</span>The country successfully landed its Chandrayaan-3 spacecraft on the lunar surface.</p>
+        <p class="zh">该国成功将月船3号航天器降落在月球表面。</p>
+      </li>
+      <li class="sentence" data-start="298.28">
+        <p class="en"><span class="time-tag">4:58</span>The mission made India the fourth nation to complete a moon landing.</p>
+        <p class="zh">这次任务使印度成为第四个完成月球着陆的国家。</p>
+      </li>
+      <li class="sentence" data-start="304.82">
+        <p class="en"><span class="time-tag">5:05</span>In January 2024, Japan became the fifth country to successfully land a spacecraft on the moon.</p>
+        <p class="zh">2024年1月，日本成为第五个成功将航天器送上月球的国家。</p>
+      </li>
+      <li class="sentence" data-start="314.51">
+        <p class="en"><span class="time-tag">5:15</span>But the SLIM spacecraft landed upside down.</p>
+        <p class="zh">但SLIM航天器降落后是倒置的。</p>
+      </li>
+      <li class="sentence" data-start="319.47">
+        <p class="en"><span class="time-tag">5:19</span>This caused some power and communication problems, but the lander was able to operate for a short time.</p>
+        <p class="zh">这导致了一些电源和通信问题，但着陆器仍能短暂运行。</p>
+      </li>
+      <li class="sentence" data-start="329.84">
+        <p class="en"><span class="time-tag">5:30</span>I'm Bryan Lynn.</p>
+        <p class="zh">我是布莱恩·林恩。</p>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://www.voase.cn/2025/03/2025-03-10-%5BScience-and-Technology%5D-A-Short-History-of-Spacecraft-Landings-on-the-Moon.html">https://www.voase.cn/2025/03/2025-03-10-%5BScience-and-Technology%5D-A-Short-History-of-Spacecraft-Landings-on-the-Moon.html</a>
+    </p>
+    <p class="source">
+      Transcript (字幕):
+      <a href="../transcripts/a-short-history-of-spacecraft-landings-on-the.vtt">VTT</a> ·
+      <a href="../transcripts/a-short-history-of-spacecraft-landings-on-the.srt">SRT</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    // Split each English line into per-word spans for word-level highlight.
+    // Word timing is interpolated evenly within each sentence's time span
+    // (sentence start -> next sentence start). VOA Special English is spoken
+    // slowly and evenly, so this tracks the audio closely enough to read along.
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    var wordStarts = []; // wordStarts[i] = array of start times for sentence i's words
+    sentences.forEach(function (el, i) {
+      var enP = el.querySelector('.en');
+      var timeTag = enP.querySelector('.time-tag');
+      var timeTagHTML = timeTag ? timeTag.outerHTML : '';
+      var text = enP.textContent;
+      if (timeTag) text = text.replace(timeTag.textContent, '');
+      var words = text.trim().split(/\s+/).filter(Boolean);
+      enP.innerHTML = timeTagHTML + words.map(function (w) {
+        return '<span class="word">' + escapeHtml(w) + '</span>';
+      }).join(' ');
+      var wordEls = Array.prototype.slice.call(enP.querySelectorAll('.word'));
+      el._wordEls = wordEls;
+      wordStarts.push([]);
+    });
+
+    function recomputeWordTimings() {
+      var n = starts.length;
+      for (var i = 0; i < n; i++) {
+        var begin = starts[i];
+        var end = (i + 1 < n) ? starts[i + 1] : (player.duration ? player.duration : begin + el_word_count(i) * 0.5);
+        var wc = sentences[i]._wordEls.length;
+        var step = wc > 1 ? (end - begin) / wc : (end - begin);
+        var arr = [];
+        for (var k = 0; k < wc; k++) {
+          arr.push(begin + k * step);
+        }
+        wordStarts[i] = arr;
+      }
+    }
+    function el_word_count(i) { return sentences[i]._wordEls.length; }
+
+    var activeWord = null; // {s:i, w:k}
+    function clearWords() {
+      if (activeWord) {
+        var prev = sentences[activeWord.s]._wordEls[activeWord.w];
+        if (prev) prev.classList.remove('active');
+        activeWord = null;
+      }
+    }
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    function currentWordIndex(si, t) {
+      var arr = wordStarts[si] || [];
+      var idx = -1;
+      for (var k = 0; k < arr.length; k++) {
+        if (arr[k] <= t + 0.15) idx = k;
+        else break;
+      }
+      return idx;
+    }
+
+    function update(t) {
+      var si = currentSentenceIndex(t);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        clearWords();
+        lastSentence = si;
+      }
+      var wi = currentWordIndex(si, t);
+      if (wi >= 0) {
+        if (!activeWord || activeWord.s !== si || activeWord.w !== wi) {
+          clearWords();
+          var el = sentences[si]._wordEls[wi];
+          if (el) el.classList.add('active');
+          activeWord = { s: si, w: wi };
+        }
+      }
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        clearWords();
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('loadedmetadata', function () {
+      recomputeWordTimings();
+    });
+    player.addEventListener('timeupdate', function () {
+      if (!wordStarts[0] || !wordStarts[0].length) recomputeWordTimings();
+      update(player.currentTime);
+    });
+  })();
+</script>
+</body>
+</html>

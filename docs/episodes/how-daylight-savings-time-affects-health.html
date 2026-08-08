@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>How Daylight Savings Time Affects Health - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .word {
+    border-radius: 3px;
+    transition: background 0.08s, color 0.08s;
+  }
+  .word.active {
+    background: var(--active-border);
+    color: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .word.active { color: #fff; }
+  }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>How Daylight Savings Time Affects Health</h1>
+  <p class="meta">
+    Mar 07, 2025 · Health and Lifestyle
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/003-how-daylight-savings-time-affects-health.mp3"></audio>
+  </div>
+
+  <section class="bilingual">
+    <h2>English &amp; 中文（点击句子跳转音频）</h2>
+    <p class="hint">Click any sentence to jump to that point in the audio. The current sentence highlights as it plays.</p>
+    <ul class="sentence-list">
+      <li class="sentence" data-start="0.0">
+        <p class="en"><span class="time-tag">0:00</span>Much of the United States "springs forward" on Sunday, March 9th, for daylight saving time.</p>
+        <p class="zh">美国大部分地区将于3月9日周日“提前”进入夏令时。</p>
+      </li>
+      <li class="sentence" data-start="9.69">
+        <p class="en"><span class="time-tag">0:10</span>Worldwide, many other countries also observe daylight saving time, starting and ending on different dates.</p>
+        <p class="zh">在全球范围内，许多其他国家也实行夏令时，但开始和结束的日期各不相同。</p>
+      </li>
+      <li class="sentence" data-start="21.8">
+        <p class="en"><span class="time-tag">0:22</span>The time change can leave people tired and perhaps unhappy the next day.</p>
+        <p class="zh">时间变化可能会让人第二天感到疲倦，甚至可能心情不佳。</p>
+      </li>
+      <li class="sentence" data-start="30.58">
+        <p class="en"><span class="time-tag">0:31</span>But it also might even harm health.</p>
+        <p class="zh">但它甚至可能对健康有害。</p>
+      </li>
+      <li class="sentence" data-start="35.65">
+        <p class="en"><span class="time-tag">0:36</span>Some studies have found an increase in heart attacks and strokes right after the March time change.</p>
+        <p class="zh">一些研究发现，在3月时间变化后，心脏病发作和中风的数量有所增加。</p>
+      </li>
+      <li class="sentence" data-start="46.1">
+        <p class="en"><span class="time-tag">0:46</span>However, there are ways to ease the effects of the time change, including getting more sunshine.</p>
+        <p class="zh">不过，有一些方法可以减轻时间变化的影响，包括多晒太阳。</p>
+      </li>
+      <li class="sentence" data-start="56.76">
+        <p class="en"><span class="time-tag">0:57</span>The light helps reset your circadian rhythm for healthful sleep.</p>
+        <p class="zh">光线有助于重新调整你的昼夜节律，实现健康睡眠。</p>
+      </li>
+      <li class="sentence" data-start="64.62">
+        <p class="en"><span class="time-tag">1:05</span>In the U.S., daylight saving time begins Sunday at 2:00 in the morning.</p>
+        <p class="zh">在美国，夏令时于周日凌晨2:00开始。</p>
+      </li>
+      <li class="sentence" data-start="73.24">
+        <p class="en"><span class="time-tag">1:13</span>The time change will reverse on November 2 when clocks "fall back" as daylight saving time ends.</p>
+        <p class="zh">时间变化将于11月2日逆转，届时夏令时结束，时钟“回拨”。</p>
+      </li>
+      <li class="sentence" data-start="85.78">
+        <p class="en"><span class="time-tag">1:26</span>The state of Hawaii and most of the state of Arizona do not make the spring change.</p>
+        <p class="zh">夏威夷州和亚利桑那州的大部分地区不实行春季时间调整。</p>
+      </li>
+      <li class="sentence" data-start="94.26">
+        <p class="en"><span class="time-tag">1:34</span>Those areas remain on standard time along with Puerto Rico, American Samoa, Guam and the U.S. Virgin Islands.</p>
+        <p class="zh">这些地区与波多黎各、美属萨摩亚、关岛和美属维尔京群岛一样，保持标准时间。</p>
+      </li>
+      <li class="sentence" data-start="108.47">
+        <p class="en"><span class="time-tag">1:48</span>Some people try to prepare for the change to daylight saving time by going to bed a little earlier two or three nights ahead.</p>
+        <p class="zh">有些人试图通过提前两三天晚上早睡来为夏令时变化做准备。</p>
+      </li>
+      <li class="sentence" data-start="121.67">
+        <p class="en"><span class="time-tag">2:02</span>But with a third of American adults already not getting the suggested seven hours of nightly sleep, catching up can be difficult.</p>
+        <p class="zh">但由于已有三分之一的美国成年人无法达到建议的每晚七小时睡眠，补觉可能很困难。</p>
+      </li>
+      <li class="sentence" data-start="135.92">
+        <p class="en"><span class="time-tag">2:16</span>The brain has a kind of clock that is set by exposure to sunlight and darkness.</p>
+        <p class="zh">大脑有一种时钟，由暴露在日光和黑暗中设定。</p>
+      </li>
+      <li class="sentence" data-start="145.48">
+        <p class="en"><span class="time-tag">2:25</span>This clock, known as the circadian rhythm, is on a roughly 24-hour cycle.</p>
+        <p class="zh">这个时钟，即昼夜节律，大约以24小时为一个周期。</p>
+      </li>
+      <li class="sentence" data-start="155.08">
+        <p class="en"><span class="time-tag">2:35</span>It governs when we become sleepy and when we are more wakeful.</p>
+        <p class="zh">它控制着我们何时感到困倦，何时更加清醒。</p>
+      </li>
+      <li class="sentence" data-start="161.57">
+        <p class="en"><span class="time-tag">2:42</span>The rhythms change with age.</p>
+        <p class="zh">节律会随着年龄变化。</p>
+      </li>
+      <li class="sentence" data-start="165.94">
+        <p class="en"><span class="time-tag">2:46</span>This is one reason that early-to-rise young children turn into hard-to-wake teenagers.</p>
+        <p class="zh">这就是为什么早睡早起的小孩会变成难叫醒的青少年原因之一。</p>
+      </li>
+      <li class="sentence" data-start="177.21">
+        <p class="en"><span class="time-tag">2:57</span>Morning light resets the rhythm.</p>
+        <p class="zh">晨光可以重置节律。</p>
+      </li>
+      <li class="sentence" data-start="180.8">
+        <p class="en"><span class="time-tag">3:01</span>By evening, levels of a hormone called melatonin begin to increase, leading to tiredness.</p>
+        <p class="zh">到了晚上，一种叫做褪黑素的激素水平开始上升，导致困倦。</p>
+      </li>
+      <li class="sentence" data-start="190.93">
+        <p class="en"><span class="time-tag">3:11</span>Too much light in the evening - that extra hour from daylight saving time - delays the melatonin increase.</p>
+        <p class="zh">晚上光线过多——夏令时多出的那一小时——会延迟褪黑素的增加。</p>
+      </li>
+      <li class="sentence" data-start="202.05">
+        <p class="en"><span class="time-tag">3:22</span>As a result, the cycle gets delayed.</p>
+        <p class="zh">结果，周期被推迟了。</p>
+      </li>
+      <li class="sentence" data-start="206.34">
+        <p class="en"><span class="time-tag">3:26</span>The circadian rhythm affects more than sleep.</p>
+        <p class="zh">昼夜节律影响的不只是睡眠。</p>
+      </li>
+      <li class="sentence" data-start="211.48">
+        <p class="en"><span class="time-tag">3:31</span>It also influences heart rate, blood pressure, hormone releases and other systems.</p>
+        <p class="zh">它还影响心率、血压、激素释放和其他系统。</p>
+      </li>
+      <li class="sentence" data-start="220.62">
+        <p class="en"><span class="time-tag">3:41</span>Sleep deprivation, or lack of sleep, is linked to heart disease, weight conditions, problems with thinking and remembering, and more.</p>
+        <p class="zh">睡眠不足或缺乏睡眠与心脏病、体重问题、思维和记忆障碍等有关。</p>
+      </li>
+      <li class="sentence" data-start="235.03">
+        <p class="en"><span class="time-tag">3:55</span>Deadly car crash numbers increase the first few days after the spring time change, a study of U.S. traffic deaths says.</p>
+        <p class="zh">一项对美国交通死亡人数的研究显示，春季时间变化后的头几天，致命车祸数量增加。</p>
+      </li>
+      <li class="sentence" data-start="247.18">
+        <p class="en"><span class="time-tag">4:07</span>The risk of crashes is highest in the morning, it found.</p>
+        <p class="zh">研究发现，车祸风险在早晨最高。</p>
+      </li>
+      <li class="sentence" data-start="252.73">
+        <p class="en"><span class="time-tag">4:13</span>Researchers suggested sleep deprivation might be responsible.</p>
+        <p class="zh">研究人员认为睡眠不足可能是原因。</p>
+      </li>
+      <li class="sentence" data-start="259.63">
+        <p class="en"><span class="time-tag">4:20</span>The time change also has a link to the heart.</p>
+        <p class="zh">时间变化也与心脏有关。</p>
+      </li>
+      <li class="sentence" data-start="264.87">
+        <p class="en"><span class="time-tag">4:25</span>The American Heart Association points to studies that suggest an increase in heart attacks on the Monday after daylight saving time begins, and in strokes for two days afterward.</p>
+        <p class="zh">美国心脏协会指出，有研究表明，夏令时开始后的星期一心脏病发作增加，之后两天中风增加。</p>
+      </li>
+      <li class="sentence" data-start="282.98">
+        <p class="en"><span class="time-tag">4:43</span>Doctors already know that heart attacks, especially severe ones, are a bit more common on Mondays generally - and in the morning, when blood is more likely to clot.</p>
+        <p class="zh">医生们已经知道，心脏病发作，尤其是严重的心肌梗死，通常在星期一更常见——而且在早晨，血液更容易凝固。</p>
+      </li>
+      <li class="sentence" data-start="299.82">
+        <p class="en"><span class="time-tag">4:60</span>Researchers do not know why the time change would add to that Monday connection.</p>
+        <p class="zh">研究人员不知道时间变化为何会加剧这种周一关联。</p>
+      </li>
+      <li class="sentence" data-start="307.57">
+        <p class="en"><span class="time-tag">5:08</span>But it is possible the sudden circadian change influences other issues such as high blood pressure in people already at risk.</p>
+        <p class="zh">但突然的昼夜节律变化可能会影响其他问题，比如已有风险人群的高血压。</p>
+      </li>
+      <li class="sentence" data-start="320.98">
+        <p class="en"><span class="time-tag">5:21</span>To prepare for daylight saving time, experts offer some advice.</p>
+        <p class="zh">为了应对夏令时，专家们提供了一些建议。</p>
+      </li>
+      <li class="sentence" data-start="328.35">
+        <p class="en"><span class="time-tag">5:28</span>Slowly move bedtimes about 15 or 20 minutes earlier for several nights before the time change.</p>
+        <p class="zh">在时间变化前的几个晚上，将就寝时间逐渐提前15或20分钟。</p>
+      </li>
+      <li class="sentence" data-start="339.36">
+        <p class="en"><span class="time-tag">5:39</span>Try to rise earlier the next morning, too.</p>
+        <p class="zh">第二天早上也要尝试早起。</p>
+      </li>
+      <li class="sentence" data-start="345.09">
+        <p class="en"><span class="time-tag">5:45</span>Go outside for early morning sunshine the first week of daylight saving time.</p>
+        <p class="zh">夏令时第一周，到户外享受清晨的阳光。</p>
+      </li>
+      <li class="sentence" data-start="353.1">
+        <p class="en"><span class="time-tag">5:53</span>This is another way to help reset your body's clock.</p>
+        <p class="zh">这是帮助重置身体时钟的另一种方法。</p>
+      </li>
+      <li class="sentence" data-start="359.51">
+        <p class="en"><span class="time-tag">5:60</span>Start daily activities, like dinner or exercise, a little earlier.</p>
+        <p class="zh">将日常活动，如晚餐或锻炼，稍微提前。</p>
+      </li>
+      <li class="sentence" data-start="367.6">
+        <p class="en"><span class="time-tag">6:08</span>This may help tell your body to start getting used to the new conditions, sleep experts suggest.</p>
+        <p class="zh">睡眠专家建议，这有助于告诉你的身体开始适应新的条件。</p>
+      </li>
+      <li class="sentence" data-start="376.99">
+        <p class="en"><span class="time-tag">6:17</span>Daytime sleeping, the drug caffeine and light from phones and other electronic devices can make an earlier bedtime even harder.</p>
+        <p class="zh">白天睡觉、咖啡因以及手机和其他电子设备的光线会使早睡变得更加困难。</p>
+      </li>
+      <li class="sentence" data-start="391.53">
+        <p class="en"><span class="time-tag">6:32</span>Americans have discussed ending daylight saving time.</p>
+        <p class="zh">美国人一直在讨论取消夏令时。</p>
+      </li>
+      <li class="sentence" data-start="397.37">
+        <p class="en"><span class="time-tag">6:37</span>But so far, no official changes have been made.</p>
+        <p class="zh">但到目前为止，还没有做出任何正式改变。</p>
+      </li>
+      <li class="sentence" data-start="402.96">
+        <p class="en"><span class="time-tag">6:43</span>Health groups such as the American Medical Association and American Academy of Sleep Medicine believe it is time to end time changes.</p>
+        <p class="zh">美国医学协会和美国睡眠医学学会等健康组织认为，是时候结束时间变更了。</p>
+      </li>
+      <li class="sentence" data-start="416.9">
+        <p class="en"><span class="time-tag">6:57</span>The groups suggest that staying with standard time year-round works better for human biology and sleep needs.</p>
+        <p class="zh">这些组织建议，全年保持标准时间更符合人类生物学和睡眠需求。</p>
+      </li>
+      <li class="sentence" data-start="429.22">
+        <p class="en"><span class="time-tag">7:09</span>I'm Caty Weaver.</p>
+        <p class="zh">我是凯蒂·韦弗。</p>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://www.voase.cn/2025/03/2025-03-07-%5BHealth-and-Lifestyle%5D-How-Daylight-Savings-Time-Affects-Health.html">https://www.voase.cn/2025/03/2025-03-07-%5BHealth-and-Lifestyle%5D-How-Daylight-Savings-Time-Affects-Health.html</a>
+    </p>
+    <p class="source">
+      Transcript (字幕):
+      <a href="../transcripts/how-daylight-savings-time-affects-health.vtt">VTT</a> ·
+      <a href="../transcripts/how-daylight-savings-time-affects-health.srt">SRT</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    // Split each English line into per-word spans for word-level highlight.
+    // Word timing is interpolated evenly within each sentence's time span
+    // (sentence start -> next sentence start). VOA Special English is spoken
+    // slowly and evenly, so this tracks the audio closely enough to read along.
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    var wordStarts = []; // wordStarts[i] = array of start times for sentence i's words
+    sentences.forEach(function (el, i) {
+      var enP = el.querySelector('.en');
+      var timeTag = enP.querySelector('.time-tag');
+      var timeTagHTML = timeTag ? timeTag.outerHTML : '';
+      var text = enP.textContent;
+      if (timeTag) text = text.replace(timeTag.textContent, '');
+      var words = text.trim().split(/\s+/).filter(Boolean);
+      enP.innerHTML = timeTagHTML + words.map(function (w) {
+        return '<span class="word">' + escapeHtml(w) + '</span>';
+      }).join(' ');
+      var wordEls = Array.prototype.slice.call(enP.querySelectorAll('.word'));
+      el._wordEls = wordEls;
+      wordStarts.push([]);
+    });
+
+    function recomputeWordTimings() {
+      var n = starts.length;
+      for (var i = 0; i < n; i++) {
+        var begin = starts[i];
+        var end = (i + 1 < n) ? starts[i + 1] : (player.duration ? player.duration : begin + el_word_count(i) * 0.5);
+        var wc = sentences[i]._wordEls.length;
+        var step = wc > 1 ? (end - begin) / wc : (end - begin);
+        var arr = [];
+        for (var k = 0; k < wc; k++) {
+          arr.push(begin + k * step);
+        }
+        wordStarts[i] = arr;
+      }
+    }
+    function el_word_count(i) { return sentences[i]._wordEls.length; }
+
+    var activeWord = null; // {s:i, w:k}
+    function clearWords() {
+      if (activeWord) {
+        var prev = sentences[activeWord.s]._wordEls[activeWord.w];
+        if (prev) prev.classList.remove('active');
+        activeWord = null;
+      }
+    }
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    function currentWordIndex(si, t) {
+      var arr = wordStarts[si] || [];
+      var idx = -1;
+      for (var k = 0; k < arr.length; k++) {
+        if (arr[k] <= t + 0.15) idx = k;
+        else break;
+      }
+      return idx;
+    }
+
+    function update(t) {
+      var si = currentSentenceIndex(t);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        clearWords();
+        lastSentence = si;
+      }
+      var wi = currentWordIndex(si, t);
+      if (wi >= 0) {
+        if (!activeWord || activeWord.s !== si || activeWord.w !== wi) {
+          clearWords();
+          var el = sentences[si]._wordEls[wi];
+          if (el) el.classList.add('active');
+          activeWord = { s: si, w: wi };
+        }
+      }
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        clearWords();
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('loadedmetadata', function () {
+      recomputeWordTimings();
+    });
+    player.addEventListener('timeupdate', function () {
+      if (!wordStarts[0] || !wordStarts[0].length) recomputeWordTimings();
+      update(player.currentTime);
+    });
+  })();
+</script>
+</body>
+</html>
