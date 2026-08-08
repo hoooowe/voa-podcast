@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>Beach, Coast, Shore - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .word {
+    border-radius: 3px;
+    transition: background 0.08s, color 0.08s;
+  }
+  .word.active {
+    background: var(--active-border);
+    color: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .word.active { color: #fff; }
+  }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>Beach, Coast, Shore</h1>
+  <p class="meta">
+    Mar 08, 2025 · Ask a Teacher
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/008-beach-coast-shore.mp3"></audio>
+  </div>
+
+  <section class="bilingual">
+    <h2>English &amp; 中文（点击句子跳转音频）</h2>
+    <p class="hint">Click any sentence to jump to that point in the audio. The current sentence highlights as it plays.</p>
+    <ul class="sentence-list">
+      <li class="sentence" data-start="0.0">
+        <p class="en"><span class="time-tag">0:00</span>This week on Ask a Teacher, we answer a question from Doyeon in Korea about the usage of three similar words.</p>
+        <p class="zh">本周的《名师答疑》中，我们回答来自韩国Doyeon关于三个相似单词用法的问题。</p>
+      </li>
+      <li class="sentence" data-start="12.7">
+        <p class="en"><span class="time-tag">0:13</span>Here is the question:</p>
+        <p class="zh">问题是：</p>
+      </li>
+      <li class="sentence" data-start="15.54">
+        <p class="en"><span class="time-tag">0:16</span>Hello.</p>
+        <p class="zh">你好。</p>
+      </li>
+      <li class="sentence" data-start="16.52">
+        <p class="en"><span class="time-tag">0:17</span>I want to know the differences between</p>
+        <p class="zh">我想知道它们之间的区别</p>
+      </li>
+      <li class="sentence" data-start="19.85">
+        <p class="en"><span class="time-tag">0:20</span>the beach, . . . coast and shore.</p>
+        <p class="zh">海滩、海岸和滨岸。</p>
+      </li>
+      <li class="sentence" data-start="23.95">
+        <p class="en"><span class="time-tag">0:24</span>Thank you.</p>
+        <p class="zh">谢谢。</p>
+      </li>
+      <li class="sentence" data-start="24.97">
+        <p class="en"><span class="time-tag">0:25</span>You ask a useful question, Doyeon. Beach, shore and coast are related words, but they have some important differences.</p>
+        <p class="zh">你的问题很有用，Doyeon。Beach、shore和coast是相关词汇，但有一些重要区别。</p>
+      </li>
+      <li class="sentence" data-start="39.55">
+        <p class="en"><span class="time-tag">0:40</span>Beach</p>
+        <p class="zh">Beach（海滩）</p>
+      </li>
+      <li class="sentence" data-start="41.28">
+        <p class="en"><span class="time-tag">0:41</span>The word "beach" is the most specific of the three words.</p>
+        <p class="zh">“Beach”是这三个词中最具体的。</p>
+      </li>
+      <li class="sentence" data-start="48.52">
+        <p class="en"><span class="time-tag">0:49</span>The Collins online dictionary defines beach as "a nearly level stretch of pebbles and sand beside a sea, lake, etc., often washed by high water."</p>
+        <p class="zh">柯林斯在线词典将beach定义为“海、湖等旁边近乎平坦的卵石和沙地带，常被高潮淹没。”</p>
+      </li>
+      <li class="sentence" data-start="64.78">
+        <p class="en"><span class="time-tag">1:05</span>Ocean beaches are popular places to visit.</p>
+        <p class="zh">海洋海滩是受欢迎的旅游景点。</p>
+      </li>
+      <li class="sentence" data-start="69.32">
+        <p class="en"><span class="time-tag">1:09</span>We often use the phrase "at the beach" to express the idea of spending time in the general area of the beach, as in the following example:</p>
+        <p class="zh">我们常用“at the beach”表示在海滩周边区域度过时光，例如：</p>
+      </li>
+      <li class="sentence" data-start="83.22">
+        <p class="en"><span class="time-tag">1:23</span>They will vacation at the beach this summer.</p>
+        <p class="zh">他们今年夏天将在海滩度假。</p>
+      </li>
+      <li class="sentence" data-start="87.58">
+        <p class="en"><span class="time-tag">1:28</span>We usually say "on the beach" when describing specific activities we do there:</p>
+        <p class="zh">描述在海滩上的具体活动时，我们通常用“on the beach”：</p>
+      </li>
+      <li class="sentence" data-start="97.54">
+        <p class="en"><span class="time-tag">1:38</span>She went for a walk on the beach.</p>
+        <p class="zh">她在海滩上散步。</p>
+      </li>
+      <li class="sentence" data-start="100.72">
+        <p class="en"><span class="time-tag">1:41</span>I'm going to spend my afternoon on the beach.</p>
+        <p class="zh">我打算下午待在海滩上。</p>
+      </li>
+      <li class="sentence" data-start="106.22">
+        <p class="en"><span class="time-tag">1:46</span>They are playing football on the beach.</p>
+        <p class="zh">他们正在海滩上踢足球。</p>
+      </li>
+      <li class="sentence" data-start="109.91">
+        <p class="en"><span class="time-tag">1:50</span>Coast</p>
+        <p class="zh">Coast（海岸）</p>
+      </li>
+      <li class="sentence" data-start="111.72">
+        <p class="en"><span class="time-tag">1:52</span>The Learning English Word Book defines coast as "land on the edge of the ocean."</p>
+        <p class="zh">《学英语词汇手册》将coast定义为“海洋边缘的陆地。”</p>
+      </li>
+      <li class="sentence" data-start="120.52">
+        <p class="en"><span class="time-tag">2:01</span>We can use the word to describe a wide area, however.</p>
+        <p class="zh">不过，这个词也可以用来描述广阔的区域。</p>
+      </li>
+      <li class="sentence" data-start="125.95">
+        <p class="en"><span class="time-tag">2:06</span>For example, Baltimore, Maryland is an East Coast city even though it is several kilometers from the Atlantic Ocean.</p>
+        <p class="zh">例如，马里兰州巴尔的摩是东海岸城市，尽管它距离大西洋约几公里。</p>
+      </li>
+      <li class="sentence" data-start="136.82">
+        <p class="en"><span class="time-tag">2:17</span>Here are more examples of how we can use "coast" in a sentence.</p>
+        <p class="zh">以下是更多使用“coast”的例句：</p>
+      </li>
+      <li class="sentence" data-start="144.08">
+        <p class="en"><span class="time-tag">2:24</span>The Florida coast has many nice towns and beaches.</p>
+        <p class="zh">佛罗里达海岸有许多美丽的小镇和海滩。</p>
+      </li>
+      <li class="sentence" data-start="149.86">
+        <p class="en"><span class="time-tag">2:30</span>The coast of California extends over 1,300 kilometers.</p>
+        <p class="zh">加利福尼亚海岸线绵延超过1300公里。</p>
+      </li>
+      <li class="sentence" data-start="159.24">
+        <p class="en"><span class="time-tag">2:39</span>Like the expression "at the beach," we can say "on the coast" when describing the general area, as in the following example:</p>
+        <p class="zh">与“at the beach”类似，我们可以用“on the coast”来描述一般区域，例如：</p>
+      </li>
+      <li class="sentence" data-start="173.14">
+        <p class="en"><span class="time-tag">2:53</span>Her mother has lived on the coast for 30 years.</p>
+        <p class="zh">她母亲住在海边已有30年。</p>
+      </li>
+      <li class="sentence" data-start="178.7">
+        <p class="en"><span class="time-tag">2:59</span>We can use the expression "off the coast of" to describe an area of ocean or sea relative to a place on land:</p>
+        <p class="zh">我们可以用“off the coast of”来描述相对于陆地的海域：</p>
+      </li>
+      <li class="sentence" data-start="191.4">
+        <p class="en"><span class="time-tag">3:11</span>The island is about 60 kilometers off the coast of Africa.</p>
+        <p class="zh">该岛距离非洲海岸约60公里。</p>
+      </li>
+      <li class="sentence" data-start="198.41">
+        <p class="en"><span class="time-tag">3:18</span>Shore</p>
+        <p class="zh">Shore（滨岸/岸）</p>
+      </li>
+      <li class="sentence" data-start="200.43">
+        <p class="en"><span class="time-tag">3:20</span>The Merriam-Webster online dictionary defines the word "shore" as "the land bordering a usually large body of water."</p>
+        <p class="zh">韦氏在线词典将“shore”定义为“通常濒临大面积水域的陆地。”</p>
+      </li>
+      <li class="sentence" data-start="213.42">
+        <p class="en"><span class="time-tag">3:33</span>Shore can sometimes mean the beach, but not always.</p>
+        <p class="zh">Shore有时可以指海滩，但并非总是如此。</p>
+      </li>
+      <li class="sentence" data-start="218.75">
+        <p class="en"><span class="time-tag">3:39</span>For example, you might swim to shore and come out of the water onto a beach.</p>
+        <p class="zh">例如，你可以游到岸边，然后从水里走上沙滩。</p>
+      </li>
+      <li class="sentence" data-start="224.74">
+        <p class="en"><span class="time-tag">3:45</span>But you could also come to shore at a port with no beach in sight.</p>
+        <p class="zh">但你也可能在一个看不到海滩的港口上岸。</p>
+      </li>
+      <li class="sentence" data-start="231.04">
+        <p class="en"><span class="time-tag">3:51</span>And we can use "shore" when discussing the general area, just like we do with the word "coast."</p>
+        <p class="zh">和“coast”一样，我们也可以用“shore”来讨论一般区域。</p>
+      </li>
+      <li class="sentence" data-start="240.67">
+        <p class="en"><span class="time-tag">4:01</span>The following example shows this meaning:</p>
+        <p class="zh">以下例子展示了这个含义：</p>
+      </li>
+      <li class="sentence" data-start="246.02">
+        <p class="en"><span class="time-tag">4:06</span>The northern shore has many nice towns and beaches.</p>
+        <p class="zh">北部海岸有许多美丽的小镇和海滩。</p>
+      </li>
+      <li class="sentence" data-start="251.97">
+        <p class="en"><span class="time-tag">4:12</span>For our readers and listeners, what are your questions about American English?</p>
+        <p class="zh">对于我们的读者和听众，你们对美国英语有什么问题吗？</p>
+      </li>
+      <li class="sentence" data-start="259.35">
+        <p class="en"><span class="time-tag">4:19</span>We want to hear from you!</p>
+        <p class="zh">我们期待您的来信！</p>
+      </li>
+      <li class="sentence" data-start="261.75">
+        <p class="en"><span class="time-tag">4:22</span>Do you like to spend time at the coast?</p>
+        <p class="zh">你喜欢在海边度过时光吗？</p>
+      </li>
+      <li class="sentence" data-start="265.29">
+        <p class="en"><span class="time-tag">4:25</span>Send us an email at learningenglish@voanews.com.</p>
+        <p class="zh">请发送邮件至learningenglish@voanews.com。</p>
+      </li>
+      <li class="sentence" data-start="271.64">
+        <p class="en"><span class="time-tag">4:32</span>And please let us know where you are from, too.</p>
+        <p class="zh">也请告诉我们你来自哪里。</p>
+      </li>
+      <li class="sentence" data-start="275.83">
+        <p class="en"><span class="time-tag">4:36</span>And that's Ask a Teacher.</p>
+        <p class="zh">这就是《问老师》节目。</p>
+      </li>
+      <li class="sentence" data-start="279.88">
+        <p class="en"><span class="time-tag">4:40</span>I'm Andrew Smith.</p>
+        <p class="zh">我是安德鲁·史密斯。</p>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://www.voase.cn/2025/03/2025-03-08-%5BAsk-a-Teacher%5D-Beach%2C-Coast%2C-Shore.html">https://www.voase.cn/2025/03/2025-03-08-%5BAsk-a-Teacher%5D-Beach%2C-Coast%2C-Shore.html</a>
+    </p>
+    <p class="source">
+      Transcript (字幕):
+      <a href="../transcripts/beach-coast-shore.vtt">VTT</a> ·
+      <a href="../transcripts/beach-coast-shore.srt">SRT</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    // Split each English line into per-word spans for word-level highlight.
+    // Word timing is interpolated evenly within each sentence's time span
+    // (sentence start -> next sentence start). VOA Special English is spoken
+    // slowly and evenly, so this tracks the audio closely enough to read along.
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    var wordStarts = []; // wordStarts[i] = array of start times for sentence i's words
+    sentences.forEach(function (el, i) {
+      var enP = el.querySelector('.en');
+      var timeTag = enP.querySelector('.time-tag');
+      var timeTagHTML = timeTag ? timeTag.outerHTML : '';
+      var text = enP.textContent;
+      if (timeTag) text = text.replace(timeTag.textContent, '');
+      var words = text.trim().split(/\s+/).filter(Boolean);
+      enP.innerHTML = timeTagHTML + words.map(function (w) {
+        return '<span class="word">' + escapeHtml(w) + '</span>';
+      }).join(' ');
+      var wordEls = Array.prototype.slice.call(enP.querySelectorAll('.word'));
+      el._wordEls = wordEls;
+      wordStarts.push([]);
+    });
+
+    function recomputeWordTimings() {
+      var n = starts.length;
+      for (var i = 0; i < n; i++) {
+        var begin = starts[i];
+        var end = (i + 1 < n) ? starts[i + 1] : (player.duration ? player.duration : begin + el_word_count(i) * 0.5);
+        var wc = sentences[i]._wordEls.length;
+        var step = wc > 1 ? (end - begin) / wc : (end - begin);
+        var arr = [];
+        for (var k = 0; k < wc; k++) {
+          arr.push(begin + k * step);
+        }
+        wordStarts[i] = arr;
+      }
+    }
+    function el_word_count(i) { return sentences[i]._wordEls.length; }
+
+    var activeWord = null; // {s:i, w:k}
+    function clearWords() {
+      if (activeWord) {
+        var prev = sentences[activeWord.s]._wordEls[activeWord.w];
+        if (prev) prev.classList.remove('active');
+        activeWord = null;
+      }
+    }
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    function currentWordIndex(si, t) {
+      var arr = wordStarts[si] || [];
+      var idx = -1;
+      for (var k = 0; k < arr.length; k++) {
+        if (arr[k] <= t + 0.15) idx = k;
+        else break;
+      }
+      return idx;
+    }
+
+    function update(t) {
+      var si = currentSentenceIndex(t);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        clearWords();
+        lastSentence = si;
+      }
+      var wi = currentWordIndex(si, t);
+      if (wi >= 0) {
+        if (!activeWord || activeWord.s !== si || activeWord.w !== wi) {
+          clearWords();
+          var el = sentences[si]._wordEls[wi];
+          if (el) el.classList.add('active');
+          activeWord = { s: si, w: wi };
+        }
+      }
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        clearWords();
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('loadedmetadata', function () {
+      recomputeWordTimings();
+    });
+    player.addEventListener('timeupdate', function () {
+      if (!wordStarts[0] || !wordStarts[0].length) recomputeWordTimings();
+      update(player.currentTime);
+    });
+  })();
+</script>
+</body>
+</html>

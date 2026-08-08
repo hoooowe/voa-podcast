@@ -20,3 +20,8 @@ translation:
 
 audio:
   storage: "github_pages"
+
+copyright:
+  # When false (default), third-party-sourced articles (AP/Reuters/AFP) are
+  # processed with a warning instead of being rejected. Personal study use only.
+  strict: false

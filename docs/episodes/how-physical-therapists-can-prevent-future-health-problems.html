@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>How Physical Therapists Can Prevent Future Health Problems - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .word {
+    border-radius: 3px;
+    transition: background 0.08s, color 0.08s;
+  }
+  .word.active {
+    background: var(--active-border);
+    color: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .word.active { color: #fff; }
+  }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>How Physical Therapists Can Prevent Future Health Problems</h1>
+  <p class="meta">
+    Unknown date · Health and Lifestyle
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/006-how-physical-therapists-can-prevent-future-health-problems.mp3"></audio>
+  </div>
+
+  <section class="bilingual">
+    <h2>English &amp; 中文（点击句子跳转音频）</h2>
+    <p class="hint">Click any sentence to jump to that point in the audio. The current sentence highlights as it plays.</p>
+    <ul class="sentence-list">
+      <li class="sentence" data-start="0.0">
+        <p class="en"><span class="time-tag">0:00</span>Many of us might only seek out physical therapists if we are recovering from accidental injuries or surgery.</p>
+        <p class="zh">我们很多人可能只有在从意外受伤或手术中恢复时才会寻求物理治疗师。</p>
+      </li>
+      <li class="sentence" data-start="11.27">
+        <p class="en"><span class="time-tag">0:11</span>However, medical experts say these specialists can also help prevent many health problems if they are seen on a regular basis.</p>
+        <p class="zh">然而，医学专家表示，如果定期就诊，这些专家也能帮助预防许多健康问题。</p>
+      </li>
+      <li class="sentence" data-start="23.83">
+        <p class="en"><span class="time-tag">0:24</span>One leader in the industry, Sharon Dunn, even calls physical therapists "the best-kept secret in health care."</p>
+        <p class="zh">该行业的一位领导者Sharon Dunn甚至称物理治疗师是“医疗保健领域最保守的秘密”。</p>
+      </li>
+      <li class="sentence" data-start="33.92">
+        <p class="en"><span class="time-tag">0:34</span>Dunn is the past president of the American Physical Therapy Association (APTA).</p>
+        <p class="zh">Dunn是美国物理治疗协会（APTA）的前任主席。</p>
+      </li>
+      <li class="sentence" data-start="42.39">
+        <p class="en"><span class="time-tag">0:42</span>She recently told The Associated Press she thinks people need to look at physical therapists in a new way - as health practitioners who can help identify possible medical issues before they appear.</p>
+        <p class="zh">她最近告诉美联社，她认为人们需要以新的眼光看待物理治疗师——作为能够帮助在疾病出现前识别潜在健康问题的医疗从业者。</p>
+      </li>
+      <li class="sentence" data-start="60.61">
+        <p class="en"><span class="time-tag">1:01</span>Other health experts share this opinion.</p>
+        <p class="zh">其他健康专家也持相同观点。</p>
+      </li>
+      <li class="sentence" data-start="64.1">
+        <p class="en"><span class="time-tag">1:04</span>They include Roger Herr, the current president of the APTA, and Gammon Earhart of Washington University in St. Louis.</p>
+        <p class="zh">其中包括APTA现任主席Roger Herr和圣路易斯华盛顿大学的Gammon Earhart。</p>
+      </li>
+      <li class="sentence" data-start="76.87">
+        <p class="en"><span class="time-tag">1:17</span>They both shared Dunn's prevention message in separate discussions with the AP.</p>
+        <p class="zh">两人在与美联社的单独讨论中都分享了Dunn的预防理念。</p>
+      </li>
+      <li class="sentence" data-start="84.01">
+        <p class="en"><span class="time-tag">1:24</span>Earhart urges people to think about physical therapists just as they do dentists.</p>
+        <p class="zh">Earhart敦促人们像对待牙医一样看待物理治疗师。</p>
+      </li>
+      <li class="sentence" data-start="90.9">
+        <p class="en"><span class="time-tag">1:31</span>"Even if you're not having any problem, you go in and have everything checked out."</p>
+        <p class="zh">“即使你没有任何问题，也要去检查一下所有方面。”</p>
+      </li>
+      <li class="sentence" data-start="97.29">
+        <p class="en"><span class="time-tag">1:37</span>She noted that such examinations could help find and deal with problems early.</p>
+        <p class="zh">她指出，这样的检查有助于及早发现和处理问题。</p>
+      </li>
+      <li class="sentence" data-start="104.74">
+        <p class="en"><span class="time-tag">1:45</span>For example, an exam could include a patient's health history and current health - things like physical activity, sleep, nutrition, and so on.</p>
+        <p class="zh">例如，检查可以包括患者的健康史和当前健康状况，如身体活动、睡眠、营养等。</p>
+      </li>
+      <li class="sentence" data-start="117.73">
+        <p class="en"><span class="time-tag">1:58</span>This could be followed by a look at how a person is moving.</p>
+        <p class="zh">随后可以观察一个人的运动方式。</p>
+      </li>
+      <li class="sentence" data-start="122.25">
+        <p class="en"><span class="time-tag">2:02</span>Exams might uncover things like postural issues or unusual body movements.</p>
+        <p class="zh">检查可能会发现诸如姿势问题或异常身体动作等问题。</p>
+      </li>
+      <li class="sentence" data-start="130.09">
+        <p class="en"><span class="time-tag">2:10</span>Herr is a big supporter of yearly wellness visits.</p>
+        <p class="zh">Herr是年度健康检查的坚定支持者。</p>
+      </li>
+      <li class="sentence" data-start="136.25">
+        <p class="en"><span class="time-tag">2:16</span>He told the AP he believes physical therapists can be helpful for all kinds of people - the young, athletes, or anyone who wants to be as "independent as possible."</p>
+        <p class="zh">他告诉美联社，他相信物理治疗师对各类人群都有帮助——年轻人、运动员，或者任何希望“尽可能独立”的人。</p>
+      </li>
+      <li class="sentence" data-start="150.51">
+        <p class="en"><span class="time-tag">2:31</span>In the United States, you can now visit a physical therapist in all 50 states without needing permission from a doctor or surgeon.</p>
+        <p class="zh">在美国，你现在可以在所有50个州直接看物理治疗师，无需医生或外科医生的许可。</p>
+      </li>
+      <li class="sentence" data-start="161.95">
+        <p class="en"><span class="time-tag">2:42</span>However, a yearly exam might not be covered by a person's health insurance.</p>
+        <p class="zh">然而，年度检查可能不在个人的医疗保险覆盖范围内。</p>
+      </li>
+      <li class="sentence" data-start="169.38">
+        <p class="en"><span class="time-tag">2:49</span>This could prevent some from seeking out care.</p>
+        <p class="zh">这可能会阻止一些人寻求护理。</p>
+      </li>
+      <li class="sentence" data-start="174.05">
+        <p class="en"><span class="time-tag">2:54</span>Earhart estimated such a visit in areas across the U.S. Midwest might cost around $150.</p>
+        <p class="zh">Earhart估计，在美国中西部地区的这样一次就诊费用大约为150美元。</p>
+      </li>
+      <li class="sentence" data-start="185.17">
+        <p class="en"><span class="time-tag">3:05</span>Herr suggested a cost of $200-$300 in more costly areas.</p>
+        <p class="zh">Herr建议在费用更高的地区，费用为200-300美元。</p>
+      </li>
+      <li class="sentence" data-start="193.38">
+        <p class="en"><span class="time-tag">3:13</span>But both experts said that in the long run, such exams might save money and can add healthy years.</p>
+        <p class="zh">但两位专家都表示，从长远来看，这样的检查可能节省费用，并增加健康的寿命。</p>
+      </li>
+      <li class="sentence" data-start="203.09">
+        <p class="en"><span class="time-tag">3:23</span>"I think if people understood more that the way they move might be setting them up for a problem down the line, they'd be much more inclined to see a physical therapist," Earhart said.</p>
+        <p class="zh">Earhart说：“我认为如果人们更了解他们的运动方式可能会在将来导致问题，他们会更愿意去看物理治疗师。”</p>
+      </li>
+      <li class="sentence" data-start="219.13">
+        <p class="en"><span class="time-tag">3:39</span>We are all built differently.</p>
+        <p class="zh">我们的身体构造各不相同。</p>
+      </li>
+      <li class="sentence" data-start="221.89">
+        <p class="en"><span class="time-tag">3:42</span>So, it might be useful to examine children early to see what sports or activities might be good for them.</p>
+        <p class="zh">因此，及早检查孩子，看看哪些运动或活动可能适合他们，可能会很有用。</p>
+      </li>
+      <li class="sentence" data-start="229.54">
+        <p class="en"><span class="time-tag">3:50</span>Physical therapists can carry out such early exams.</p>
+        <p class="zh">物理治疗师可以进行这样的早期检查。</p>
+      </li>
+      <li class="sentence" data-start="233.28">
+        <p class="en"><span class="time-tag">3:53</span>Earhart said, "If we screened kids as they were choosing sports and said this sport is probably not the right kind of stress for the way you are put together, it could save a lot pain and problems down the line."</p>
+        <p class="zh">Earhart说：“如果我们在孩子选择运动时进行筛查，并告诉他们这项运动可能不适合他们的身体构造，这可以避免将来很多痛苦和问题。”</p>
+      </li>
+      <li class="sentence" data-start="249.28">
+        <p class="en"><span class="time-tag">4:09</span>She added about children, "Maybe they don't have the hips for ballet."</p>
+        <p class="zh">她补充说关于孩子：“也许他们的髋部不适合跳芭蕾。”</p>
+      </li>
+      <li class="sentence" data-start="254.31">
+        <p class="en"><span class="time-tag">4:14</span>Distance runners could also think this way.</p>
+        <p class="zh">长跑运动员也可以这样考虑。</p>
+      </li>
+      <li class="sentence" data-start="258.32">
+        <p class="en"><span class="time-tag">4:18</span>Some are built to avoid injuries despite running many kilometers while others are not.</p>
+        <p class="zh">有些人天生就能避免受伤，尽管跑了很多公里，而有些人则不然。</p>
+      </li>
+      <li class="sentence" data-start="264.96">
+        <p class="en"><span class="time-tag">4:25</span>Exams by physical therapists could help identify future problems.</p>
+        <p class="zh">物理治疗师的检查有助于识别未来的问题。</p>
+      </li>
+      <li class="sentence" data-start="270.63">
+        <p class="en"><span class="time-tag">4:31</span>Another area where physical therapists can help is with fall prevention.</p>
+        <p class="zh">物理治疗师能提供帮助的另一个领域是预防跌倒。</p>
+      </li>
+      <li class="sentence" data-start="278.27">
+        <p class="en"><span class="time-tag">4:38</span>Falling - and the fear of falling - can be major issues, especially for the aging population.</p>
+        <p class="zh">跌倒——以及对跌倒的恐惧——可能是重大问题，尤其是对老年人群。</p>
+      </li>
+      <li class="sentence" data-start="287.61">
+        <p class="en"><span class="time-tag">4:48</span>"You want to show people they can get back up if they fall," Herr said.</p>
+        <p class="zh">Herr说：“你想让人们知道，如果他们摔倒了，他们还能站起来。”</p>
+      </li>
+      <li class="sentence" data-start="293.78">
+        <p class="en"><span class="time-tag">4:54</span>"And once they know they can do it, it gives them confidence and it can help reduce the fear of falling."</p>
+        <p class="zh">“一旦他们知道自己能做到，这就会给他们信心，并有助于减少对跌倒的恐惧。”</p>
+      </li>
+      <li class="sentence" data-start="303.39">
+        <p class="en"><span class="time-tag">5:03</span>He added, "One of the risks of falling is that people don't do anything, so you don't move and therefore you become more out of shape..."</p>
+        <p class="zh">他补充道：“跌倒的风险之一是人们什么都不做，所以你不运动，因此你变得更加虚弱……”</p>
+      </li>
+      <li class="sentence" data-start="315.02">
+        <p class="en"><span class="time-tag">5:15</span>Herr said one example could be to introduce exercises involving "floor to stand" movements.</p>
+        <p class="zh">Herr说，一个例子可以是引入涉及“从地面站立”的动作练习。</p>
+      </li>
+      <li class="sentence" data-start="323.62">
+        <p class="en"><span class="time-tag">5:24</span>These can help improve flexibility, strength, balance, coordination, and planning.</p>
+        <p class="zh">这些有助于提高柔韧性、力量、平衡、协调和规划能力。</p>
+      </li>
+      <li class="sentence" data-start="331.14">
+        <p class="en"><span class="time-tag">5:31</span>"It sounds simple getting up from a lying position on the floor to stand," Herr said.</p>
+        <p class="zh">Herr说：“从躺在地板上到站起来听起来很简单。”</p>
+      </li>
+      <li class="sentence" data-start="338.6">
+        <p class="en"><span class="time-tag">5:39</span>"But it's a great exercise for all age groups."</p>
+        <p class="zh">但这对所有年龄段的人来说都是一项极好的锻炼。</p>
+      </li>
+      <li class="sentence" data-start="343.45">
+        <p class="en"><span class="time-tag">5:43</span>Earhart estimated about half of physical therapy patients seek help to deal with issues related to being overweight.</p>
+        <p class="zh">埃尔哈特估计，大约一半的物理治疗患者寻求帮助以应对与超重相关的问题。</p>
+      </li>
+      <li class="sentence" data-start="353.26">
+        <p class="en"><span class="time-tag">5:53</span>"The more weight somebody is carrying the higher the loads are on their joints," she said.</p>
+        <p class="zh">她说：“一个人体重越重，关节承受的负荷就越大。”</p>
+      </li>
+      <li class="sentence" data-start="361.19">
+        <p class="en"><span class="time-tag">6:01</span>Herr said he had watched extremely overweight patients successfully lose large amounts of weight.</p>
+        <p class="zh">赫尔说，他目睹了极度超重的患者成功减掉了大量体重。</p>
+      </li>
+      <li class="sentence" data-start="368.97">
+        <p class="en"><span class="time-tag">6:09</span>He noted that some of these individuals are motivated for a specific reason.</p>
+        <p class="zh">他指出，其中一些人是因为某个特定原因而受到激励。</p>
+      </li>
+      <li class="sentence" data-start="376.21">
+        <p class="en"><span class="time-tag">6:16</span>But for others, it is not always that clear and easy.</p>
+        <p class="zh">但对其他人来说，事情并不总是那么清楚和容易。</p>
+      </li>
+      <li class="sentence" data-start="381.06">
+        <p class="en"><span class="time-tag">6:21</span>"I have seen people change based on a milestone, like having a kid and they really want to be a good parent," Herr said.</p>
+        <p class="zh">赫尔说：“我见过人们因为某个里程碑而改变，比如有了孩子，他们真的很想成为一个好父母。”</p>
+      </li>
+      <li class="sentence" data-start="391.08">
+        <p class="en"><span class="time-tag">6:31</span>"They want to be a fit parent, and the same thing with a grandparent. So that motivates people to engage because of a lifestyle change."</p>
+        <p class="zh">他们想成为健康的父母，祖父母也是如此。因此，生活方式的改变会激励人们参与其中。</p>
+      </li>
+      <li class="sentence" data-start="403.67">
+        <p class="en"><span class="time-tag">6:44</span>I'm John Russell. And I'm Jill Robbins.</p>
+        <p class="zh">我是约翰·拉塞尔。我是吉尔·罗宾斯。</p>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://www.voase.cn/2025/03/2025-03-11-%5BHealth-and-Lifestyle%5D-How-Physical-Therapists-Can-Prevent-Future-Health-Problems.html">https://www.voase.cn/2025/03/2025-03-11-%5BHealth-and-Lifestyle%5D-How-Physical-Therapists-Can-Prevent-Future-Health-Problems.html</a>
+    </p>
+    <p class="source">
+      Transcript (字幕):
+      <a href="../transcripts/how-physical-therapists-can-prevent-future-health-problems.vtt">VTT</a> ·
+      <a href="../transcripts/how-physical-therapists-can-prevent-future-health-problems.srt">SRT</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    // Split each English line into per-word spans for word-level highlight.
+    // Word timing is interpolated evenly within each sentence's time span
+    // (sentence start -> next sentence start). VOA Special English is spoken
+    // slowly and evenly, so this tracks the audio closely enough to read along.
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    var wordStarts = []; // wordStarts[i] = array of start times for sentence i's words
+    sentences.forEach(function (el, i) {
+      var enP = el.querySelector('.en');
+      var timeTag = enP.querySelector('.time-tag');
+      var timeTagHTML = timeTag ? timeTag.outerHTML : '';
+      var text = enP.textContent;
+      if (timeTag) text = text.replace(timeTag.textContent, '');
+      var words = text.trim().split(/\s+/).filter(Boolean);
+      enP.innerHTML = timeTagHTML + words.map(function (w) {
+        return '<span class="word">' + escapeHtml(w) + '</span>';
+      }).join(' ');
+      var wordEls = Array.prototype.slice.call(enP.querySelectorAll('.word'));
+      el._wordEls = wordEls;
+      wordStarts.push([]);
+    });
+
+    function recomputeWordTimings() {
+      var n = starts.length;
+      for (var i = 0; i < n; i++) {
+        var begin = starts[i];
+        var end = (i + 1 < n) ? starts[i + 1] : (player.duration ? player.duration : begin + el_word_count(i) * 0.5);
+        var wc = sentences[i]._wordEls.length;
+        var step = wc > 1 ? (end - begin) / wc : (end - begin);
+        var arr = [];
+        for (var k = 0; k < wc; k++) {
+          arr.push(begin + k * step);
+        }
+        wordStarts[i] = arr;
+      }
+    }
+    function el_word_count(i) { return sentences[i]._wordEls.length; }
+
+    var activeWord = null; // {s:i, w:k}
+    function clearWords() {
+      if (activeWord) {
+        var prev = sentences[activeWord.s]._wordEls[activeWord.w];
+        if (prev) prev.classList.remove('active');
+        activeWord = null;
+      }
+    }
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    function currentWordIndex(si, t) {
+      var arr = wordStarts[si] || [];
+      var idx = -1;
+      for (var k = 0; k < arr.length; k++) {
+        if (arr[k] <= t + 0.15) idx = k;
+        else break;
+      }
+      return idx;
+    }
+
+    function update(t) {
+      var si = currentSentenceIndex(t);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        clearWords();
+        lastSentence = si;
+      }
+      var wi = currentWordIndex(si, t);
+      if (wi >= 0) {
+        if (!activeWord || activeWord.s !== si || activeWord.w !== wi) {
+          clearWords();
+          var el = sentences[si]._wordEls[wi];
+          if (el) el.classList.add('active');
+          activeWord = { s: si, w: wi };
+        }
+      }
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        clearWords();
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('loadedmetadata', function () {
+      recomputeWordTimings();
+    });
+    player.addEventListener('timeupdate', function () {
+      if (!wordStarts[0] || !wordStarts[0].length) recomputeWordTimings();
+      update(player.currentTime);
+    });
+  })();
+</script>
+</body>
+</html>

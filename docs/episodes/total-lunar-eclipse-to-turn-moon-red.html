@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>Total Lunar Eclipse to Turn Moon Red - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .word {
+    border-radius: 3px;
+    transition: background 0.08s, color 0.08s;
+  }
+  .word.active {
+    background: var(--active-border);
+    color: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .word.active { color: #fff; }
+  }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>Total Lunar Eclipse to Turn Moon Red</h1>
+  <p class="meta">
+    Mar 12, 2025 · Science and Technology
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/004-total-lunar-eclipse-to-turn-moon-red.mp3"></audio>
+  </div>
+
+  <section class="bilingual">
+    <h2>English &amp; 中文（点击句子跳转音频）</h2>
+    <p class="hint">Click any sentence to jump to that point in the audio. The current sentence highlights as it plays.</p>
+    <ul class="sentence-list">
+      <li class="sentence" data-start="0.0">
+        <p class="en"><span class="time-tag">0:00</span>A total lunar eclipse is about to make the moon appear a reddish color across the Western Hemisphere.</p>
+        <p class="zh">一场月全食即将使西半球的月亮呈现红色。</p>
+      </li>
+      <li class="sentence" data-start="10.69">
+        <p class="en"><span class="time-tag">0:11</span>The event will happen Thursday night into Friday morning.</p>
+        <p class="zh">这一事件将在周四晚至周五早上发生。</p>
+      </li>
+      <li class="sentence" data-start="17.7">
+        <p class="en"><span class="time-tag">0:18</span>The best places to see the eclipse will be in North America and South America.</p>
+        <p class="zh">观赏月食的最佳地点将是北美洲和南美洲。</p>
+      </li>
+      <li class="sentence" data-start="27.58">
+        <p class="en"><span class="time-tag">0:28</span>Parts of Africa and Europe may also get brief views.</p>
+        <p class="zh">非洲和欧洲部分地区也可能短暂看到。</p>
+      </li>
+      <li class="sentence" data-start="33.83">
+        <p class="en"><span class="time-tag">0:34</span>A lunar eclipse happens when the sun, Earth, and moon line up just right, with Earth positioned between the sun and moon.</p>
+        <p class="zh">当太阳、地球和月球完美排列，地球位于太阳和月球之间时，就会发生月食。</p>
+      </li>
+      <li class="sentence" data-start="48.89">
+        <p class="en"><span class="time-tag">0:49</span>This causes the Earth to create a shadow on the moon.</p>
+        <p class="zh">这导致地球在月球上投下阴影。</p>
+      </li>
+      <li class="sentence" data-start="54.59">
+        <p class="en"><span class="time-tag">0:55</span>In a total lunar eclipse, the Earth's shadow covers all of the moon.</p>
+        <p class="zh">在月全食中，地球的阴影覆盖了整个月球。</p>
+      </li>
+      <li class="sentence" data-start="61.73">
+        <p class="en"><span class="time-tag">1:02</span>Another kind of eclipse is a solar eclipse.</p>
+        <p class="zh">另一种食是日食。</p>
+      </li>
+      <li class="sentence" data-start="66.68">
+        <p class="en"><span class="time-tag">1:07</span>In a solar eclipse, the moon gets in a position where it blocks light from the sun, causing a partial or full shadow on Earth.</p>
+        <p class="zh">在日食中，月球处于阻挡太阳光的位置，导致地球出现部分或全部阴影。</p>
+      </li>
+      <li class="sentence" data-start="81.16">
+        <p class="en"><span class="time-tag">1:21</span>A total lunar eclipse can also be called a blood moon.</p>
+        <p class="zh">月全食也可以被称为血月。</p>
+      </li>
+      <li class="sentence" data-start="87.54">
+        <p class="en"><span class="time-tag">1:28</span>It makes the moon appear reddish-orange, similar to the element copper.</p>
+        <p class="zh">它使月亮呈现红橙色，类似于铜元素。</p>
+      </li>
+      <li class="sentence" data-start="95.11">
+        <p class="en"><span class="time-tag">1:35</span>The color comes from small amounts of sunlight passing through the Earth's atmosphere.</p>
+        <p class="zh">这种颜色来自于少量阳光穿过地球大气层。</p>
+      </li>
+      <li class="sentence" data-start="103.4">
+        <p class="en"><span class="time-tag">1:43</span>The American space agency NASA says lunar and solar eclipses happen between four and seven times a year.</p>
+        <p class="zh">美国航天局NASA表示，月食和日食每年发生四到七次。</p>
+      </li>
+      <li class="sentence" data-start="116.25">
+        <p class="en"><span class="time-tag">1:56</span>The last total lunar eclipse was in 2022.</p>
+        <p class="zh">上一次月全食发生在2022年。</p>
+      </li>
+      <li class="sentence" data-start="121.19">
+        <p class="en"><span class="time-tag">2:01</span>This one will be visible for about one hour starting Friday morning at 2:26 a.m. Eastern Daylight Time (EDT).</p>
+        <p class="zh">这次月全食将在周五凌晨2点26分（美国东部夏令时间）开始，持续约一小时。</p>
+      </li>
+      <li class="sentence" data-start="135.52">
+        <p class="en"><span class="time-tag">2:16</span>The time when the Earth's shadow covers all of the moon will be close to 3 a.m. EDT.</p>
+        <p class="zh">地球阴影完全覆盖月球的时刻将接近美国东部夏令时间凌晨3点。</p>
+      </li>
+      <li class="sentence" data-start="145.26">
+        <p class="en"><span class="time-tag">2:25</span>"As long as the sky is clear, you should be able to see it," Shannon Schmoll told the Associated Press.</p>
+        <p class="zh">“只要天空晴朗，你应该能看到它，”香农·施莫尔告诉美联社。</p>
+      </li>
+      <li class="sentence" data-start="156.29">
+        <p class="en"><span class="time-tag">2:36</span>She is the director of Abrams Planetarium at Michigan State University.</p>
+        <p class="zh">她是密歇根州立大学艾布拉姆斯天文馆的馆长。</p>
+      </li>
+      <li class="sentence" data-start="163.35">
+        <p class="en"><span class="time-tag">2:43</span>No special equipment will be needed to see the reddish moon.</p>
+        <p class="zh">观看红色的月亮不需要特殊设备。</p>
+      </li>
+      <li class="sentence" data-start="169.28">
+        <p class="en"><span class="time-tag">2:49</span>The total lunar eclipse may be harder to see in Europe and Africa because the moon will be close to setting.</p>
+        <p class="zh">由于月亮即将落下，欧洲和非洲可能更难看到月全食。</p>
+      </li>
+      <li class="sentence" data-start="182.41">
+        <p class="en"><span class="time-tag">3:02</span>Michael Faison is an astronomy expert from Yale University.</p>
+        <p class="zh">迈克尔·费森是耶鲁大学的天文学专家。</p>
+      </li>
+      <li class="sentence" data-start="188.59">
+        <p class="en"><span class="time-tag">3:09</span>He told the AP, "This is really an eclipse for North and South America."</p>
+        <p class="zh">他告诉美联社：“这确实是北美洲和南美洲的月食。”</p>
+      </li>
+      <li class="sentence" data-start="197.35">
+        <p class="en"><span class="time-tag">3:17</span>Zoe Ortiz is a historian with the University of North Texas.</p>
+        <p class="zh">佐伊·奥尔蒂斯是北德克萨斯大学的历史学家。</p>
+      </li>
+      <li class="sentence" data-start="204.42">
+        <p class="en"><span class="time-tag">3:24</span>She noted that different civilizations have observed lunar eclipses for thousands of years.</p>
+        <p class="zh">她指出，不同文明已经观测月食数千年了。</p>
+      </li>
+      <li class="sentence" data-start="214.12">
+        <p class="en"><span class="time-tag">3:34</span>This helped ancient people learn things about the behaviors of the sun, moon, and stars.</p>
+        <p class="zh">这帮助古人了解了太阳、月球和恒星的行为。</p>
+      </li>
+      <li class="sentence" data-start="223.39">
+        <p class="en"><span class="time-tag">3:43</span>"They were looking at the night sky and they had a much brighter vision than we do today," Ortiz said.</p>
+        <p class="zh">“他们仰望夜空，看到的景象比我们今天要明亮得多，”奥尔蒂斯说。</p>
+      </li>
+      <li class="sentence" data-start="233.25">
+        <p class="en"><span class="time-tag">3:53</span>The ancient Greek thinker and writer Aristotle observed that Earths' shadow on the moon during a lunar eclipse was always curved.</p>
+        <p class="zh">古希腊思想家、作家亚里士多德观察到，月食期间地球在月球上的阴影总是弯曲的。</p>
+      </li>
+      <li class="sentence" data-start="246.87">
+        <p class="en"><span class="time-tag">4:07</span>This fact supported proof that the Earth is round.</p>
+        <p class="zh">这一事实支持了地球是球形的证据。</p>
+      </li>
+      <li class="sentence" data-start="254.0">
+        <p class="en"><span class="time-tag">4:14</span>The next total lunar eclipse will appear in the sky September 7, across parts of Asia, Africa, Australia and Europe.</p>
+        <p class="zh">下一次月全食将于9月7日出现在天空，覆盖亚洲、非洲、澳大利亚和欧洲部分地区。</p>
+      </li>
+      <li class="sentence" data-start="267.02">
+        <p class="en"><span class="time-tag">4:27</span>Parts of the Americas will get the next chance to see one in March 2026.</p>
+        <p class="zh">美洲部分地区将在2026年3月获得下一次观测机会。</p>
+      </li>
+      <li class="sentence" data-start="275.46">
+        <p class="en"><span class="time-tag">4:35</span>I'm Caty Weaver.</p>
+        <p class="zh">我是凯蒂·韦弗。</p>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://www.voase.cn/2025/03/2025-03-12-%5BScience-and-Technology%5D-Total-Lunar-Eclipse-to-Turn-Moon-Red.html">https://www.voase.cn/2025/03/2025-03-12-%5BScience-and-Technology%5D-Total-Lunar-Eclipse-to-Turn-Moon-Red.html</a>
+    </p>
+    <p class="source">
+      Transcript (字幕):
+      <a href="../transcripts/total-lunar-eclipse-to-turn-moon-red.vtt">VTT</a> ·
+      <a href="../transcripts/total-lunar-eclipse-to-turn-moon-red.srt">SRT</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    // Split each English line into per-word spans for word-level highlight.
+    // Word timing is interpolated evenly within each sentence's time span
+    // (sentence start -> next sentence start). VOA Special English is spoken
+    // slowly and evenly, so this tracks the audio closely enough to read along.
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    var wordStarts = []; // wordStarts[i] = array of start times for sentence i's words
+    sentences.forEach(function (el, i) {
+      var enP = el.querySelector('.en');
+      var timeTag = enP.querySelector('.time-tag');
+      var timeTagHTML = timeTag ? timeTag.outerHTML : '';
+      var text = enP.textContent;
+      if (timeTag) text = text.replace(timeTag.textContent, '');
+      var words = text.trim().split(/\s+/).filter(Boolean);
+      enP.innerHTML = timeTagHTML + words.map(function (w) {
+        return '<span class="word">' + escapeHtml(w) + '</span>';
+      }).join(' ');
+      var wordEls = Array.prototype.slice.call(enP.querySelectorAll('.word'));
+      el._wordEls = wordEls;
+      wordStarts.push([]);
+    });
+
+    function recomputeWordTimings() {
+      var n = starts.length;
+      for (var i = 0; i < n; i++) {
+        var begin = starts[i];
+        var end = (i + 1 < n) ? starts[i + 1] : (player.duration ? player.duration : begin + el_word_count(i) * 0.5);
+        var wc = sentences[i]._wordEls.length;
+        var step = wc > 1 ? (end - begin) / wc : (end - begin);
+        var arr = [];
+        for (var k = 0; k < wc; k++) {
+          arr.push(begin + k * step);
+        }
+        wordStarts[i] = arr;
+      }
+    }
+    function el_word_count(i) { return sentences[i]._wordEls.length; }
+
+    var activeWord = null; // {s:i, w:k}
+    function clearWords() {
+      if (activeWord) {
+        var prev = sentences[activeWord.s]._wordEls[activeWord.w];
+        if (prev) prev.classList.remove('active');
+        activeWord = null;
+      }
+    }
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    function currentWordIndex(si, t) {
+      var arr = wordStarts[si] || [];
+      var idx = -1;
+      for (var k = 0; k < arr.length; k++) {
+        if (arr[k] <= t + 0.15) idx = k;
+        else break;
+      }
+      return idx;
+    }
+
+    function update(t) {
+      var si = currentSentenceIndex(t);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        clearWords();
+        lastSentence = si;
+      }
+      var wi = currentWordIndex(si, t);
+      if (wi >= 0) {
+        if (!activeWord || activeWord.s !== si || activeWord.w !== wi) {
+          clearWords();
+          var el = sentences[si]._wordEls[wi];
+          if (el) el.classList.add('active');
+          activeWord = { s: si, w: wi };
+        }
+      }
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        clearWords();
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('loadedmetadata', function () {
+      recomputeWordTimings();
+    });
+    player.addEventListener('timeupdate', function () {
+      if (!wordStarts[0] || !wordStarts[0].length) recomputeWordTimings();
+      update(player.currentTime);
+    });
+  })();
+</script>
+</body>
+</html>

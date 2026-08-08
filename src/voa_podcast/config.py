@@ -50,6 +50,7 @@ class AppConfig:
     podcast: PodcastConfig
     llm: LLMConfig
     project_root: Path = PROJECT_ROOT
+    copyright_strict: bool = False
 
     @property
     def docs_dir(self) -> Path:
@@ -121,4 +122,12 @@ def load_config(config_path: Path | None = None) -> AppConfig:
         max_chars_per_request=max_chars,
     )
 
-    return AppConfig(site=site, podcast=podcast, llm=llm)
+    copyright_raw = raw.get("copyright", {})
+    copyright_strict = bool(copyright_raw.get("strict", False))
+
+    return AppConfig(
+        site=site,
+        podcast=podcast,
+        llm=llm,
+        copyright_strict=copyright_strict,
+    )

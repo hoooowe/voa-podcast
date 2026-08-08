@@ -41,6 +41,7 @@ SECTIONS: list[dict] = [
 _CATEGORY_KEYWORDS: list[tuple[str, str]] = [
     ("american stories", "American Stories"),
     ("learning english podcast", "VOA Learning English Podcast"),
+    ("ask a teacher", "Education"),
     ("science", "Science"),
     ("education", "Education"),
     ("health", "Health"),

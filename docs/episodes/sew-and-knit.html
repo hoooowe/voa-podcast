@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>Sew and Knit - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .word {
+    border-radius: 3px;
+    transition: background 0.08s, color 0.08s;
+  }
+  .word.active {
+    background: var(--active-border);
+    color: #fff;
+  }
+  @media (prefers-color-scheme: dark) {
+    .word.active { color: #fff; }
+  }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>Sew and Knit</h1>
+  <p class="meta">
+    Mar 15, 2025 · Ask a Teacher
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/007-sew-and-knit.mp3"></audio>
+  </div>
+
+  <section class="bilingual">
+    <h2>English &amp; 中文（点击句子跳转音频）</h2>
+    <p class="hint">Click any sentence to jump to that point in the audio. The current sentence highlights as it plays.</p>
+    <ul class="sentence-list">
+      <li class="sentence" data-start="0.0">
+        <p class="en"><span class="time-tag">0:00</span>This week on Ask a Teacher, we answer a question from Rohullah in Afghanistan about using the words "sew" and "knit" and related terms.</p>
+        <p class="zh">本周在《问老师》节目中，我们回答来自阿富汗的Rohullah提出的关于使用“缝”和“织”及相关词汇的问题。</p>
+      </li>
+      <li class="sentence" data-start="16.14">
+        <p class="en"><span class="time-tag">0:16</span>Dear VOA Learning English,</p>
+        <p class="zh">亲爱的VOA学英语：</p>
+      </li>
+      <li class="sentence" data-start="19.26">
+        <p class="en"><span class="time-tag">0:19</span>I am sending this email to know what the differences are between "sewing and knitting" or "sew and knit."</p>
+        <p class="zh">我发这封邮件是想知道“缝纫和编织”或“缝和织”之间的区别。</p>
+      </li>
+      <li class="sentence" data-start="29.51">
+        <p class="en"><span class="time-tag">0:30</span>Besides [that], I wanted to know what I can call a woman or a man that makes clothes.</p>
+        <p class="zh">除此之外，我还想知道可以怎么称呼做衣服的男人或女人。</p>
+      </li>
+      <li class="sentence" data-start="38.25">
+        <p class="en"><span class="time-tag">0:38</span>Thank you</p>
+        <p class="zh">谢谢。</p>
+      </li>
+      <li class="sentence" data-start="39.31">
+        <p class="en"><span class="time-tag">0:39</span>I'm happy to answer this question, Rohullah.</p>
+        <p class="zh">Rohullah，我很高兴回答这个问题。</p>
+      </li>
+      <li class="sentence" data-start="43.03">
+        <p class="en"><span class="time-tag">0:43</span>An important difference between sewing and knitting is that when we sew, we connect pieces of fabric or cloth that are already made.</p>
+        <p class="zh">缝纫和编织的一个重要区别是，当我们缝纫时，我们连接已经做好的布料或织物片。</p>
+      </li>
+      <li class="sentence" data-start="56.64">
+        <p class="en"><span class="time-tag">0:57</span>When we knit, we make the cloth itself from strings called yarn.</p>
+        <p class="zh">当我们编织时，我们用叫做纱线的线来制作布料本身。</p>
+      </li>
+      <li class="sentence" data-start="63.99">
+        <p class="en"><span class="time-tag">1:04</span>Also, the word "sewing" can describe many ways people connect or repair fabric and clothes.</p>
+        <p class="zh">此外，“缝纫”这个词可以描述人们连接或修补布料和衣服的多种方式。</p>
+      </li>
+      <li class="sentence" data-start="73.68">
+        <p class="en"><span class="time-tag">1:14</span>For example, people can sew many kinds of clothes, such as socks, shirts, dresses, hats, and gloves.</p>
+        <p class="zh">例如，人们可以缝制多种衣服，如袜子、衬衫、连衣裙、帽子和手套。</p>
+      </li>
+      <li class="sentence" data-start="86.06">
+        <p class="en"><span class="time-tag">1:26</span>People can also sew larger things, such as window coverings or tents.</p>
+        <p class="zh">人们还可以缝制更大的物品，如窗帘或帐篷。</p>
+      </li>
+      <li class="sentence" data-start="93.39">
+        <p class="en"><span class="time-tag">1:33</span>A person can sew using a sewing machine or simply by using their hands with a needle and thread.</p>
+        <p class="zh">一个人可以用缝纫机缝纫，也可以只用针线手工缝纫。</p>
+      </li>
+      <li class="sentence" data-start="103.48">
+        <p class="en"><span class="time-tag">1:43</span>Knitting does not generally require use of a machine or a needle and thread.</p>
+        <p class="zh">编织通常不需要使用机器或针线。</p>
+      </li>
+      <li class="sentence" data-start="110.94">
+        <p class="en"><span class="time-tag">1:51</span>To knit, a person uses thicker strings called yarn, along with two thin sticks called knitting needles.</p>
+        <p class="zh">编织时，人们使用较粗的线（称为纱线），以及两根细棒（称为织针）。</p>
+      </li>
+      <li class="sentence" data-start="122.22">
+        <p class="en"><span class="time-tag">2:02</span>Yarn is usually made of small, natural pieces, called fibers, such as wool or cotton.</p>
+        <p class="zh">纱线通常由细小的天然纤维制成，如羊毛或棉花。</p>
+      </li>
+      <li class="sentence" data-start="131.69">
+        <p class="en"><span class="time-tag">2:12</span>While sewing thread is often less than one millimeter thick, knitting yarn is generally two to five millimeters thick.</p>
+        <p class="zh">缝纫线通常不到一毫米粗，而编织纱线通常有两到五毫米粗。</p>
+      </li>
+      <li class="sentence" data-start="143.57">
+        <p class="en"><span class="time-tag">2:24</span>Many people who knit make clothing for cold weather, such as wool sweaters, hats, and scarves.</p>
+        <p class="zh">许多编织者制作寒冷天气穿的衣服，如羊毛衫、帽子和围巾。</p>
+      </li>
+      <li class="sentence" data-start="152.87">
+        <p class="en"><span class="time-tag">2:33</span>They may also knit blankets or other things that can be used in the home.</p>
+        <p class="zh">他们也可能编织毯子或其他家中可用的物品。</p>
+      </li>
+      <li class="sentence" data-start="160.09">
+        <p class="en"><span class="time-tag">2:40</span>More than 50 years ago, most Americans who earned money sewing clothes in a factory were women. They were called "seamstresses."</p>
+        <p class="zh">五十多年前，大多数在工厂靠缝制衣服赚钱的美国人都是女性。她们被称为“女裁缝”。</p>
+      </li>
+      <li class="sentence" data-start="173.09">
+        <p class="en"><span class="time-tag">2:53</span>Today, we sometimes call any person who sews a "sewist."</p>
+        <p class="zh">今天，我们有时称任何缝纫的人为“缝纫者”。</p>
+      </li>
+      <li class="sentence" data-start="179.66">
+        <p class="en"><span class="time-tag">2:60</span>Or we can simply say "a person who sews."</p>
+        <p class="zh">或者我们可以简单地说“一个缝纫的人”。</p>
+      </li>
+      <li class="sentence" data-start="185.01">
+        <p class="en"><span class="time-tag">3:05</span>And a person whose job is to sew or repair clothes to make them fit well is called a tailor.</p>
+        <p class="zh">而一个以缝制或修补衣服使其合身为职业的人被称为裁缝。</p>
+      </li>
+      <li class="sentence" data-start="194.4">
+        <p class="en"><span class="time-tag">3:14</span>For our readers and listeners, what are your questions about American English?</p>
+        <p class="zh">对于我们的读者和听众，你们对美国英语有什么问题吗？</p>
+      </li>
+      <li class="sentence" data-start="201.27">
+        <p class="en"><span class="time-tag">3:21</span>Do you like to knit or sew?</p>
+        <p class="zh">你喜欢编织还是缝纫？</p>
+      </li>
+      <li class="sentence" data-start="205.08">
+        <p class="en"><span class="time-tag">3:25</span>We want to hear from you! Send us an email at learningenglish@voanews.com.</p>
+        <p class="zh">我们想听到你的声音！请给我们发邮件至learningenglish@voanews.com。</p>
+      </li>
+      <li class="sentence" data-start="214.01">
+        <p class="en"><span class="time-tag">3:34</span>And please let us know where you are from, too.</p>
+        <p class="zh">也请告诉我们你来自哪里。</p>
+      </li>
+      <li class="sentence" data-start="218.56">
+        <p class="en"><span class="time-tag">3:39</span>And that's Ask a Teacher.</p>
+        <p class="zh">这就是《问老师》节目。</p>
+      </li>
+      <li class="sentence" data-start="222.84">
+        <p class="en"><span class="time-tag">3:43</span>I'm Andrew Smith.</p>
+        <p class="zh">我是安德鲁·史密斯。</p>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://www.voase.cn/2025/03/2025-03-15-%5BAsk-a-Teacher%5D-Sew-and-Knit.html">https://www.voase.cn/2025/03/2025-03-15-%5BAsk-a-Teacher%5D-Sew-and-Knit.html</a>
+    </p>
+    <p class="source">
+      Transcript (字幕):
+      <a href="../transcripts/sew-and-knit.vtt">VTT</a> ·
+      <a href="../transcripts/sew-and-knit.srt">SRT</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    // Split each English line into per-word spans for word-level highlight.
+    // Word timing is interpolated evenly within each sentence's time span
+    // (sentence start -> next sentence start). VOA Special English is spoken
+    // slowly and evenly, so this tracks the audio closely enough to read along.
+    function escapeHtml(s) {
+      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    var wordStarts = []; // wordStarts[i] = array of start times for sentence i's words
+    sentences.forEach(function (el, i) {
+      var enP = el.querySelector('.en');
+      var timeTag = enP.querySelector('.time-tag');
+      var timeTagHTML = timeTag ? timeTag.outerHTML : '';
+      var text = enP.textContent;
+      if (timeTag) text = text.replace(timeTag.textContent, '');
+      var words = text.trim().split(/\s+/).filter(Boolean);
+      enP.innerHTML = timeTagHTML + words.map(function (w) {
+        return '<span class="word">' + escapeHtml(w) + '</span>';
+      }).join(' ');
+      var wordEls = Array.prototype.slice.call(enP.querySelectorAll('.word'));
+      el._wordEls = wordEls;
+      wordStarts.push([]);
+    });
+
+    function recomputeWordTimings() {
+      var n = starts.length;
+      for (var i = 0; i < n; i++) {
+        var begin = starts[i];
+        var end = (i + 1 < n) ? starts[i + 1] : (player.duration ? player.duration : begin + el_word_count(i) * 0.5);
+        var wc = sentences[i]._wordEls.length;
+        var step = wc > 1 ? (end - begin) / wc : (end - begin);
+        var arr = [];
+        for (var k = 0; k < wc; k++) {
+          arr.push(begin + k * step);
+        }
+        wordStarts[i] = arr;
+      }
+    }
+    function el_word_count(i) { return sentences[i]._wordEls.length; }
+
+    var activeWord = null; // {s:i, w:k}
+    function clearWords() {
+      if (activeWord) {
+        var prev = sentences[activeWord.s]._wordEls[activeWord.w];
+        if (prev) prev.classList.remove('active');
+        activeWord = null;
+      }
+    }
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    function currentWordIndex(si, t) {
+      var arr = wordStarts[si] || [];
+      var idx = -1;
+      for (var k = 0; k < arr.length; k++) {
+        if (arr[k] <= t + 0.15) idx = k;
+        else break;
+      }
+      return idx;
+    }
+
+    function update(t) {
+      var si = currentSentenceIndex(t);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        clearWords();
+        lastSentence = si;
+      }
+      var wi = currentWordIndex(si, t);
+      if (wi >= 0) {
+        if (!activeWord || activeWord.s !== si || activeWord.w !== wi) {
+          clearWords();
+          var el = sentences[si]._wordEls[wi];
+          if (el) el.classList.add('active');
+          activeWord = { s: si, w: wi };
+        }
+      }
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        clearWords();
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('loadedmetadata', function () {
+      recomputeWordTimings();
+    });
+    player.addEventListener('timeupdate', function () {
+      if (!wordStarts[0] || !wordStarts[0].length) recomputeWordTimings();
+      update(player.currentTime);
+    });
+  })();
+</script>
+</body>
+</html>

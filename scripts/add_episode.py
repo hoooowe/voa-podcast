@@ -101,11 +101,16 @@ def run_pipeline(url: str, force: bool = False, update: bool = False) -> int:
     checker = CopyrightChecker()
     result = checker.check(article)
     if result.status == CopyrightStatus.THIRD_PARTY:
-        logger.error(
-            "[COPYRIGHT] Third-party content (%s). Not processing.",
+        if config.copyright_strict:
+            logger.error(
+                "[COPYRIGHT] Third-party content (%s). Not processing.",
+                result.matched_source,
+            )
+            return 1
+        logger.warning(
+            "[COPYRIGHT] Third-party content (%s). copyright.strict=false, proceeding.",
             result.matched_source,
         )
-        return 1
     if result.status == CopyrightStatus.UNKNOWN and not force:
         logger.error(
             "[COPYRIGHT] Unknown copyright source. Use --force to proceed manually."
