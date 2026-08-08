@@ -11,6 +11,8 @@ podcast:
   author: "Private English Learner"
   explicit: false
   block_public_directory: true
+  owner_email: "hoooowe@users.noreply.github.com"
+  summary: "Personal English listening practice with VOA Learning English. English audio with sentence-by-sentence Chinese translation and click-to-seek transcripts."
 
 translation:
   max_chars_per_request: 4000

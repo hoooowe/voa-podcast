@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import html
 import logging
+import shutil
+import subprocess
 from datetime import datetime, timezone
 from email.utils import format_datetime
 from pathlib import Path
@@ -22,6 +24,41 @@ logger = logging.getLogger(__name__)
 # Apple Podcasts may truncate very long descriptions; keep the inline
 # transcript below this character budget and link out for the rest.
 MAX_DESCRIPTION_CHARS = 4000
+
+
+def _probe_duration(audio_path: Path, file_size: int) -> float:
+    """Return audio duration in seconds.
+
+    Uses ffprobe when available; falls back to a 64 kbps CBR estimate (the
+    VOA Special English encoding) based on file size.
+    """
+    if audio_path.exists():
+        ffprobe = shutil.which("ffprobe")
+        if ffprobe:
+            try:
+                out = subprocess.run(
+                    [ffprobe, "-v", "error", "-show_entries", "format=duration",
+                     "-of", "default=noprint_wrappers=1:nokey=1", str(audio_path)],
+                    capture_output=True, text=True, timeout=15,
+                )
+                if out.returncode == 0 and out.stdout.strip():
+                    return float(out.stdout.strip())
+            except (subprocess.SubprocessError, ValueError) as exc:
+                logger.warning("[RSS] ffprobe failed: %s", exc)
+    # Fallback: VOA Special English MP3s are ~64 kbps CBR.
+    return round(file_size * 8 / 64000, 0) if file_size else 0.0
+
+
+def _format_duration(seconds: float) -> str:
+    """Format seconds as HH:MM:SS (or MM:SS when under an hour)."""
+    if seconds <= 0:
+        return ""
+    total = int(round(seconds))
+    h, rem = divmod(total, 3600)
+    m, s = divmod(rem, 60)
+    if h:
+        return f"{h}:{m:02d}:{s:02d}"
+    return f"{m}:{s:02d}"
 
 
 class RSSGenerator:
@@ -77,11 +114,12 @@ class RSSGenerator:
         lines.append(f"    <itunes:author>{_escape(pc.author)}</itunes:author>")
         lines.append(f"    <itunes:explicit>{explicit}</itunes:explicit>")
         lines.append("    <itunes:category text=\"Education\"/>")
-        lines.append(
-            "    <itunes:owner>"
-            f"<itunes:name>{_escape(pc.author)}</itunes:name>"
-            "</itunes:owner>"
-        )
+        if pc.summary:
+            lines.append(f"    <itunes:summary>{_escape(pc.summary)}</itunes:summary>")
+        owner_parts = [f"<itunes:name>{_escape(pc.author)}</itunes:name>"]
+        if pc.owner_email:
+            owner_parts.append(f"<itunes:email>{_escape(pc.owner_email)}</itunes:email>")
+        lines.append("    <itunes:owner>" + "".join(owner_parts) + "</itunes:owner>")
         lines.append(f"    <itunes:block>{block}</itunes:block>")
         lines.append(
             f'    <image><url>{_escape(base + "/cover.jpg")}</url>'
@@ -107,6 +145,9 @@ class RSSGenerator:
         description_html = self._build_description(ep, page_url)
         summary_text = self._build_summary_text(ep)
 
+        audio_path = cfg.docs_dir / ep.audio_file
+        duration = _format_duration(_probe_duration(audio_path, ep.audio_size))
+
         lines: list[str] = []
         lines.append("    <item>")
         lines.append(f"      <title>{_escape(ep.title)}</title>")
@@ -118,7 +159,8 @@ class RSSGenerator:
             f'length="{ep.audio_size}" type="{_attr(ep.audio_type)}"/>'
         )
         lines.append(f"      <description>{_escape(summary_text)}</description>")
-        lines.append(f"      <itunes:duration></itunes:duration>")
+        if duration:
+            lines.append(f"      <itunes:duration>{_escape(duration)}</itunes:duration>")
         lines.append(
             "      <content:encoded><![CDATA["
             + description_html

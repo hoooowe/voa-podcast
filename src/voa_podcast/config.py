@@ -40,6 +40,8 @@ class PodcastConfig:
     author: str
     explicit: bool = False
     block_public_directory: bool = True
+    owner_email: str = ""
+    summary: str = ""
 
 
 @dataclass
@@ -103,6 +105,8 @@ def load_config(config_path: Path | None = None) -> AppConfig:
         author=podcast_raw["author"],
         explicit=podcast_raw.get("explicit", False),
         block_public_directory=podcast_raw.get("block_public_directory", True),
+        owner_email=podcast_raw.get("owner_email", ""),
+        summary=podcast_raw.get("summary", ""),
     )
 
     translation_raw = raw.get("translation", {})

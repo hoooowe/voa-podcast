@@ -9,7 +9,8 @@
     <itunes:author>Private English Learner</itunes:author>
     <itunes:explicit>no</itunes:explicit>
     <itunes:category text="Education"/>
-    <itunes:owner><itunes:name>Private English Learner</itunes:name></itunes:owner>
+    <itunes:summary>Personal English listening practice with VOA Learning English. English audio with sentence-by-sentence Chinese translation and click-to-seek transcripts.</itunes:summary>
+    <itunes:owner><itunes:name>Private English Learner</itunes:name><itunes:email>hoooowe@users.noreply.github.com</itunes:email></itunes:owner>
     <itunes:block>Yes</itunes:block>
     <image><url>https://hoooowe.github.io/voa-podcast/cover.jpg</url><title>Daily English Listening</title><link>https://hoooowe.github.io/voa-podcast/</link></image>
     <item>
@@ -19,7 +20,7 @@
       <pubDate>Tue, 18 Mar 2025 00:00:00 GMT</pubDate>
       <enclosure url="https://hoooowe.github.io/voa-podcast/audio/001-wilbur-and-orville-wright-the-first-airplane.mp3" length="1066649" type="audio/mpeg"/>
       <description>VOA Learning English - Wilbur and Orville Wright: The First Airplane. Wilbur and Orville Wright are the American inventors who made a small engine-powered flying machine.  They proved that flight without the aid of gas-filled balloons was possible.  Wilbur Wright was bo... English original and Chinese translation in full notes.</description>
-      <itunes:duration></itunes:duration>
+      <itunes:duration>4:27</itunes:duration>
       <content:encoded><![CDATA[
 <h2>English &amp; 中文</h2>
 <p><strong>Wilbur and Orville Wright are the American inventors who made a small engine-powered flying machine.</strong><br/>威尔伯·莱特和奥维尔·莱特是发明了小型发动机驱动飞行器的美国发明家。</p>
