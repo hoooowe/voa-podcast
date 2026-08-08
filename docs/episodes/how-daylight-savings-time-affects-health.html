@@ -156,17 +156,6 @@
     color: var(--text-muted);
   }
   .sentence.active .zh { color: var(--text); }
-  .word {
-    border-radius: 3px;
-    transition: background 0.08s, color 0.08s;
-  }
-  .word.active {
-    background: var(--active-border);
-    color: #fff;
-  }
-  @media (prefers-color-scheme: dark) {
-    .word.active { color: #fff; }
-  }
   .time-tag {
     font-size: 12px;
     color: var(--text-muted);
@@ -414,55 +403,6 @@
       return parseFloat(el.getAttribute('data-start')) || 0;
     });
 
-    // Split each English line into per-word spans for word-level highlight.
-    // Word timing is interpolated evenly within each sentence's time span
-    // (sentence start -> next sentence start). VOA Special English is spoken
-    // slowly and evenly, so this tracks the audio closely enough to read along.
-    function escapeHtml(s) {
-      return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
-
-    var wordStarts = []; // wordStarts[i] = array of start times for sentence i's words
-    sentences.forEach(function (el, i) {
-      var enP = el.querySelector('.en');
-      var timeTag = enP.querySelector('.time-tag');
-      var timeTagHTML = timeTag ? timeTag.outerHTML : '';
-      var text = enP.textContent;
-      if (timeTag) text = text.replace(timeTag.textContent, '');
-      var words = text.trim().split(/\s+/).filter(Boolean);
-      enP.innerHTML = timeTagHTML + words.map(function (w) {
-        return '<span class="word">' + escapeHtml(w) + '</span>';
-      }).join(' ');
-      var wordEls = Array.prototype.slice.call(enP.querySelectorAll('.word'));
-      el._wordEls = wordEls;
-      wordStarts.push([]);
-    });
-
-    function recomputeWordTimings() {
-      var n = starts.length;
-      for (var i = 0; i < n; i++) {
-        var begin = starts[i];
-        var end = (i + 1 < n) ? starts[i + 1] : (player.duration ? player.duration : begin + el_word_count(i) * 0.5);
-        var wc = sentences[i]._wordEls.length;
-        var step = wc > 1 ? (end - begin) / wc : (end - begin);
-        var arr = [];
-        for (var k = 0; k < wc; k++) {
-          arr.push(begin + k * step);
-        }
-        wordStarts[i] = arr;
-      }
-    }
-    function el_word_count(i) { return sentences[i]._wordEls.length; }
-
-    var activeWord = null; // {s:i, w:k}
-    function clearWords() {
-      if (activeWord) {
-        var prev = sentences[activeWord.s]._wordEls[activeWord.w];
-        if (prev) prev.classList.remove('active');
-        activeWord = null;
-      }
-    }
-
     function setActiveSentence(index) {
       sentences.forEach(function (el, i) {
         el.classList.toggle('active', i === index);
@@ -482,34 +422,6 @@
       return idx;
     }
 
-    function currentWordIndex(si, t) {
-      var arr = wordStarts[si] || [];
-      var idx = -1;
-      for (var k = 0; k < arr.length; k++) {
-        if (arr[k] <= t + 0.15) idx = k;
-        else break;
-      }
-      return idx;
-    }
-
-    function update(t) {
-      var si = currentSentenceIndex(t);
-      if (si !== lastSentence) {
-        setActiveSentence(si);
-        clearWords();
-        lastSentence = si;
-      }
-      var wi = currentWordIndex(si, t);
-      if (wi >= 0) {
-        if (!activeWord || activeWord.s !== si || activeWord.w !== wi) {
-          clearWords();
-          var el = sentences[si]._wordEls[wi];
-          if (el) el.classList.add('active');
-          activeWord = { s: si, w: wi };
-        }
-      }
-    }
-
     var lastSentence = -1;
 
     sentences.forEach(function (el, i) {
@@ -517,17 +429,16 @@
         player.currentTime = starts[i];
         player.play().catch(function () {});
         setActiveSentence(i);
-        clearWords();
         lastSentence = i;
       });
     });
 
-    player.addEventListener('loadedmetadata', function () {
-      recomputeWordTimings();
-    });
     player.addEventListener('timeupdate', function () {
-      if (!wordStarts[0] || !wordStarts[0].length) recomputeWordTimings();
-      update(player.currentTime);
+      var si = currentSentenceIndex(player.currentTime);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        lastSentence = si;
+      }
     });
   })();
 </script>

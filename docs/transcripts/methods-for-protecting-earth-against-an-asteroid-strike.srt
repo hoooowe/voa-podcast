@@ -1,0 +1,164 @@
+1
+00:00:00,000 --> 00:00:17,700
+Astronomers following asteroid activity in space estimate there is a very small chance an object large enough to destroy a whole city could strike Earth in 2032.
+跟踪太空中小行星活动的天文学家估计，一个足以摧毁整座城市的物体在2032年撞击地球的可能性非常小。
+
+2
+00:00:17,700 --> 00:00:32,870
+But space agency officials say even if such an asteroid keeps heading on a path toward Earth, the world is now much better-equipped to defend itself against such a threat.
+但航天局官员表示，即使这样的小行星继续沿着朝向地球的路径前进，世界现在也更有能力防御此类威胁。
+
+3
+00:00:32,870 --> 00:00:48,860
+The American space agency NASA recently estimated there was a 3.1 percent chance that asteroid 2024 YR4 would hit Earth on December 22, 2032.
+美国航天局NASA最近估计，小行星2024 YR4在2032年12月22日撞击地球的可能性为3.1%。
+
+4
+00:00:48,860 --> 00:00:57,310
+That is the highest probability predicted for such a large space rock in modern times.
+这是现代对如此大的太空岩石预测的最高概率。
+
+5
+00:00:57,310 --> 00:01:05,360
+Richard Moissl is head of the European Space Agency's (ESA) planetary defense office.
+理查德·莫伊塞尔是欧洲航天局（ESA）行星防御办公室的负责人。
+
+6
+00:01:05,360 --> 00:01:17,070
+While recognizing the risk the asteroid could present, he told the French news agency AFP people should not panic over such predictions.
+在承认小行星可能带来的风险的同时，他告诉法国新闻机构法新社，人们不应因这类预测而恐慌。
+
+7
+00:01:17,070 --> 00:01:27,920
+Astronomers have noted that the more data they gather, the odds of a direct asteroid hit are expected to keep rising over time.
+天文学家指出，他们收集的数据越多，小行星直接撞击的几率预计会随时间持续上升。
+
+8
+00:01:27,920 --> 00:01:35,260
+However, scientists say at a certain point the odds will likely drop down to zero.
+然而，科学家表示，在某个节点，几率可能会降至零。
+
+9
+00:01:35,260 --> 00:01:48,740
+Moissl said he thinks it is important to remember that even in the unlikely event the probability keeps rising to 100 percent, the world is "not defenseless."
+莫伊塞尔说，他认为重要的是要记住，即使在不太可能的情况下概率持续上升至100%，世界也“并非毫无防御能力”。
+
+10
+00:01:48,740 --> 00:01:58,240
+Here are some methods currently being considered as defensive measures to keep humanity safe in case there is a real threat.
+以下是一些目前正在考虑的防御措施，以在出现真实威胁时确保人类安全。
+
+11
+00:01:58,240 --> 00:02:04,340
+Only one planetary defense method has been tried against an asteroid.
+只有一种行星防御方法曾在小行星上尝试过。
+
+12
+00:02:04,340 --> 00:02:17,330
+In 2022, NASA's Double Asteroid Redirection Test (DART) sent a spacecraft into the 160-meter-wide Dimorphos asteroid.
+2022年，NASA的双小行星重定向测试（DART）将一艘航天器送入宽160米的迪莫弗斯小行星。
+
+13
+00:02:17,330 --> 00:02:23,360
+The effort successfully changed the asteroid's orbit around a larger space rock.
+这次行动成功改变了该小行星围绕一颗更大太空岩石的轨道。
+
+14
+00:02:23,360 --> 00:02:29,380
+Bruce Betts is chief scientist for the nonprofit Planetary Society.
+布鲁斯·贝茨是非营利组织行星学会的首席科学家。
+
+15
+00:02:29,380 --> 00:02:41,220
+He told AFP that space agencies could hit the 2024 YR4 asteroid with several spacecrafts, observing how each one changed the path.
+他告诉法新社，航天机构可以用多艘航天器撞击2024 YR4小行星，观察每一艘如何改变其路径。
+
+16
+00:02:41,220 --> 00:02:50,560
+The asteroid discovered in December is estimated to be 40-90 meters wide -- about half the size of Dimorphos.
+去年12月发现的这颗小行星估计宽40-90米，大约是迪莫弗斯大小的一半。
+
+17
+00:02:50,560 --> 00:02:55,220
+"You have to take care not to overdo it," Moissl warned.
+“必须小心不要过度，”莫伊塞尔警告说。
+
+18
+00:02:55,220 --> 00:03:06,460
+He said this is because if a spacecraft only partly destroys an asteroid, it could send smaller pieces of the space rock heading toward Earth.
+他说，这是因为如果航天器只部分摧毁小行星，可能会将更小的碎片推向地球。
+
+19
+00:03:06,460 --> 00:03:14,270
+A separate idea would involve sending a large spacecraft to fly alongside a threatening asteroid.
+另一个想法涉及发射一艘大型航天器与有威胁的小行星并排飞行。
+
+20
+00:03:14,270 --> 00:03:21,660
+The spacecraft would not touch the asteroid, but would use its gravitational force to pull it away from Earth.
+航天器不会接触小行星，而是利用其引力将其拉离地球。
+
+21
+00:03:21,660 --> 00:03:35,390
+Moissl said another non-contact plan would put a spacecraft near the asteroid to eject a continuous flow of atoms to push the asteroid off course.
+莫伊塞尔说，另一个非接触式计划是将航天器放置在小行星附近，持续喷射原子流，将小行星推离轨道。
+
+22
+00:03:35,390 --> 00:03:40,830
+Scientists have also considered painting one side of the asteroid white.
+科学家还考虑将小行星的一侧涂成白色。
+
+23
+00:03:40,830 --> 00:03:48,900
+They believe this could increase the light the object reflects to make it slowly change course.
+他们相信这可以增加该物体反射的光线，使其缓慢改变方向。
+
+24
+00:03:48,900 --> 00:03:53,640
+One idea is to use a nuclear weapon against a threatening asteroid.
+一个想法是使用核武器对付有威胁的小行星。
+
+25
+00:03:53,640 --> 00:04:00,660
+In laboratory tests, researchers found that X-rays from a nuclear blast could move a rock.
+在实验室测试中，研究人员发现核爆炸产生的X射线可以移动岩石。
+
+26
+00:04:00,660 --> 00:04:10,230
+But this is considered more of a plan for kilometers-wide asteroids like the one that killed off the dinosaurs.
+但这更多地被视为针对像灭绝恐龙那样宽达数公里的小行星的计划。
+
+27
+00:04:10,230 --> 00:04:19,590
+And this method also carries the risk that a nuclear explosion could send additional pieces of the asteroid falling toward Earth.
+而且这种方法还带有风险：核爆炸可能导致更多小行星碎片落向地球。
+
+28
+00:04:19,590 --> 00:04:34,460
+A similar method - but one considered less dangerous - would involve shooting laser beams from a spacecraft to destroy the side of an asteroid in an effort to push it away from Earth.
+一种类似但被认为危险较小的方法，涉及从航天器发射激光束摧毁小行星的一侧，以将其推离地球。
+
+29
+00:04:34,460 --> 00:04:42,450
+Moissl said that if all else fails, at least the world will have a good idea where a threatening asteroid would strike.
+莫伊塞尔说，如果其他方法都失败，至少世界将很清楚有威胁的小行星会在哪里撞击。
+
+30
+00:04:42,450 --> 00:04:54,190
+Since astronomers believe most asteroids would at most threaten to destroy one city, efforts could be organized to get people out of an area before a strike.
+由于天文学家认为大多数小行星最多威胁摧毁一座城市，可以在撞击前组织人们撤离该区域。
+
+31
+00:04:54,190 --> 00:04:59,320
+"Seven-and-a-half years is a long time to prepare," Moissl added.
+“七年半的时间足够准备，”莫伊塞尔补充道。
+
+32
+00:04:59,320 --> 00:05:12,880
+He also noted that even with the rising odds involving 2024 YR4, there is still about a 97 percent chance the asteroid will miss Earth.
+他还指出，即使2024 YR4的几率上升，该小行星仍有约97%的可能性会错过地球。
+
+33
+00:05:12,880 --> 00:05:16,682
+I'm Jill Robbins.
+我是吉尔·罗宾斯。
