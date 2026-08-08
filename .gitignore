@@ -9,9 +9,6 @@ venv/
 # Environment
 .env
 
-# Cache
-.cache/
-
 # OS
 .DS_Store
 

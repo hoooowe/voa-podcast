@@ -5,21 +5,18 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# GitHub Pages is served via "Deploy from a branch" (main -> /docs) in
+# repository Settings -> Pages. This workflow only rebuilds and validates
+# the site as a CI sanity check; the committed docs/ folder is what Pages
+# actually serves. The update-podcast workflow commits rebuilt docs/ back
+# to main, so Pages stays in sync automatically.
+
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build-and-validate:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,15 +37,3 @@ jobs:
 
       - name: Validate feed
         run: python scripts/validate_feed.py
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4

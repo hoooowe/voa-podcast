@@ -191,8 +191,10 @@ python -m http.server 8000 --directory docs
 
 ### 8.1 自动部署（deploy-pages.yml）
 
-push 到 `main` 后自动：安装 Python → `pip install` → `build_site.py` →
-`validate_feed.py` → 部署 `docs/` 到 GitHub Pages。
+GitHub Pages 通过 **Settings → Pages → Deploy from a branch → main → /docs**
+直接托管已提交的 `docs/` 目录。push 到 `main` 后，本 workflow 自动：
+安装 Python → `pip install` → `build_site.py` → `validate_feed.py`，作为
+CI 校验。实际的页面服务由 branch deployment 完成，无需额外部署步骤。
 
 ### 8.2 通过网页添加 Episode（update-podcast.yml）
 
