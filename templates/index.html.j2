@@ -10,6 +10,7 @@
     --card: #ffffff;
     --text: #1d1d1f;
     --text-muted: #6e6e73;
+    --text-faint: #a1a1a6;
     --border: #e5e5e7;
     --accent: #0071e3;
     --accent-hover: #0077ed;
@@ -20,6 +21,7 @@
       --card: #1c1c1e;
       --text: #f5f5f7;
       --text-muted: #98989d;
+      --text-faint: #636366;
       --border: #2c2c2e;
       --accent: #0a84ff;
       --accent-hover: #409cff;
@@ -82,33 +84,77 @@
     border-radius: 6px;
     border: 1px solid var(--border);
   }
+
+  /* Section structure */
+  .listening-section { margin-bottom: 48px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .section-duration {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    background: rgba(0, 113, 227, 0.1);
+    padding: 3px 10px;
+    border-radius: 980px;
+    white-space: nowrap;
+  }
+  @media (prefers-color-scheme: dark) {
+    .section-duration { background: rgba(10, 132, 255, 0.18); }
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 0 20px;
+  }
+  .subcategory { margin-bottom: 24px; }
+  .subcategory-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Episode cards */
   .episode-list { list-style: none; padding: 0; margin: 0; }
   .episode-card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: 16px;
-    padding: 24px 28px;
-    margin-bottom: 20px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
     transition: transform 0.15s ease;
   }
   .episode-card:hover { transform: translateY(-2px); }
   .episode-number {
     color: var(--accent);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    margin: 0 0 6px;
+    margin: 0 0 4px;
   }
   .episode-title {
-    font-size: 22px;
+    font-size: 19px;
     font-weight: 600;
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     letter-spacing: -0.01em;
   }
   .episode-title a { color: var(--text); text-decoration: none; }
   .episode-meta {
     color: var(--text-muted);
-    font-size: 14px;
-    margin: 0 0 16px;
+    font-size: 13px;
+    margin: 0 0 12px;
   }
   .episode-actions {
     display: flex;
@@ -119,8 +165,13 @@
   .btn-link {
     color: var(--accent);
     text-decoration: none;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
+  }
+  .empty-sub {
+    color: var(--text-faint);
+    font-size: 14px;
+    padding: 8px 4px;
   }
   .empty {
     text-align: center;
@@ -144,22 +195,55 @@
     <div class="rss-url">RSS: <code>{{ feed_url }}</code></div>
   </header>
 
-  {% if episodes %}
-  <ul class="episode-list">
-    {% for ep in episodes %}
-    <li class="episode-card">
-      <p class="episode-number">#{{ "%03d" | format(ep.id) }}</p>
-      <h2 class="episode-title"><a href="episodes/{{ ep.slug }}.html">{{ ep.title }}</a></h2>
-      <p class="episode-meta">
-        {{ ep.category or "General" }} · {{ ep.published_at_display }}
-      </p>
-      <div class="episode-actions">
-        <a class="btn-link" href="{{ ep.audio_url }}">▶ Listen</a>
-        <a class="btn-link" href="episodes/{{ ep.slug }}.html">Read English &amp; Chinese →</a>
-      </div>
-    </li>
+  {% macro episode_card(ep) %}
+  <li class="episode-card">
+    <p class="episode-number">#{{ "%03d" | format(ep.id) }}</p>
+    <h2 class="episode-title"><a href="episodes/{{ ep.slug }}.html">{{ ep.title }}</a></h2>
+    <p class="episode-meta">{{ ep.category or "General" }} · {{ ep.published_at_display }}</p>
+    <div class="episode-actions">
+      <a class="btn-link" href="{{ ep.audio_url }}">▶ Listen</a>
+      <a class="btn-link" href="episodes/{{ ep.slug }}.html">Read English &amp; Chinese →</a>
+    </div>
+  </li>
+  {% endmacro %}
+
+  {% if has_episodes %}
+  {% for section in sections %}
+  <section class="listening-section">
+    <div class="section-header">
+      <h2 class="section-title">{{ section.title }}</h2>
+      <span class="section-duration">{{ section.duration }}</span>
+    </div>
+    <hr class="section-divider">
+    {% for sub in section.subcategories %}
+    <div class="subcategory">
+      <p class="subcategory-label">{{ sub.label }}</p>
+      {% if sub.episodes %}
+      <ul class="episode-list">
+        {% for ep in sub.episodes %}{{ episode_card(ep) }}{% endfor %}
+      </ul>
+      {% else %}
+      <p class="empty-sub">No episodes yet</p>
+      {% endif %}
+    </div>
     {% endfor %}
-  </ul>
+  </section>
+  {% endfor %}
+
+  {% if uncategorized %}
+  <section class="listening-section">
+    <div class="section-header">
+      <h2 class="section-title">Other</h2>
+    </div>
+    <hr class="section-divider">
+    <div class="subcategory">
+      <ul class="episode-list">
+        {% for ep in uncategorized %}{{ episode_card(ep) }}{% endfor %}
+      </ul>
+    </div>
+  </section>
+  {% endif %}
+
   {% else %}
   <p class="empty">No episodes yet. Add one with <code>python scripts/add_episode.py "VOA_URL"</code></p>
   {% endif %}

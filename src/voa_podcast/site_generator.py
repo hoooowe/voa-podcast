@@ -16,6 +16,47 @@ from .models import Episode
 
 logger = logging.getLogger(__name__)
 
+# Listening-length sections, each holding topic subcategories. Episodes are
+# matched to a subcategory by normalizing their VOA category string.
+SECTIONS: list[dict] = [
+    {
+        "title": "Short Listening",
+        "duration": "5–10 min",
+        "subcategories": ["Science", "Education", "Health"],
+    },
+    {
+        "title": "Stories",
+        "duration": "15 min",
+        "subcategories": ["American Stories"],
+    },
+    {
+        "title": "Long Listening",
+        "duration": "30 min",
+        "subcategories": ["VOA Learning English Podcast"],
+    },
+]
+
+# Map a (lowercased) keyword found in the VOA category to a subcategory label.
+# More specific phrases are checked first.
+_CATEGORY_KEYWORDS: list[tuple[str, str]] = [
+    ("american stories", "American Stories"),
+    ("learning english podcast", "VOA Learning English Podcast"),
+    ("science", "Science"),
+    ("education", "Education"),
+    ("health", "Health"),
+]
+
+
+def _normalize_category(raw: str | None) -> str | None:
+    """Map a raw VOA category (e.g. 'Health and Lifestyle') to a subcategory."""
+    if not raw:
+        return None
+    low = raw.lower()
+    for keyword, label in _CATEGORY_KEYWORDS:
+        if keyword in low:
+            return label
+    return None
+
 
 class SiteGenerator:
     """Generates the static HTML site from episodes."""
@@ -45,10 +86,14 @@ class SiteGenerator:
             reverse=True,
         )
         view_models = [self._episode_summary(e) for e in sorted_episodes]
+        sections, uncategorized = self._sections_view(view_models)
         html = template.render(
             site_title=self._config.site.title,
             feed_url=self._feed_url(),
             episodes=view_models,
+            sections=sections,
+            uncategorized=uncategorized,
+            has_episodes=bool(view_models),
         )
         out = self._config.docs_dir / "index.html"
         out.write_text(html, encoding="utf-8")
@@ -67,6 +112,36 @@ class SiteGenerator:
     # ------------------------------------------------------------------ #
     # View models
     # ------------------------------------------------------------------ #
+    def _sections_view(self, episodes: list[dict]) -> tuple[list[dict], list[dict]]:
+        """Group episode view models into the listening-length sections.
+
+        Returns ``(sections, uncategorized)`` where ``sections`` follows the
+        ``SECTIONS`` taxonomy and ``uncategorized`` holds episodes whose VOA
+        category did not map to any subcategory.
+        """
+        by_sub: dict[str, list[dict]] = {}
+        uncategorized: list[dict] = []
+        for ep in episodes:
+            sub = _normalize_category(ep.get("category"))
+            if sub:
+                by_sub.setdefault(sub, []).append(ep)
+            else:
+                uncategorized.append(ep)
+
+        sections_out: list[dict] = []
+        for section in SECTIONS:
+            subs = []
+            for label in section["subcategories"]:
+                subs.append({"label": label, "episodes": by_sub.get(label, [])})
+            sections_out.append(
+                {
+                    "title": section["title"],
+                    "duration": section["duration"],
+                    "subcategories": subs,
+                }
+            )
+        return sections_out, uncategorized
+
     def _episode_summary(self, ep: Episode) -> dict:
         return {
             "id": ep.id,
