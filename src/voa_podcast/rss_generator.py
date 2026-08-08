@@ -74,7 +74,7 @@ class RSSGenerator:
         lines.append(f"    <description>{_escape(site.description)}</description>")
         lines.append(f"    <language>{_escape(site.language)}</language>")
         lines.append(
-            f'    <itunes:image href="{_attr(base + "/cover.jpg")}"/>'
+            f'    <itunes:image href="{_attr(base + "/podcast-cover.jpg")}"/>'
         )
         lines.append(f"    <itunes:author>{_escape(pc.author)}</itunes:author>")
         lines.append(f"    <itunes:explicit>{explicit}</itunes:explicit>")
@@ -87,7 +87,7 @@ class RSSGenerator:
         lines.append("    <itunes:owner>" + "".join(owner_parts) + "</itunes:owner>")
         lines.append(f"    <itunes:block>{block}</itunes:block>")
         lines.append(
-            f'    <image><url>{_escape(base + "/cover.jpg")}</url>'
+            f'    <image><url>{_escape(base + "/podcast-cover.jpg")}</url>'
             f"<title>{_escape(site.title)}</title>"
             f"<link>{_escape(base + '/')}</link></image>"
         )

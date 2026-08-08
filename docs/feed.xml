@@ -5,14 +5,14 @@
     <link>https://hoooowe.github.io/voa-podcast/</link>
     <description>Personal VOA Learning English listening practice.</description>
     <language>en-us</language>
-    <itunes:image href="https://hoooowe.github.io/voa-podcast/cover.jpg"/>
+    <itunes:image href="https://hoooowe.github.io/voa-podcast/podcast-cover.jpg"/>
     <itunes:author>Private English Learner</itunes:author>
     <itunes:explicit>no</itunes:explicit>
     <itunes:category text="Education"/>
     <itunes:summary>Personal English listening practice with VOA Learning English. English audio with sentence-by-sentence Chinese translation and click-to-seek transcripts.</itunes:summary>
     <itunes:owner><itunes:name>Private English Learner</itunes:name><itunes:email>hoooowe@users.noreply.github.com</itunes:email></itunes:owner>
     <itunes:block>No</itunes:block>
-    <image><url>https://hoooowe.github.io/voa-podcast/cover.jpg</url><title>Daily English Listening</title><link>https://hoooowe.github.io/voa-podcast/</link></image>
+    <image><url>https://hoooowe.github.io/voa-podcast/podcast-cover.jpg</url><title>Daily English Listening</title><link>https://hoooowe.github.io/voa-podcast/</link></image>
     <item>
       <title>Beach, Coast, Shore</title>
       <link>https://hoooowe.github.io/voa-podcast/episodes/beach-coast-shore.html</link>
