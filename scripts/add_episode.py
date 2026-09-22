@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import re
 import sys
 from pathlib import Path
 
@@ -29,6 +30,32 @@ from voa_podcast.translator import OpenAICompatibleTranslator, TranslationError
 from voa_podcast.voa_fetcher import VOAContentFetcher, VOAFetchError
 
 logger = logging.getLogger("add_episode")
+
+GENERIC_TITLES = {
+    "voa learning english podcast",
+    "learning english podcast",
+    "american stories",
+}
+
+
+def _audio_date(audio_url: str) -> str | None:
+    m = re.search(r"/(\d{4})/(\d{2})/(\d{2})/", audio_url or "")
+    if m:
+        return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+    m = re.search(r"(20\d{2})(\d{2})(\d{2})-\d{6}", audio_url or "")
+    if m:
+        return f"{m.group(1)}-{m.group(2)}-{m.group(3)}"
+    return None
+
+
+def refine_title(title: str, audio_url: str, series: str | None = None) -> str:
+    """Turn generic series titles into something per-episode readable."""
+    title = (title or "").strip()
+    if title.lower() not in GENERIC_TITLES:
+        return title
+    date = _audio_date(audio_url or "")
+    base = (series or title).strip() or title
+    return f"{base} ({date})" if date else base
 
 
 def setup_logging() -> None:
@@ -75,7 +102,14 @@ def main() -> int:
         return 1
 
 
-def run_pipeline(url: str, force: bool = False, update: bool = False) -> int:
+def run_pipeline(
+    url: str,
+    force: bool = False,
+    update: bool = False,
+    category: str | None = None,
+    title: str | None = None,
+) -> int:
+    """Process one article URL. Return codes: 0=created/skipped-ok, 2=duplicate, 1=failed."""
     config = load_config()
 
     # 1. Duplicate detection / update.
@@ -96,6 +130,13 @@ def run_pipeline(url: str, force: bool = False, update: bool = False) -> int:
     # 2. Fetch + parse.
     fetcher = VOAContentFetcher()
     article = fetcher.fetch(url)
+    if category and not article.category:
+        article.category = category
+    article.title = refine_title(
+        title or article.title,
+        article.audio_url,
+        series=category or title,
+    )
 
     # 3. Copyright check.
     checker = CopyrightChecker()
@@ -119,65 +160,74 @@ def run_pipeline(url: str, force: bool = False, update: bool = False) -> int:
 
     # 4. Download audio.
     downloader = AudioDownloader()
-    slug = make_slug(article.title)
+    episode_title = article.title
+    slug = make_slug(episode_title)
     episode_id = repo.next_id()
     filename = audio_filename(episode_id, slug)
     audio_path = config.audio_dir / filename
     audio_meta = downloader.download(article.audio_url, audio_path)
 
-    # Auxiliary duplicate check via audio SHA256.
-    dupe_audio = repo.find_by_audio_sha256(audio_meta.sha256)
-    if dupe_audio is not None:
-        logger.error(
-            "[AUDIO] Duplicate audio (SHA256 matches episode #%d). Skipping.",
-            dupe_audio.id,
+    try:
+        # Auxiliary duplicate check via audio SHA256.
+        # Same episode often appears under multiple feed URLs — treat as skip, not error.
+        dupe_audio = repo.find_by_audio_sha256(audio_meta.sha256)
+        if dupe_audio is not None:
+            logger.warning(
+                "[AUDIO] Duplicate audio (SHA256 matches episode #%d). Skipping.",
+                dupe_audio.id,
+            )
+            return 2
+
+        # 5. Translate.
+        translator = OpenAICompatibleTranslator(
+            base_url=config.llm.base_url,
+            api_key=config.llm.api_key,
+            model=config.llm.model,
+            temperature=config.llm.temperature,
+            max_chars_per_request=config.llm.max_chars_per_request,
+            cache_dir=config.cache_dir,
         )
+
+        episode_sentences: list[Sentence] = []
+        if article.sentences:
+            en_list = [s.en for s in article.sentences]
+            zh_list = translator.translate_sentences(en_list)
+            episode_sentences = [
+                Sentence(start=s.start, en=s.en, zh=zh)
+                for s, zh in zip(article.sentences, zh_list)
+            ]
+            chinese_text = "\n\n".join(s.zh for s in episode_sentences)
+        else:
+            chinese_text = translator.translate(article.english_text)
+
+        # 6. Create episode.
+        audio_rel = f"audio/{filename}"
+        episode = repo.create_episode(
+            title=article.title,
+            slug=slug,
+            source_url=article.source_url,
+            published_at=article.published_at,
+            category=article.category,
+            english_text=article.english_text,
+            chinese_text=chinese_text,
+            audio_file=audio_rel,
+            audio_size=audio_meta.file_size,
+            audio_type=audio_meta.mime_type,
+            audio_sha256=audio_meta.sha256,
+            copyright_status=result.status.value,
+            sentences=episode_sentences,
+        )
+    except Exception:
+        # Don't leave half-downloaded audio behind when translation/build fails.
         audio_path.unlink(missing_ok=True)
-        return 1
+        raise
 
-    # 5. Translate.
-    translator = OpenAICompatibleTranslator(
-        base_url=config.llm.base_url,
-        api_key=config.llm.api_key,
-        model=config.llm.model,
-        temperature=config.llm.temperature,
-        max_chars_per_request=config.llm.max_chars_per_request,
-        cache_dir=config.cache_dir,
-    )
-
-    episode_sentences: list[Sentence] = []
-    if article.sentences:
-        en_list = [s.en for s in article.sentences]
-        zh_list = translator.translate_sentences(en_list)
-        episode_sentences = [
-            Sentence(start=s.start, en=s.en, zh=zh)
-            for s, zh in zip(article.sentences, zh_list)
-        ]
-        chinese_text = "\n\n".join(s.zh for s in episode_sentences)
-    else:
-        chinese_text = translator.translate(article.english_text)
-
-    # 6. Create episode.
-    audio_rel = f"audio/{filename}"
-    episode = repo.create_episode(
-        title=article.title,
-        slug=slug,
-        source_url=article.source_url,
-        published_at=article.published_at,
-        category=article.category,
-        english_text=article.english_text,
-        chinese_text=chinese_text,
-        audio_file=audio_rel,
-        audio_size=audio_meta.file_size,
-        audio_type=audio_meta.mime_type,
-        audio_sha256=audio_meta.sha256,
-        copyright_status=result.status.value,
-        sentences=episode_sentences,
-    )
-
-    # 7. Rebuild site + RSS.
+    # 7. Rebuild site + transcripts + RSS.
     episodes = repo.load_all()
     SiteGenerator(config).generate(episodes)
+    from voa_podcast.transcript_generator import TranscriptGenerator
+
+    TranscriptGenerator(config).generate_all(episodes)
     RSSGenerator(config).generate(episodes)
 
     # 8. Output.
@@ -188,6 +238,8 @@ def run_pipeline(url: str, force: bool = False, update: bool = False) -> int:
     print(f"Audio:  docs/{episode.audio_file}")
     print(f"Page:   docs/episodes/{episode.slug}.html")
     print(f"Podcast Feed: docs/feed.xml")
+    print()
+    sys.stdout.flush()
     return 0
 
 

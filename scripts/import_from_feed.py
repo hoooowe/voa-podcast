@@ -8,6 +8,11 @@ check → download audio → translate → create episode → rebuild site/RSS).
 Designed to run on GitHub Actions (US servers) where learningenglish.
 voanews.com is directly accessible.
 
+Exit code:
+    0 — no failures, or at least one episode was added (partial success).
+        Duplicate audio / already-imported items are soft skips, not failures.
+    1 — every attempted item failed (nothing new added).
+
 Usage:
     python scripts/import_from_feed.py --feed american-stories [--limit 3]
     python scripts/import_from_feed.py --feed learning-english-podcast [--limit 3]
@@ -33,6 +38,9 @@ import requests  # noqa: E402
 from voa_podcast.config import load_config  # noqa: E402
 from voa_podcast.episode_repository import EpisodeRepository  # noqa: E402
 from voa_podcast.feed_parser import parse_feed  # noqa: E402
+from voa_podcast.rss_generator import RSSGenerator  # noqa: E402
+from voa_podcast.site_generator import SiteGenerator  # noqa: E402
+from voa_podcast.transcript_generator import TranscriptGenerator  # noqa: E402
 
 # Reuse the full add_episode pipeline (fetch/parse/translate/build).
 from add_episode import run_pipeline  # noqa: E402
@@ -58,7 +66,7 @@ USER_AGENT = (
 
 
 def setup_logging() -> None:
-    logging.basicConfig(level=logging.INFO, format="%(message)s")
+    logging.basicConfig(level=logging.INFO, format="%(message)s", stream=sys.stdout)
 
 
 def parse_args() -> argparse.Namespace:
@@ -87,7 +95,20 @@ def fetch_feed(url: str) -> str:
     return resp.text
 
 
+def _feed_category(feed_key: str) -> str | None:
+    if feed_key == "american-stories":
+        return "American Stories"
+    if feed_key == "learning-english-podcast":
+        return "VOA Learning English Podcast"
+    return None
+
+
 def main() -> int:
+    # Line-buffer stdout so GitHub Actions logs stay in order with stderr.
+    try:
+        sys.stdout.reconfigure(line_buffering=True)
+    except Exception:  # noqa: BLE001
+        pass
     setup_logging()
     args = parse_args()
 
@@ -130,7 +151,12 @@ def main() -> int:
             logger.info("[IMPORT] URL: %s", item.url)
 
             try:
-                rc = run_pipeline(item.url, force=False, update=False)
+                rc = run_pipeline(
+                    item.url,
+                    force=False,
+                    update=False,
+                    category=_feed_category(key) or (item.categories[0] if item.categories else None),
+                )
             except Exception as exc:  # noqa: BLE001
                 logger.error("[IMPORT] FAILED: %s", exc)
                 total_failed += 1
@@ -139,16 +165,43 @@ def main() -> int:
             if rc == 0:
                 added += 1
                 total_added += 1
+            elif rc == 2:
+                # Duplicate audio under another URL — soft skip.
+                logger.info("[IMPORT] Duplicate audio, counted as skip.")
+                total_skipped += 1
             else:
                 logger.warning("[IMPORT] Pipeline returned rc=%d, skipping.", rc)
                 total_failed += 1
+
+    # Final rebuild so site/transcripts/RSS reflect the complete import batch.
+    try:
+        episodes = repo.load_all()
+        if episodes:
+            SiteGenerator(config).generate(episodes)
+            TranscriptGenerator(config).generate_all(episodes)
+            RSSGenerator(config).generate(episodes)
+    except Exception as exc:  # noqa: BLE001
+        logger.error("[SITE] Final rebuild failed: %s", exc)
+        total_failed += 1
 
     logger.info("")
     logger.info("=== Import Summary ===")
     logger.info("Added:    %d", total_added)
     logger.info("Skipped:  %d", total_skipped)
     logger.info("Failed:   %d", total_failed)
-    return 0 if total_failed == 0 else 1
+    sys.stdout.flush()
+
+    # Partial success still exits 0 so the workflow can commit what was imported.
+    if total_failed == 0:
+        return 0
+    if total_added > 0:
+        logger.warning(
+            "Partial success: %d added, %d failed. Committing progress.",
+            total_added,
+            total_failed,
+        )
+        return 0
+    return 1
 
 
 if __name__ == "__main__":

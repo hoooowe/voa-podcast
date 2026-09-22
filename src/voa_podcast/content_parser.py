@@ -25,6 +25,8 @@ logger = logging.getLogger(__name__)
 BODY_SELECTORS = [
     "div.article-content",
     "div#article-content",
+    "div.content-floated-wrap",
+    "div.wsw",
     "div.article__content",
     "div.content",
     "div.body",
@@ -84,8 +86,12 @@ NOISE_TEXT_PATTERNS = [
     re.compile(r"^Related Stories$", re.I),
     re.compile(r"^Subscribe$", re.I),
     re.compile(r"^Share$", re.I),
+    re.compile(r"^Copy link$", re.I),
     re.compile(r"^Read More$", re.I),
     re.compile(r"^Comments$", re.I),
+    re.compile(r"^Embed share$", re.I),
+    re.compile(r"^Accessibility links$", re.I),
+    re.compile(r"^No media source currently available$", re.I),
 ]
 
 
@@ -183,22 +189,30 @@ class VOAContentParser:
         return _parse_datetime(_clean_text(raw))
 
     def _extract_body(self, soup: BeautifulSoup, jsonld: dict) -> str:
-        body_text = jsonld.get("articleBody") or jsonld.get("description")
-        if body_text and len(_clean_text(body_text)) > 50:
-            return _clean_paragraphs(body_text)
+        # 1. JSON-LD articleBody — only when it looks like a full article.
+        #    Current VOA pages often put only a short teaser in `description`.
+        article_body = jsonld.get("articleBody")
+        if article_body and len(_clean_text(article_body)) > 200:
+            return _clean_paragraphs(article_body)
 
+        # 2. DOM containers — full transcript lives in #article-content / .wsw.
         for selector in BODY_SELECTORS:
             container = soup.select_one(selector)
             if not container:
                 continue
             paragraphs = self._extract_paragraphs(container)
-            if paragraphs:
+            if paragraphs and len("\n\n".join(paragraphs)) > 200:
                 return "\n\n".join(paragraphs)
 
-        # Fallback: scan all <p> inside main content areas.
+        # 3. Fallback: scan all <p> inside the page.
         paragraphs = self._extract_paragraphs(soup)
         if paragraphs:
             return "\n\n".join(paragraphs)
+
+        # 4. Last resort: short JSON-LD description / articleBody teaser.
+        description = jsonld.get("description") or jsonld.get("articleBody")
+        if description and len(_clean_text(description)) > 50:
+            return _clean_paragraphs(description)
 
         raise VOAParseError("Unable to extract VOA article text.")
 
