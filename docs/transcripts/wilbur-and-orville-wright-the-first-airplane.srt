@@ -184,6 +184,6 @@ The world has changed a lot since Wilbur and Orville Wright began the modern age
 自从威尔伯·莱特和奥维尔·莱特在一百多年前开创了现代飞行时代以来，世界发生了巨大变化。
 
 38
-00:04:23,750 --> 00:04:26,606
+00:04:23,750 --> 00:04:31,750
 I'm John Russell.
 我是约翰·拉塞尔。

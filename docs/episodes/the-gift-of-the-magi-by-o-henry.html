@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>'The Gift of the Magi,' by O. Henry - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>'The Gift of the Magi,' by O. Henry</h1>
+  <p class="meta">
+    Dec 20, 2024 · American Stories
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/033-the-gift-of-the-magi-by-o-henry.mp3"></audio>
+  </div>
+
+  <section class="english">
+    <h2>English</h2>
+    <p>Editor's Note: We are pleased to share a traditional holiday story with you, 'The Gift of the Magi' by O. Henry. Karen Leggett adapted this story for VOA Learning English. Your storyteller was Shep O'Neal. The producer was Lawan Davis.</p>
+    <p>One dollar and eighty-seven cents. That was all. And sixty cents of it in the smallest pieces of money - pennies. Pennies saved one and two at a time by negotiating with the men at the market who sold vegetables and meat. Negotiating until one's face burned with the silent knowledge of being poor. Three times Della counted it. One dollar and eighty-seven cents. And the next day would be Christmas.</p>
+    <p>There was clearly nothing to do but sit down and cry. So Della cried. Which led to the thought that life is made up of little cries and smiles, with more little cries than smiles.</p>
+    <p>Della finished her crying and dried her face. She stood by the window and looked out unhappily at a gray cat walking along a gray fence in a gray back yard. Tomorrow would be Christmas Day, and she had only one dollar and eighty-seven cents to buy her husband Jim a gift. She had been saving every penny she could for months, with this result.</p>
+    <p>Jim earned twenty dollars a week, which does not go far. Expenses had been greater than she had expected. They always are. Many a happy hour she had spent planning to buy something nice for him. Something fine and rare -- something close to being worthy of the honor of belonging to Jim.</p>
+    <p>There was a tall glass mirror between the windows of the room. Suddenly Della turned from the window and stood before the glass mirror and looked at herself. Her eyes were shining, but her face had lost its color within twenty seconds. Quickly she pulled down her hair and let it fall to its full length.</p>
+    <p>Now, Mr. and Mrs. James Dillingham Young had two possessions which they valued. One was Jim's gold time piece, the watch that had been his father's and his grandfather's. The other was Della's hair.</p>
+    <p>Had the Queen of Sheba lived in their building, Della would have let her hair hang out the window to dry just to reduce the value of the queen's jewels.</p>
+    <p>So now Della's beautiful hair fell about her, shining like a brown waterfall. It reached below her knees and made itself almost like a covering for her. And then quickly she put it up again. She stood still while a few tears fell on the floor.</p>
+    <p>She put on her coat and her old brown hat. With a quick motion and brightness still in her eyes, she danced out the door and down the street.</p>
+    <p>Where she stopped the sign read: "Madame Sofronie. Hair Goods of All Kinds." Della ran up the steps to the shop, out of breath.</p>
+    <p>"Will you buy my hair?" asked Della.</p>
+    <p>"I buy hair," said Madame. "Take your hat off and let us have a look at it."</p>
+    <p>Down came the beautiful brown waterfall of hair.</p>
+    <p>"Twenty dollars," said Madame, lifting the hair with an experienced hand.</p>
+    <p>"Give it to me quick," said Della.</p>
+    <p>The next two hours went by as if they had wings. Della looked in all the stores to choose a gift for Jim.</p>
+    <p>She found it at last. It surely had been made for Jim and no one else. It was a chain -- simple round rings of silver. It was perfect for Jim's gold watch. As soon as she saw it she knew that it must be for him. It was like him. Quiet and with great value. She gave the shopkeeper twenty-one dollars and she hurried home with the eighty-seven cents that was left.</p>
+    <p>When Della arrived home she began to repair what was left of her hair. The hair had been ruined by her love and her desire to give a special gift. Repairing the damage was a very big job.</p>
+    <p>Within forty minutes her head was covered with tiny round curls of hair that made her look wonderfully like a schoolboy. She looked at herself in the glass mirror long and carefully.</p>
+    <p>"If Jim does not kill me before he takes a second look at me," she said to herself, "he'll say I look like a song girl. But what could I do--oh! what could I do with a dollar and eighty-seven cents?"</p>
+    <p>At seven o'clock that night the coffee was made and the pan on the back of the stove was hot and ready to cook the meat.</p>
+    <p>Jim was never late coming home from work. Della held the silver chain in her hand and sat near the door. Then she heard his step and she turned white for just a minute. She had a way of saying a little silent prayer about the simplest everyday things, and now she whispered: "Please God, make him think I am still pretty."</p>
+    <p>The door opened and Jim stepped in. He looked thin and very serious. Poor man, he was only twenty-two and he had to care for a wife. He needed a new coat and gloves to keep his hands warm.</p>
+    <p>Jim stopped inside the door, as immovable as a dog smelling a bird. His eyes were fixed upon Della. There was an expression in them that she could not read, and it frightened her. It was not anger, nor surprise, nor fear, nor any of the feelings that she had been prepared for. He simply looked at her with a strange expression on his face. Della went to him.</p>
+    <p>"Jim, my love," she cried, "do not look at me that way. I had my hair cut and sold because I could not have lived through Christmas without giving you a gift. My hair will grow out again. I just had to do it. My hair grows very fast. Say 'Merry Christmas!' Jim, and let us be happy. You do not know what a nice-- what a beautiful, nice gift I have for you."</p>
+    <p>"You have cut off your hair?" asked Jim, slowly, as if he had not accepted the information even after his mind worked very hard.</p>
+    <p>"Cut it off and sold it," said Della. "Do you not like me just as well? I am the same person without my hair, right?</p>
+    <p>Jim looked about the room as if he were looking for something.</p>
+    <p>"You say your hair is gone?" he asked.</p>
+    <p>"You need not look for it," said Della. "It is sold, I tell you--sold and gone, too. It is Christmas Eve, boy. Be good to me, for it was cut for you. Maybe the hairs of my head were numbered," she went on with sudden serious sweetness, "but nobody could ever count my love for you. Shall I put the meat on, Jim?"</p>
+    <p>Jim seemed to awaken quickly and put his arms around Della. Then he took a package from his coat and threw it on the table.</p>
+    <p>"Do not make any mistake about me, Dell," he said. "I do not think there is any haircut that could make me like my girl any less. But if you will open that package you may see why you had me frightened at first."</p>
+    <p>White fingers quickly tore at the string and paper. There was a scream of joy; and then, alas! a change to tears and cries, requiring the man of the house to use all his skill to calm his wife.</p>
+    <p>For there were the combs -- the special set of objects to hold her hair that Della had wanted ever since she saw them in a shop window. Beautiful combs, made of shells, with jewels at the edge --just the color to wear in the beautiful hair that was no longer hers. They cost a lot of money, she knew, and her heart had wanted them without ever hoping to have them. And now, the beautiful combs were hers, but the hair that should have touched them was gone.</p>
+    <p>But she held the combs to herself, and soon she was able to look up with a smile and say, "My hair grows so fast, Jim!"</p>
+    <p>Then Della jumped up like a little burned cat and cried, "Oh, oh!"</p>
+    <p>Jim had not yet seen his beautiful gift. She happily held it out to him in her open hands. The silver chain seemed so bright.</p>
+    <p>"Isn't it wonderful, Jim? I looked all over town to find it. You will have to look at the time a hundred times a day now. Give me your watch. I want to see how it looks on it."</p>
+    <p>Instead of obeying, Jim fell on the couch and put his hands under the back of his head and smiled.</p>
+    <p>"Dell," said he, "let us put our Christmas gifts away and keep them a while. They are too nice to use just right now. I sold my gold watch to get the money to buy the set of combs for your hair. And now, why not put the meat on."</p>
+    <p>The magi were wise men--wonderfully wise men--who brought gifts to the Baby Jesus. They invented the art of giving Christmas gifts. Being wise, their gifts were wise ones. And here I have told you the story of two young people who most unwisely gave for each other the greatest treasures of their house. But in a last word to the wise of these days, let it be said that of all who give gifts, these two were the wisest. Everywhere they are wisest. They are the magi.</p>
+    <p>Now it's your turn. Write to us in the Comments section or on our Facebook page about a very special gift you received.</p>
+    <p>_________________________________________________</p>
+    <p>For Teachers</p>
+    <p>Quiz - The Gift of the Magi by O. Henry</p>
+    <p>________________________________________________</p>
+    <p>Words in This Story</p>
+    <p>negotiate - v. to discuss something formally in order to make an agreement</p>
+    <p>immovable - adj. not able to be moved : firmly fixed in place</p>
+    <p>expression - n. the way someone's face looks that shows emotions and feelings</p>
+    <p>magi - n. the wise men, generally assumed to be three in number, who paid homage to the infant Jesus. Matt. 2:1–12.</p>
+    <p>Related</p>
+  </section>
+
+  <section class="chinese">
+    <h2>中文翻译</h2>
+    <p>编者按：我们很高兴与您分享一个传统的节日故事，欧·亨利的《麦琪的礼物》。凯伦·莱格特为VOA慢速英语改编了这个故事。为您讲故事的是谢普·奥尼尔。制作人是拉万·戴维斯。</p>
+    <p>一元八角七分。就这些了。其中六毛钱还是最小面额的硬币——一分钱的。这些一分钱是一分两分地攒下来的，是跟市场上卖菜卖肉的小贩们讨价还价省下来的。讨价还价直到因为默默意识到自己贫穷而脸上发烫。德拉数了三遍。一元八角七分。而第二天就是圣诞节了。</p>
+    <p>除了坐下来哭一场，显然没有别的办法。于是德拉哭了。这让她想到，生活就是由无数的小哭泣和小微笑组成的，而小哭泣比小微笑更多。</p>
+    <p>德拉哭完了，擦干了脸。她站在窗边，愁闷地望着一只灰色的猫沿着灰色后院里的灰色篱笆走着。明天就是圣诞节了，而她只有一元八角七分钱给她的丈夫吉姆买礼物。她已经好几个月尽最大努力省下每一分钱了，结果就是这个样子。</p>
+    <p>吉姆每星期挣二十美元，这点钱并不宽裕。开销比她预想的要大。向来如此。她曾度过许多快乐的时光，盘算着给他买件好东西。一件精美而稀罕的——一件近乎配得上属于吉姆这份荣幸的东西。</p>
+    <p>房间两扇窗之间有一面高高的玻璃镜子。突然德拉从窗边转过身来，站在镜子前看着自己。她的眼睛闪闪发亮，但她的脸色在二十秒之内就失去了血色。她飞快地拔下发夹，让头发垂落到全部长度。</p>
+    <p>现在，詹姆斯·迪林汉·杨夫妇有两件他们珍视的财产。一件是吉姆的金表——那块曾经属于他父亲和他祖父的表。另一件是德拉的头发。</p>
+    <p>假如示巴女王住在他们那栋楼里，德拉准会把头发垂到窗外晾干，就为了贬低女王珠宝的价值。</p>
+    <p>于是此刻德拉美丽的头发披散在她周围，像一道棕色瀑布一样闪闪发光。它垂到膝盖以下，几乎像一件披风裹住了她。然后她又飞快地把头发挽了起来。她静静地站着，几滴泪水落在地板上。</p>
+    <p>她穿上外套，戴上那顶旧的棕色帽子。眼里还带着轻盈的神采和光亮，她翩然走出门去，下了街。</p>
+    <p>她停下来的地方，招牌上写着：“索芙罗妮夫人。各类头发制品。”德拉跑上台阶进了店，上气不接下气。</p>
+    <p>“您买我的头发吗？”德拉问。</p>
+    <p>“我买头发，”夫人说。“把帽子摘下来，让我们看看。”</p>
+    <p>那道美丽的棕色瀑布垂了下来。</p>
+    <p>“二十美元，”夫人说着，用一只熟练的手掂了掂那头发。</p>
+    <p>“快给我钱，”德拉说。</p>
+    <p>接下来的两个小时飞一般地过去了。德拉跑遍了所有商店，为吉姆挑选一件礼物。</p>
+    <p>她终于找到了。那一定是为吉姆而制的，不会是别人。那是一条表链——简简单单的银质圆环。它配吉姆的金表再合适不过。她一看到它就知道了，这一定是给他的。它就像他本人。沉静，却价值非凡。她付给店主二十一美元，带着剩下的八十七分钱匆匆赶回家。</p>
+    <p>德拉到家后，开始打理剩下的头发。头发已经被她的爱和她要送一份特别礼物的心愿毁掉了。修复损伤是一项很大的工程。</p>
+    <p>四十分钟之内，她头上布满了细小的圆卷发，让她看起来活像一个男学生。她对着镜子仔细地端详了很久。</p>
+    <p>“要是吉姆看了我第二眼之前不把我杀了，”她自言自语，“他会说我看上去像个歌女。可我有什么办法——唉！就那一元八角七分钱我能有什么办法呢？”</p>
+    <p>那天晚上七点，咖啡已经煮好，炉子后部的平底锅也烧热了，准备煎肉。</p>
+    <p>吉姆下班回家从不迟到。德拉手里握着那条银链，坐在门边。接着她听到了他的脚步声，她的脸白了一瞬。她有个习惯，会为最琐碎的日常小事默默祈祷一番。这时她低声说：“上帝啊，求求你，让他觉得我还是那么漂亮。”</p>
+    <p>门开了，吉姆走了进来。他看上去消瘦而严肃。可怜的人，他只有二十二岁，却要照顾一个妻子。他需要一件新外套和手套来温暖双手。</p>
+    <p>吉姆在门内站住了，一动不动，像一只嗅到鸟儿的狗。他的目光定定地望着德拉。他眼里有一种她读不懂的表情，这让她害怕。那不是愤怒，不是惊讶，不是恐惧，也不是她做好了准备去面对的任何一种情绪。他只是脸上带着一种奇怪的神情看着她。德拉向他走去。</p>
+    <p>“吉姆，亲爱的，”她喊道，“别那样看着我。我把头发剪掉卖了，因为要是不送你一件礼物，我简直没法活过这个圣诞节。我的头发会再长出来的。我非这么做不可。我头发长得很快。说‘圣诞快乐！’吧，吉姆，让我们快快乐乐的。你还不知道我为你准备了一件多么可爱——多么漂亮、可爱的礼物呢。”</p>
+    <p>“你把头发剪掉了？”吉姆缓缓问道，仿佛费了很大力气也没能接受这个事实。</p>
+    <p>“剪掉卖了，”德拉说，“你不是也一样喜欢我吗？没了头发，我还是同一个人，对吧？”</p>
+    <p>吉姆环顾了一下房间，像是在找什么东西。</p>
+    <p>“你是说你的头发没了？”他问。</p>
+    <p>“你不用找了，”德拉说，“它卖了，我跟你说——卖了，也没了。今天是平安夜，亲爱的。对我好一点吧，因为它是为你剪掉的。也许我头上的头发是有定数的，”她突然带着一种认真而甜蜜的深情继续说，“但谁也无法数清我对你的爱。我把肉放上去煎好吗，吉姆？”</p>
+    <p>吉姆仿佛一下子醒过神来，张开双臂抱住了德拉。然后他从外套里拿出一个包，扔到了桌上。</p>
+    <p>“别误会我，德尔，”他说，“我不觉得有什么发型会让我少喜欢我的姑娘一分。但你要是打开那个包，就会明白为什么一开始你让我吓了一跳。”</p>
+    <p>白皙的手指飞快地撕扯着绳子和包装纸。随之而来一声喜悦的尖叫；然后，唉！变成了泪水和哭喊，让男主人不得不使出全部本事来安抚妻子。</p>
+    <p>原来那是那套发梳——那套德拉自从在一家商店橱窗里看到后就一直想要的、用来固定头发的特别梳子。漂亮的梳子，用贝壳制成，边缘镶着珠宝——颜色正好配那已经不再属于她的美丽头发。她知道这些梳子很贵，她心里渴望它们，却从不敢奢望拥有。而现在，这漂亮的梳子归了她，可本该戴上它们的头发却已经不在了。</p>
+    <p>但她还是把梳子抱在胸前，很快就抬起脸，带着微笑说：“我的头发长得可快啦，吉姆！”</p>
+    <p>接着德拉像一只被烫到的小猫一样跳了起来，喊道：“哦，哦！”</p>
+    <p>吉姆还没看到他漂亮的礼物。她开心地摊开双手，把礼物捧到他面前。那条银链闪闪发亮。</p>
+    <p>“是不是很漂亮，吉姆？我找遍了全城才找到它。现在你一天得看一百次时间了。把你的表给我。我想看看它配在上面是什么样子。”</p>
+    <p>吉姆没有照做，而是倒在沙发上，双手枕在脑后，微笑着。</p>
+    <p>“德尔，”他说，“我们把圣诞礼物收起来，先放一阵子吧。它们现在用起来太可惜了。我卖掉金表，换了钱给你买了那套发梳。现在，还是把肉放上去煎吧。”</p>
+    <p>The magi were wise men--wonderfully wise men--who brought gifts to the Baby Jesus. They invented the art of giving Christmas gifts. Being wise, their gifts were wise ones. And here I have told you the story of two young people who most unwisely gave for each other the greatest treasures of their house. But in a last word to the wise of these days, let it be said that of all who give gifts, these two were the wisest. Everywhere they are wisest. They are the magi.</p>
+    <p>那些贤人是智者——极其聪慧的智者——他们把礼物带给了圣婴耶稣。他们发明了赠送圣诞礼物的艺术。因为聪慧，他们的礼物也是明智的。而我在这里给你们讲述的，是两个年轻人极不明智地为彼此献出了他们家中最珍贵的财宝的故事。但且让我对当今的智者说最后一句话：在所有的送礼者之中，这两个人是最有智慧的。无论在何处，他们最是智慧。他们就是贤人。</p>
+    <p>Now it's your turn. Write to us in the Comments section or on our Facebook page about a very special gift you received.</p>
+    <p>现在轮到你了。欢迎在评论区或我们的Facebook页面上，给我们写一写你收到过的一份非常特别的礼物。</p>
+    <p>_________________________________________________</p>
+    <p>For Teachers</p>
+    <p>供教师参考</p>
+    <p>Quiz - The Gift of the Magi by O. Henry</p>
+    <p>测验——欧·亨利《贤人的礼物》</p>
+    <p>________________________________________________</p>
+    <p>Words in This Story</p>
+    <p>本故事中的词汇</p>
+    <p>negotiate - v. to discuss something formally in order to make an agreement</p>
+    <p>negotiate - 动词。为达成协议而正式商讨某事。</p>
+    <p>immovable - adj. not able to be moved : firmly fixed in place</p>
+    <p>immovable - 形容词。不能移动的；牢牢固定在某处的。</p>
+    <p>expression - n. the way someone's face looks that shows emotions and feelings</p>
+    <p>expression - 名词。面部呈现出能表达情绪与感受的样子。</p>
+    <p>magi - n. the wise men, generally assumed to be three in number, who paid homage to the infant Jesus. Matt. 2:1–12.</p>
+    <p>magi - 名词。指前来朝拜圣婴耶稣的智者，通常认为共有三位。见《马太福音》2:1–12。</p>
+    <p>Related</p>
+    <p>相关阅读</p>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://learningenglish.voanews.com/a/the-gift-of-the-magi-by-o-henry/4656574.html">https://learningenglish.voanews.com/a/the-gift-of-the-magi-by-o-henry/4656574.html</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('timeupdate', function () {
+      var si = currentSentenceIndex(player.currentTime);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        lastSentence = si;
+      }
+    });
+  })();
+</script>
+</body>
+</html>

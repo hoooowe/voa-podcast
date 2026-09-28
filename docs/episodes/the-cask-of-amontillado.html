@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>The Cask of Amontillado - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>The Cask of Amontillado</h1>
+  <p class="meta">
+    Nov 29, 2024 · American Stories
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/035-the-cask-of-amontillado.mp3"></audio>
+  </div>
+
+  <section class="english">
+    <h2>English</h2>
+    <p>Our story today is called "The Cask of Amontillado." It was written by Edgar Allan Poe. Here is Larry West with the story.</p>
+    <p>Storyteller: Fortunato and I both were members of very old and important Italian families. We used to play together when we were children.</p>
+    <p>Fortunato was bigger, richer and more handsome than I was. And he enjoyed making me look like a fool. He hurt my feelings a thousand times during the years of my childhood. I never showed my anger, however. So, he thought we were good friends. But I promised myself that one day I would punish Fortunato for his insults to me.</p>
+    <p>Many years passed. Fortunato married a rich and beautiful woman who gave him sons. Deep in my heart I hated him, but I never said or did anything that showed him how I really felt. When I smiled at him, he thought it was because we were friends.</p>
+    <p>He did not know it was the thought of his death that made me smile.</p>
+    <p>Everyone in our town respected Fortunato. Some men were afraid of him because he was so rich and powerful. He had a weak spot, however. He thought he was an excellent judge of wine. I also was an expert on wine. I spent a lot of money buying rare and costly wines. I stored the wines in the dark rooms under my family's palace.</p>
+    <p>Our palace was one of the oldest buildings in the town. The Montresor family had lived in it for hundreds of years. We had buried our dead in the rooms under the palace. These tombs were quiet, dark places that no one but myself ever visited.</p>
+    <p>Late one evening during carnival season, I happened to meet Fortunato on the street. He was going home alone from a party. Fortunato was beautiful in his silk suit made of many colors: yellow, green, purple and red. On his head he wore an orange cap, covered with little silver bells. I could see he had been drinking too much wine. He threw his arms around me. He said he was glad to see me.</p>
+    <p>I said I was glad to see him, too because I had a little problem. "What is it?" he asked, putting his large hand on my shoulder.</p>
+    <p>"My dear Fortunato," I said, "I'm afraid I have been very stupid. The man who sells me wine said he had a rare barrel of Amontillado wine. I believed him and I bought it from him. But now, I am not so sure that the wine is really Amontillado." "What!" he said, "A cask of Amontillado at this time of year. An entire barrel? Impossible!"</p>
+    <p>"Yes, I was very stupid. I paid the wine man the full price he wanted without asking you to taste the wine first. But I couldn't find you and I was afraid he would sell the cask of Amontillado to someone else. So I bought it."</p>
+    <p>"A cask of Amontillado!" Fortunato repeated. "Where is it?"</p>
+    <p>I pretended I didn't hear his question. Instead I told him I was going to visit our friend Lucresi. "He will be able to tell me if the wine is really Amontillado," I said.</p>
+    <p>Fortunato laughed in my face. "Lucresi cannot tell Amontillado from vinegar." I smiled to myself and said "But some people say that he is as good a judge of wine as you are." Fortunato grabbed my arm. "Take me to it," he said. "I'll taste the Amontillado for you." "But my friend," I protested, "it is late. The wine is in my wine cellar, underneath the palace. Those rooms are very damp and cold and the walls drip with water." "I don't care," he said. "I am the only person who can tell you if your wine man has cheated you. Lucresi cannot!"</p>
+    <p>Fortunato turned, and still holding me by the arm, pulled me down the street to my home. The building was empty. My servants were enjoying carnival. I knew they would be gone all night.</p>
+    <p>I took two large candles, lit them and gave one to Fortunato. I started down the dark, twisting stairway with Fortunato close behind me. At the bottom of the stairs, the damp air wrapped itself around our bodies. "Where are we?" Fortunato asked. "I thought you said the cask of Amontillado was in your wine cellar."</p>
+    <p>"It is," I said. "The wine cellar is just beyond these tombs where the dead of my family are kept. Surely, you are not afraid of walking through the tombs.</p>
+    <p>He turned and looked into my eyes. "Tombs?" he said. He began to cough. The silver bells on his cap jingled.</p>
+    <p>"My poor friend," I said, "how long have you had that cough?" "It's nothing," he said, but he couldn't stop coughing. "Come," I said firmly, "we will go back upstairs. Your health is important.You are rich, respected, admired, and loved. You have a wife and children. Many people would miss you if you died. We will go back before you get seriously ill. I can go to Lucresi for help with the wine."</p>
+    <p>"No!" he cried. "This cough is nothing. It will not kill me. I won't die from a cough." "That is true," I said, "but you must be careful." He took my arm and we began to walk through the cold, dark rooms. We went deeper and deeper into the cellar. Finally, we arrived in a small room. Bones were pushed high against one wall. A doorway in another wall opened to an even smaller room, about one meter wide and two meters high. Its walls were solid rock.</p>
+    <p>"Here we are," I said. "I hid the cask of Amontillado in there." I pointed to the smaller room. Fortunato lifted his candle and stepped into the tiny room. I immediately followed him. He stood stupidly staring at two iron handcuffs chained to a wall of the tiny room. I grabbed his arms and locked them into the metal handcuffs. It took only a moment. He was too surprised to fight me.</p>
+    <p>I stepped outside the small room.</p>
+    <p>"Where is the Amontillado?" he cried.</p>
+    <p>"Ah yes," I said, "the cask of Amontillado." I leaned over and began pushing aside the pile of bones against the wall. Under the bones was a basket of stone blocks, some cement and a small shovel. I had hidden the materials there earlier. I began to fill the doorway of the tiny room with stones and cement.</p>
+    <p>By the time I laid the first row of stones Fortunato was no longer drunk. I heard him moaning inside the tiny room for ten minutes. Then there was a long silence. I finished the second and third rows of stone blocks. As I began the fourth row, I heard Fortunato begin to shake the chains that held him to the wall. He was trying to pull them out of the granite wall.</p>
+    <p>I smiled to myself and stopped working so that I could better enjoy listening to the noise. After a few minutes, he stopped. I finished the fifth, the sixth and the seventh rows of stones. The wall I was building in the doorway was now almost up to my shoulders. Suddenly, loud screams burst from the throat of the chained man. For a moment I worried. What if someone heard him? Then I placed my hand on the solid rock of the walls and felt safe. I looked into the tiny room, where he was still screaming. And I began to scream, too. My screams grew louder than his and he stopped.</p>
+    <p>It was now almost midnight. I finished the eighth, the ninth and the tenth rows. All that was left was a stone for the last hole in the wall. I was about to push it in when I heard a low laugh from behind the stones. The laugh made the hair on my head stand up. Then Fortunato spoke, in a sad voice that no longer sounded like him.</p>
+    <p>He said, "Well, you have played a good joke on me. We will laugh about it soon over a glass of that Amontillado. But isn't it getting late. My wife and my friends will be waiting for us. Let us go."</p>
+    <p>"Yes," I replied, "let us go."</p>
+    <p>I waited for him to say something else. I heard only my own breathing. "Fortunato!" I called. No answer. I called again. "Fortunato!" Still no answer.</p>
+    <p>I hurried to put the last stone into the wall and put the cement around it. Then I pushed the pile of bones in front of the new wall I had built.</p>
+    <p>That was fifty years ago. For half a century now, no one has touched those bones. "May he rest in peace!"</p>
+    <p>_________________________________________________</p>
+    <p>Words in this Story</p>
+    <p>carnival - n. a festival held before Lent that includes music and dancing</p>
+    <p>cask - n. a container that is shaped like a barrel and is used for holding liquids (“an oak cask for wine”)</p>
+    <p>palace - n. a very large and impressive house</p>
+    <p>cellar - n. the part of a building that is entirely or partly below the ground</p>
+    <p>insult - v. to do or say something that is oﬀensive to (someone) : to do or say something that shows a lack of respect for (someone) (“She felt they had insulted her by repeatedly ignoring her</p>
+    <p>_________________________________________________</p>
+    <p>For teachers</p>
+    <p>Download the lesson plan below for activities that go with this lesson.</p>
+    <p>Words in The Cask of Amontillado</p>
+    <p>The Cask of Amontillado</p>
+    <p>What do you think of this story? We want to hear from you. We have a new comment system. Here is how it works:</p>
+    <p>Each time you return to comment on the Learning English site, you can use your account and see your comments and replies to them. Our comment policy is here.</p>
+    <p>Related</p>
+  </section>
+
+  <section class="chinese">
+    <h2>中文翻译</h2>
+    <p>我们今天的故事叫做《一桶阿蒙蒂亚度酒》。作者是埃德加·爱伦·坡。由拉里·韦斯特为您讲述。</p>
+    <p>讲述者：福图纳托和我都出身于非常古老而显赫的意大利家族。我们小时候常常一起玩耍。</p>
+    <p>福图纳托比我高大、比我富有，也比我英俊。而且他喜欢让我出丑。在我童年的那些年里，他无数次伤害了我的感情。然而，我从未表现出愤怒。所以，他以为我们是好朋友。但我对自己发誓，总有一天我要为他对我的侮辱而惩罚福图纳托。</p>
+    <p>许多年过去了。福图纳托娶了一个富有而美丽的女人，她给他生了儿子。在我内心深处的某个角落，我恨他，但我从未说过或做过任何让他看出我真实感受的事。当我对他微笑时，他以为那是因为我们是朋友。</p>
+    <p>他不知道，是想到他的死亡才让我微笑的。</p>
+    <p>我们镇上的每个人都尊敬福图纳托。有些人怕他，因为他太有钱、太有权势。然而，他有一个弱点。他自以为是出色的品酒专家。我也是品酒行家。我花了很多钱购买名贵稀有的葡萄酒。我把酒储存在我家宫殿下面的阴暗房间里。</p>
+    <p>我们的宫殿是镇上最古老的建筑之一。蒙特雷索家族在那里住了几百年。我们把死者埋葬在宫殿下面的房间里。那些墓穴是安静、黑暗的地方，除了我自己，没有人去过。</p>
+    <p>狂欢节期间的一个深夜，我碰巧在街上遇到了福图纳托。他刚参加完聚会，正独自回家。福图纳托穿着他那件五彩丝绸套装，非常漂亮：黄、绿、紫、红相间。他头上戴着一顶橙色的帽子，上面挂满了小银铃。我看得出来他喝了很多酒。他张开双臂抱住我，说很高兴见到我。</p>
+    <p>我说我也很高兴见到他，因为我遇到了一个小问题。"什么问题？"他问道，把一只大手搭在我的肩上。</p>
+    <p>"亲爱的福图纳托，"我说，"恐怕我做了件很愚蠢的事。卖酒给我的人说，他有一桶稀有的阿蒙蒂亚度酒。我相信了他，就从他那里买了下来。但现在，我不太确定那酒到底是不是真正的阿蒙蒂亚度酒。""什么！"他说，"这个季节有一桶阿蒙蒂亚度酒？整整一桶？不可能！"</p>
+    <p>"是的，我太蠢了。我按卖酒人开的全价付了钱，却没有先请你来尝一尝那酒。可我找不到你，又怕他把那桶阿蒙蒂亚度酒卖给别人。所以我就买了。"</p>
+    <p>"一桶阿蒙蒂亚度酒！"福图纳托重复道。"在哪里？"</p>
+    <p>我假装没有听到他的问题。我反而告诉他，我正要去找我们的朋友卢克雷西。"他能帮我判断那酒是不是真正的阿蒙蒂亚度酒，"我说。</p>
+    <p>福图纳托当面嘲笑我。"卢克雷西根本分不清阿蒙蒂亚度酒和醋。"我暗自微笑，说道："但有人说，他品酒的本事和你一样好。"福图纳托抓住我的胳膊。"带我去，"他说，"我来替你尝尝那阿蒙蒂亚度酒。""可是，我的朋友，"我表示反对，"天已经晚了。酒在我的酒窖里，在宫殿下面。那些房间非常潮湿阴冷，墙上还滴水。""我不在乎，"他说。"我是唯一能告诉你那个卖酒人有没有骗你的人。卢克雷西不行！"</p>
+    <p>福图纳托转过身，仍然抓着我的胳膊，拉着我沿街朝我家走去。那座建筑空无一人。我的仆人们都在享受狂欢节。我知道他们会整夜不归。</p>
+    <p>我拿起两支大蜡烛，点燃了，给了福图纳托一支。我开始走下黑暗蜿蜒的楼梯，福图纳托紧跟在我身后。到了楼梯底部，潮湿的空气包裹住了我们的身体。"我们在哪里？"福图纳托问道。"我以为你说那桶阿蒙蒂亚度酒在你的酒窖里呢。"</p>
+    <p>“没错，”我说，“酒窖就在这些安放我家族逝者的墓穴后面。你总不至于害怕穿过这些墓穴吧。”</p>
+    <p>他转过身，注视着我的眼睛。“墓穴？”他说。他开始咳嗽起来。他帽子上银铃叮当作响。</p>
+    <p>“我可怜的朋友，”我说，“你咳嗽多久了？”“没什么，”他说，可他还是止不住地咳。“来吧，”我语气坚定地说，“我们回楼上去。你的身体要紧。你富有、受人尊敬、被人仰慕，也被人爱戴。你有妻子和孩子。你要是死了，会有很多人想念你的。趁你还没病重，我们回去吧。我可以去找卢克雷西帮我弄酒。”</p>
+    <p>“不！”他喊道，“这咳嗽不算什么。它不会要我的命。我不会因为咳嗽死掉的。”“那倒是，”我说，“但你得小心才是。”他挽住我的胳膊，我们开始穿过那些寒冷黑暗的房间。我们往酒窖深处越走越深。最后，我们来到一个小房间。一面墙边高高堆着骸骨。另一面墙上有一道门洞，通向一个更小的房间，大约一米宽、两米高。四壁都是坚硬的岩石。</p>
+    <p>“到了，”我说，“我把那桶阿蒙蒂拉多藏在了里面。”我指向那个小房间。福尔图纳托举起蜡烛，踏进那个狭小的房间。我立刻跟了进去。他傻站在那里，盯着锁在小房间墙壁上的两只铁手铐。我抓住他的双臂，把他的手锁进铁手铐里。这只是一瞬间的事。他惊愕得来不及反抗。</p>
+    <p>我走出那个小房间。</p>
+    <p>“阿蒙蒂拉多在哪里？”他喊道。</p>
+    <p>“啊，对，”我说，“那桶阿蒙蒂拉多。”我弯下腰，开始把墙边那堆骸骨推到一边。骸骨下面是一筐石块、一些水泥和一把小铲子。这些东西是我早就藏在那里的。我开始用石块和水泥填堵那个小房间的门洞。</p>
+    <p>等我砌好第一层石块时，福尔图纳托已经不再醉了。我听见他在那个小房间里呻吟了十分钟。然后是长久的寂静。我又砌好了第二层和第三层石块。当我开始砌第四层时，我听见福尔图纳托开始摇晃把他锁在墙上的铁链。他想把铁链从花岗岩墙壁里拽出来。</p>
+    <p>我暗自微笑，停下手中的活，好更尽情地享受那噪音。几分钟后，他停下了。我砌完了第五层、第六层和第七层石块。我在门洞里砌起的墙已经快到我肩膀那么高了。突然，那个被锁住的人喉咙里爆发出尖锐的惨叫声。有那么一瞬，我有些担心。万一有人听到怎么办？然后我把手放在坚实的岩壁上，感到安心了。我朝那个小房间里看去，他还在尖叫。于是我也开始尖叫。我的叫声压过了他，他便停了下来。</p>
+    <p>这时已将近午夜。我砌完了第八层、第九层和第十层石块。剩下的只是在墙的最后一个洞口处放一块石头。我正要把它塞进去，却听见石块后面传来一声低低的笑。那笑声让我头发都竖了起来。接着福尔图纳托开口了，用一种悲伤的声音说道，那声音已经不像他了。</p>
+    <p>他说：“好吧，你跟我开了个不错的玩笑。等会儿我们喝上一杯阿蒙蒂拉多，很快就能笑着聊这事了。不过是不是已经很晚了。我的妻子和朋友们该在等我们了。我们走吧。”</p>
+    <p>“是啊，”我回答，“我们走吧。”</p>
+    <p>我等着他再说些什么。我只听到自己的呼吸声。“福尔图纳托！”我喊道。没有回答。我又喊了一声。“福尔图纳托！”还是没有回答。</p>
+    <p>我急忙把最后一块石头塞进墙洞里，用水泥把它封好。然后我把那堆骸骨推到新砌好的墙前面。</p>
+    <p>那是五十年前的事了。半个世纪以来，没有人碰过那些骸骨。“愿他安息吧！”</p>
+    <p>_________________________________________________</p>
+    <p>本故事中的词汇</p>
+    <p>狂欢节 — 名词，四旬斋前举行的节日，包括音乐和舞蹈</p>
+    <p>cask - n. 一种形状像桶的容器，用于盛放液体（“一个盛放葡萄酒的橡木桶”）</p>
+    <p>palace - n. 非常大且令人印象深刻的房屋</p>
+    <p>cellar - n. 建筑物中完全或部分位于地下的部分</p>
+    <p>insult - v. 做或说一些冒犯（某人）的事：做或说一些对（某人）表现出不尊重的行为（“她觉得自己被他们反复忽视，受到了侮辱”）</p>
+    <p>_________________________________________________</p>
+    <p>供教师使用</p>
+    <p>下载下面的教案，其中包含配合本课的课堂活动。</p>
+    <p>《阿蒙蒂拉多酒桶》中的词汇</p>
+    <p>《阿蒙蒂拉多酒桶》</p>
+    <p>你觉得这个故事怎么样？我们想听听你的看法。我们有新的评论系统。使用方法如下：</p>
+    <p>每次您返回“学英语”网站发表评论时，都可以使用您的账户查看您的评论及回复。我们的评论政策在此。</p>
+    <p>相关</p>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://learningenglish.voanews.com/a/cask-of-amontillado-edgar-allan-poe-american-stories/3249195.html">https://learningenglish.voanews.com/a/cask-of-amontillado-edgar-allan-poe-american-stories/3249195.html</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('timeupdate', function () {
+      var si = currentSentenceIndex(player.currentTime);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        lastSentence = si;
+      }
+    });
+  })();
+</script>
+</body>
+</html>

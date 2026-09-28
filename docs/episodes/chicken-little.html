@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>Chicken Little - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>Chicken Little</h1>
+  <p class="meta">
+    Dec 13, 2024 · American Stories
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/034-chicken-little.mp3"></audio>
+  </div>
+
+  <section class="english">
+    <h2>English</h2>
+    <p>And now an American Children’s Story from VOA Learning English.</p>
+    <p>Today’s story probably had its start long before it was published in Europe long ago.</p>
+    <p>It might have first been known as “Henny Penny.” But the story has been told to American children at least since the mid-1800s under a title similar to “Chicken Little.”</p>
+    <p>Generations have heard and thought about the lessons of the little chicken who causes big problems for a group of well-meaning but not-so-thoughtful birds.</p>
+    <p>Today’s version is based on two examples of the story. One is called Remarkable Story of Chicken Little. John Green Chandler had it published in the city of Boston, Massachusetts in 1842. Katharine Pyle published her 1918 version in Mother’s Nursery Tales.</p>
+    <p>The story has taken on its own American qualities and is a little like a parable, a story that teaches a moral lesson. Later retellings including a few movie versions have made changes to some of the characters or aimed to teach different ideas.</p>
+    <p>Here is the story Chicken Little in VOA Learning English.</p>
+    <p>One day, Chicken Little fell asleep under some flowers.</p>
+    <p>Cow wandered by, reached over the fence and bit off some flowers.</p>
+    <p>The noise wakened Chicken Little just as a flower petal fell on her tail.</p>
+    <p>"Squawk! Squawk!” cried Chicken Little, frightened by the petal’s landing.</p>
+    <p>“The sky is falling,” she continued, her call rising louder with her terror. “Squawk! Squawk!”</p>
+    <p>And, she jumped up and began to run, moving as fast as her two legs would carry her. She did not stop running until she came to the barnyard. There, she found Henny Penny scratching in the dirt of the barnyard.</p>
+    <p>“Oh, Henny Penny, do not scratch—run!” cried Chicken Little. “The sky is falling.”</p>
+    <p>The scratching stopped. Then Hen called out: “How do you know that, Chicken Little?”</p>
+    <p>“I saw it with my eyes, I heard it with my ears, and part of it fell on my tail. Let us run, until we get some place.”</p>
+    <p>“Squawk! Squawk,” cried Hen in return, a look of shock on her face. Then, run she did, speeding away from the barnyard.</p>
+    <p>Chicken Little followed close behind.</p>
+    <p>They almost ran right past the little lake, just as Ducky Lucky was going in for a swim.</p>
+    <p>“Oh, Ducky Lucky! Ducky Lucky! Do not try to swim,” cried Henny Penny. “The sky is falling.”</p>
+    <p>“Seriously, Henny Penny? Why do you think that?” asked Ducky Lucky.</p>
+    <p>“Chicken Little told me.”</p>
+    <p>“How do you know the sky is falling, Chicken Little?”</p>
+    <p>“I saw it with my eyes, I heard it with my ears, and part of it fell on my tail. Oh, let us run until we get some place.”</p>
+    <p>Ducky Lucky was persuaded.</p>
+    <p>“Yes, we had better run,” he yelled.</p>
+    <p>And the three took off, Ducky Lucky waddling faster than he ever had before. The birds ran and ran until they came to a green meadow, and there was Goosey Loose eating the green grass.</p>
+    <p>“Oh, Goosey Lucy, Goosey Lucy, do not eat; run,” cried Ducky Lucky.</p>
+    <p>“Why should I run?” asked Goosey Lucy.</p>
+    <p>“Because the sky is falling.”</p>
+    <p>“How do you know that, Ducky Lucky?”</p>
+    <p>“Henny Penny told me.”</p>
+    <p>“How do you know that, Henny Penny?”</p>
+    <p>“Chicken Little told me.”</p>
+    <p>“How do you know that, Chicken Little?”</p>
+    <p>“Because I saw it with my eyes, and heard it with my ears, and part of it fell on my tail. Oh, let us run some place.”</p>
+    <p>“Yes, we had better run,” cried Goosey Lucy.</p>
+    <p>Away they all ran, Goosey Lucy in the lead, and they ran and ran until they came to the turkey yard, and there was Turkey Lurkey strutting and gobbling.</p>
+    <p>“Oh, Turkey Lurkey! Do not strut!” cried Goosey Lucy.</p>
+    <p>“Why should I not strut?” asked Turkey Lurkey.</p>
+    <p>“Because the sky is falling.”</p>
+    <p>“How do you know it is?”</p>
+    <p>“Ducky Lucky told me!”</p>
+    <p>“How do you know, Ducky Lucky?”</p>
+    <p>“Henny Penny told me!”</p>
+    <p>“How do you know, Henny Penny?”</p>
+    <p>“Chicken Little told me!”</p>
+    <p>“Chicken Little, how do you know this for a fact?”</p>
+    <p>“I could not help knowing! I saw it with my eyes, I heard it with my ears, and a part of it fell on my tail. Oh, let us run until we get some place.”</p>
+    <p>“Yes, it would be best to run,” said Turkey Lurkey, so away they all ran, first Turkey Lurkey, and then Goosey Lucy, and then Ducky Lucky, and then Henny Penny and then Chicken Little.</p>
+    <p>They ran and ran until they came to Foxy Loxy’s house.</p>
+    <p>Foxy Loxy was resting, spread out across the doorway. She kept yawning, opening her mouth wide so that all her sharp teeth showed. But, her mouth snapped shut at the sudden arrival of the frightened birds, Turkey Lurkey and Goosey Lucy and Ducky Lucky and Henny Penny and Chicken Little.</p>
+    <p>Her eyes softened and her ears stood up. She was so very happy to see them all and smiled sweetly.</p>
+    <p>“Well, well,” the fox said, “what brings you all here?”</p>
+    <p>“Foxy Loxy, prevent yourself from yawning,” cried old Turkey Lurkey, “Indeed, the sky is falling.”</p>
+    <p>“How do you know that, Turkey Lurkey?” asked the fox.</p>
+    <p>“Goosey Lucy informed me.”</p>
+    <p>“How do you know that, Goosey Lucy?”</p>
+    <p>“Ducky Lucky told me.”</p>
+    <p>“How do you know that, Ducky Lucky?”</p>
+    <p>“Henny Penny told me.”</p>
+    <p>“How do you know that, Henny Penny?”</p>
+    <p>“Chicken Little.”</p>
+    <p>“How do you know that, Chicken Little?”</p>
+    <p>“I could not help knowing, for I saw it with my eyes, and I heard it with my ears, and part of it fell on my tail. Oh, where shall we run? We ought to go someplace.”</p>
+    <p>“Well,” said the Fox, “you come right into my house, and I will protect you and take such good care of you that, even if the sky falls, you will not know anything about it.”</p>
+    <p>So, in ran Turkey Lurkey and Goosey Lucy and Ducky Lucky and Henny Penny and — Chicken Little.</p>
+    <p>Foxy Loxy waited for a while and then shut the door firmly behind her. She would not let the falling sky threaten her guests, you see. She was going to take special care of them all.</p>
+    <p>And, maybe she did. But no one ever saw Chicken Little or her friends again.</p>
+    <p>Mario Ritter, Jr. adapted this story for VOA Learning English from stories in the public domain.</p>
+    <p>_______________________________________________</p>
+    <p>Lesson Plan</p>
+    <p>Download a lesson plan with activities related to this story below.</p>
+    <p>Quiz - Chicken Little</p>
+    <p>______________________________________________</p>
+    <p>Words in This Story</p>
+    <p>petal –n. a flat, soft colorful part of a flower</p>
+    <p>waddle –v. to walk with short steps while moving from side to side like a duck</p>
+    <p>meadow –n. a wide flat area covered with grass that is often surrounded by forest</p>
+    <p>strut –v. to walk in a confident or proud way</p>
+    <p>yawn –v. to open the mouth wide and take a deep breath usually as a reaction to being tired or bored</p>
+    <p>curl –v. to form into a rounded shape</p>
+    <p>We want to hear from you.</p>
+    <p>We have a new comment system. Here is how it works:</p>
+    <p>Each time you return to comment on the Learning English site, you can use your account and see your comments and replies to them. Our comment policy is here .</p>
+    <p>Related</p>
+  </section>
+
+  <section class="chinese">
+    <h2>中文翻译</h2>
+    <p>现在，这里是VOA慢速英语的美国儿童故事。</p>
+    <p>今天的故事很可能在很久以前于欧洲出版之前就已经开始了。</p>
+    <p>它最初可能被称为“Henny Penny”。但至少从19世纪中期起，这个故事就以与“Chicken Little”相似的标题讲给美国儿童听。</p>
+    <p>几代人听过并思考过这只小鸡的教训——她给一群好心但不太聪明的鸟儿带来了大麻烦。</p>
+    <p>今天的版本基于这个故事的两个版本。一个是《Chicken Little的奇妙故事》。约翰·格林·钱德勒于1842年在马萨诸塞州波士顿市出版。凯瑟琳·派尔1918年的版本发表在《母亲的育儿故事》中。</p>
+    <p>这个故事具有了美国特色，有点像一则寓言，一个教导道德教训的故事。后来的重述版本，包括几个电影版本，对某些角色做了改动，或旨在传达不同的观念。</p>
+    <p>以下是VOA慢速英语的《Chicken Little》故事。</p>
+    <p>一天，小鸡Chicken Little在花丛下睡着了。</p>
+    <p>奶牛慢慢走过，从栅栏上方探过头来，咬掉了一些花。</p>
+    <p>声音惊醒了Chicken Little，就在这时，一片花瓣落在她的尾巴上。</p>
+    <p>“呱！呱！”Chicken Little叫起来，被花瓣的落下吓了一跳。</p>
+    <p>“天塌下来了，”她继续说道，叫声随着她的恐惧越来越大。“呱！呱！”</p>
+    <p>她跳起来开始奔跑，用两条腿能以的最快速度跑着。她一直跑到谷仓院子才停下来。在那里，她看到Henny Penny正在谷仓院子的泥土里刨食。</p>
+    <p>“哦，Henny Penny，别刨了——快跑！”Chicken Little喊道。“天塌下来了。”</p>
+    <p>刨食的动作停了下来。然后母鸡喊道：“你怎么知道的，Chicken Little？”</p>
+    <p>“我亲眼看到的，亲耳听到的，还有一部分落在了我的尾巴上。我们快跑吧，直到跑到某个安全的地方。”</p>
+    <p>“呱！呱！”母鸡回应道，脸上露出震惊的神情。然后，她就真的跑了起来，飞快地离开了谷仓院子。</p>
+    <p>Chicken Little紧随其后。</p>
+    <p>她们差点从那个小湖边跑过去，正好Ducky Lucky正要下水游泳。</p>
+    <p>“哦，Ducky Lucky！Ducky Lucky！别游泳了，”Henny Penny喊道。“天塌下来了。”</p>
+    <p>“真的吗，Henny Penny？你为什么这么认为？”Ducky Lucky问道。</p>
+    <p>“Chicken Little告诉我的。”</p>
+    <p>“你怎么知道天塌下来了，Chicken Little？”</p>
+    <p>“我亲眼看到的，亲耳听到的，还有一部分落在了我的尾巴上。哦，我们快跑吧，直到跑到某个安全的地方。”</p>
+    <p>Ducky Lucky被说服了。</p>
+    <p>“是的，我们最好快跑，”他喊道。</p>
+    <p>于是三个伙伴出发了，Ducky Lucky以他前所未有的速度摇摇摆摆地跑着。鸟儿们跑啊跑，直到来到一片绿色的草地上，那里Goosey Loose正在吃青草。</p>
+    <p>“哦，Goosey Lucy，Goosey Lucy，别吃了；快跑，”Ducky Lucky喊道。</p>
+    <p>“我为什么要跑？”Goosey Lucy问道。</p>
+    <p>“因为天塌下来了。”</p>
+    <p>“你怎么知道的，Ducky Lucky？”</p>
+    <p>“Henny Penny告诉我的。”</p>
+    <p>“你怎么知道的，Henny Penny？”</p>
+    <p>“Chicken Little告诉我的。”</p>
+    <p>“你怎么知道的，Chicken Little？”</p>
+    <p>“因为我亲眼看到的，亲耳听到的，还有一部分落在了我的尾巴上。哦，我们快跑到某个地方去吧。”</p>
+    <p>“是的，我们最好快跑，”Goosey Lucy喊道。</p>
+    <p>于是它们全都跑了起来，Goosey Lucy跑在最前面，它们跑啊跑，直到来到火鸡场，那里Turkey Lurkey正在昂首阔步、咯咯地叫着。</p>
+    <p>“哦，Turkey Lurkey！别昂首阔步了！”Goosey Lucy喊道。</p>
+    <p>“我为什么不能昂首阔步？”Turkey Lurkey问道。</p>
+    <p>“因为天塌下来了。”</p>
+    <p>“你怎么知道的？”</p>
+    <p>“Ducky Lucky告诉我的！”</p>
+    <p>“你怎么知道的，Ducky Lucky？”</p>
+    <p>“Henny Penny告诉我的！”</p>
+    <p>“你怎么知道的，Henny Penny？”</p>
+    <p>“Chicken Little告诉我的！”</p>
+    <p>“Chicken Little，你是怎么确切知道这件事的？”</p>
+    <p>“我是不可能不知道的！我是亲眼看到的，亲耳听到的，还有一部分落在了我的尾巴上。哦，我们快跑吧，跑到某个地方去。”</p>
+    <p>“对，最好还是跑吧。”火鸡勒基说，于是它们全都跑了起来，先是火鸡勒基，然后是鹅露西，接着是鸭乐奇，再然后是母鸡彭妮，最后是小鸡利特尔。</p>
+    <p>它们跑啊跑，一直跑到狐狸乐希的家。</p>
+    <p>狐狸乐希正躺着休息，整个身子横在门口。她不停地打哈欠，把嘴张得大大的，露出所有锋利的牙齿。但是，看到火鸡勒基、鹅露西、鸭乐奇、母鸡彭妮和小鸡利特尔这些受惊的鸟儿突然到来，她的嘴啪地一下合上了。</p>
+    <p>她的眼神变得柔和，耳朵竖了起来。她看到它们非常高兴，甜甜地笑了。</p>
+    <p>“哎呀，哎呀，”狐狸说，“是什么风把你们大家吹到这儿来了？”</p>
+    <p>“狐狸乐希，你别打哈欠了，”老火鸡勒基喊道，“真的，天要塌下来了。”</p>
+    <p>“你是怎么知道的，火鸡勒基？”狐狸问。</p>
+    <p>“鹅露西告诉我的。”</p>
+    <p>“你是怎么知道的，鹅露西？”</p>
+    <p>“鸭乐奇告诉我的。”</p>
+    <p>“你是怎么知道的，鸭乐奇？”</p>
+    <p>“母鸡彭妮告诉我的。”</p>
+    <p>“你是怎么知道的，母鸡彭妮？”</p>
+    <p>“小鸡利特尔。”</p>
+    <p>“你是怎么知道的，小鸡利特尔？”</p>
+    <p>“我是不可能不知道的，因为我是亲眼看到的，亲耳听到的，还有一部分落在了我的尾巴上。哦，我们该往哪儿跑？我们得去个什么地方。”</p>
+    <p>“嗯，”狐狸说，“你们快进我屋里来吧，我会保护你们，好好照顾你们，就算天塌下来，你们也不会察觉到。”</p>
+    <p>于是，火鸡勒基、鹅露西、鸭乐奇、母鸡彭妮跑进去了，还有——小鸡利特尔。</p>
+    <p>狐狸乐希等了一会儿，然后在她身后牢牢地关上了门。你看，她可不想让塌下来的天威胁到她的客人们。她要好好“照顾”它们大家。</p>
+    <p>也许，她的确这么做了。但从此再也没有人见过小鸡利特尔和它的朋友们。</p>
+    <p>小马里奥·里特根据公共领域的故事为VOA学英语改编了这个故事。</p>
+    <p>_______________________________________________</p>
+    <p>教案</p>
+    <p>在下方下载一份包含与本故事相关的活动的教案。</p>
+    <p>测验——小鸡利特尔</p>
+    <p>______________________________________________</p>
+    <p>本故事中的词汇</p>
+    <p>花瓣——名词：花朵上扁平、柔软的彩色部分</p>
+    <p>摇摇摆摆地走——动词：像鸭子一样迈着小步、左右摇晃地走路</p>
+    <p>草地——名词：一片广阔平坦、长满草、常常被森林环绕的地方</p>
+    <p>昂首阔步——动词：以自信或骄傲的方式行走</p>
+    <p>打哈欠——动词：张开嘴深吸一口气，通常是对疲倦或无聊的反应</p>
+    <p>卷曲——动词：形成圆形的形状</p>
+    <p>我们期待听到你的声音。</p>
+    <p>我们有了新的评论系统。使用方法如下：</p>
+    <p>每次你回到学英语网站发表评论时，都可以使用你的账户查看你的评论及他人对你的回复。我们的评论政策在此。</p>
+    <p>相关</p>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://learningenglish.voanews.com/a/american-stories-chicken-little/6947104.html">https://learningenglish.voanews.com/a/american-stories-chicken-little/6947104.html</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('timeupdate', function () {
+      var si = currentSentenceIndex(player.currentTime);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        lastSentence = si;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
