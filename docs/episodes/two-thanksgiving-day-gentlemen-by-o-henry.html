@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>'Two Thanksgiving Day Gentlemen,' by O. Henry - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>'Two Thanksgiving Day Gentlemen,' by O. Henry</h1>
+  <p class="meta">
+    Nov 22, 2024 · American Stories
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/041-two-thanksgiving-day-gentlemen-by-o-henry.mp3"></audio>
+  </div>
+
+  <section class="english">
+    <h2>English</h2>
+    <p>We present the short story "Two Thanksgiving Day Gentlemen," by O. Henry. The story was originally adapted and recorded by the U.S. Department of State.</p>
+    <p>There is one day that is ours. There is one day when all Americans go back to the old home and eat a big dinner. Bless the day. The President gives it to us every year.</p>
+    <p>Sometimes he talks about the people who had the first Thanksgiving. They were the Puritans. They were some people who landed on our Atlantic shore. We don’t really remember much about them.</p>
+    <p>But those people ate a large bird called turkey on the first Thanksgiving Day. So we have turkey for Thanksgiving dinner, if we have enough money to buy turkey. That is a tradition.</p>
+    <p>Yes. Thanksgiving Day is the one day of the year that is purely American. And now here is the story to prove to you that we have old traditions in this new country. They are growing older more quickly than traditions in old countries. That is because we are so young and full of life. We do everything quickly.</p>
+    <p>Stuffy Pete sat down on a seat in the New York City park named Union Square. It was the third seat to the right as you enter Union Square from the east.</p>
+    <p>Every Thanksgiving for nine years he had sat down there at one in the afternoon. Every time, things had happened to him. They were wonderful things. They made his heart feel full of joy—and they filled another part of him, too. They filled the part below his heart.</p>
+    <p>On those other Thanksgiving Days he had been hungry. (It is a strange thing. There are rich people who wish to help the poor. But many of them seem to think that the poor are hungry only on Thanksgiving Day.)</p>
+    <p>But today Pete was not hungry. He had come from a dinner so big that he had almost no power to move. His light green eyes looked out from a gray face on which there was still a little food. His breath was short. His body had suddenly become too big for his clothes; it seemed ready to break out of them. They were torn. You could see his skin through a hole in the front of his shirt. But the cold wind, with snow in it, felt pleasantly cool to him.</p>
+    <p>For Stuffy Pete was overheated with the warmth of all he had had to eat. The dinner had been much too big. It seemed to him that his dinner had included all the turkey and all the other food in the whole world.</p>
+    <p>So he sat, very, very full. He looked out at the world without interest, as if it could never offer him anything more.</p>
+    <p>The dinner had not been expected.</p>
+    <p>He had been passing a large house near the beginning of that great broad street called Fifth Avenue. It was the home of two old ladies of an old family. These two old ladies had a deep love of traditions. There were certain things they always did. On Thanksgiving Day at noon they always sent a servant to stand at the door. There he waited for the first hungry person who walked by. The servant had orders to bring that person into the house and feed him until he could eat no more. Stuffy Pete happened to pass by on his way to the park. The servant had gathered him in. Tradition had been followed.</p>
+    <p>Stuffy Pete sat in the park looking straight before him for ten minutes. Then he felt a desire to look in another direction. With a very great effort, he moved his head slowly to the left.</p>
+    <p>Then his eyes grew wider and his breath stopped. His feet in their torn shoes at the ends of his short legs moved about on the ground.</p>
+    <p>For the Old Gentleman was coming across Fourth Avenue toward Stuffy’s seat.</p>
+    <p>Every Thanksgiving Day for nine years the Old Gentleman had come there to find Stuffy Pete on his seat. That was a thing that the Old Gentleman was trying to make into a tradition. Every Thanksgiving Day for nine years he had found Stuffy there. Then he had led Stuffy to a restaurant and watched him eat a big dinner.</p>
+    <p>They do these things more easily in old countries like England. They do them without thinking about them.</p>
+    <p>But in this young country, we must think about them. In order to build a tradition, we must do the same thing again and again for a long time. The Old Gentleman loved his country. He believed he was helping to build a great American tradition. And he had been doing very well. Nine years is a long time here.</p>
+    <p>The Old Gentleman moved, straight and proud, toward the tradition that he was building. Truly feeding Stuffy Pete once a year was not a very important tradition. There are greater and more important traditions in England. But it was a beginning. It proved that a tradition was at least possible in America.</p>
+    <p>The Old Gentleman was thin and tall and sixty. He was dressed all in black. He wore eyeglasses. His hair was whiter and thinner than it had been last year. His legs did not seem as strong as they had seemed the year before.</p>
+    <p>As this kind Old Gentleman came toward him, Stuffy began to shake and his breath was shorter. He wished he could fly away. But he could not move from his seat.</p>
+    <p>“Good morning,” said the Old Gentleman. “I am glad to see that the troubles of another year have not hurt you. You continue to move in health about the beautiful world. For that blessing you and I can give thanks on this day of thanksgiving. If you will come with me, my man, I will give you a dinner that will surely make your body feel as thankful as your mind.”</p>
+    <p>That is what the Old Gentleman said every time. Every Thanksgiving Day for nine years. The words themselves were almost a tradition. Always before, they had been music in Stuffy’s ear. But now he looked up at the Old Gentleman’s face with tears of suffering in his eyes. The snow turned quickly to water when it fell upon his hot face. But the Old Gentleman was shaking with the cold. He turned away, with his back to the wind, and he did not see Stuffy’s eyes.</p>
+    <p>Stuffy had always wondered why the Old Gentleman seemed sad as he spoke. He did not know that it was because the Old Gentleman was wishing that he had a son. A son would come there after he himself was gone. A son would stand proud and strong before Stuffy, and say: “In remembrance of my father.” Then it would really be a tradition.</p>
+    <p>But the Old Gentleman had no family. He lived in a room in one of the old houses near the park. In the winter he grew a few flowers there. In the spring he walked on Fifth Avenue. In the summer he lived in a farmhouse in the hills outside New York, and he talked of a strange bug he hoped some day to find. In the fall season he gave Stuffy a dinner. These were the things that filled the Old Gentleman’s life.</p>
+    <p>Stuffy Pete looked up at him for a half minute, helpless and very sorry for himself. The Old Gentleman’s eyes were bright with the giving pleasure. His face was getting older every year, but his clothes were very clean and fresh.</p>
+    <p>And then Stuffy made a strange noise. He was trying to speak. As the Old Gentleman had heard the noise nine times before, he understood it. He knew that Stuffy was accepting.</p>
+    <p>“Thank you. I’m very hungry.”</p>
+    <p>Stuffy was very full, but he understood that he was part of a tradition. His desire for food on Thanksgiving Day was not his own. It belonged to this kind Old Gentleman. True, America is free. But there are some things that must be done.</p>
+    <p>The Old Gentleman led Stuffy to the restaurant and to the same table where they had always gone. They were known here.</p>
+    <p>“Here comes that old man,” said a waiter, “that buys that old no-good fellow a dinner every Thanksgiving.”</p>
+    <p>The Old Gentleman sat at the table, watching. The waiters brought food, and more food. And Stuffy began to eat.</p>
+    <p>No great and famous soldier ever battled more strongly against an enemy. The turkey and all the other food were gone almost as quickly as they appeared. Stuffy saw the look of happiness on the Old Gentleman’s face. He continued to eat in order to keep it there.</p>
+    <p>In an hour the battle was finished.</p>
+    <p>“Thank you,” Stuffy said. “Thank you for my Thanksgiving dinner.” Then he stood up heavily and started to go to the wrong door. A waiter turned him in the right direction.</p>
+    <p>The Old Gentleman carefully counted out $1.30, and left fifteen cents more for the waiter.</p>
+    <p>They said goodbye, as they did each year, at the door. The Old Gentleman went south, and Stuffy went north.</p>
+    <p>Stuffy went around the first corner, and stood for one minute. Then he fell.</p>
+    <p>There he was found. He was picked up and taken to a hospital. They put him on a bed, and began to try to discover what strange sickness had made him fall.</p>
+    <p>And an hour later the Old Gentleman was brought to the same hospital. And they put him on another bed, and began to try to discover what his sickness could be.</p>
+    <p>After a little time one of the doctors met another doctor, and they talked.</p>
+    <p>“That nice old gentleman over there,” he said. “Do you know what’s wrong with him? He’s almost dead for the need of food. A very proud old man, I think. He told me he has had nothing to eat for three days.”</p>
+    <p>Now it's your turn to use the words in this story. What is your favorite holiday? What kinds of holiday traditions do they have in your country? Let us know in the comments section or on our Facebook page.</p>
+    <p>______________________________________________</p>
+    <p>Quiz</p>
+    <p>Quiz - Two Thanksgiving Day Gentlemen</p>
+    <p>_______________________________</p>
+    <p>For Teachers</p>
+    <p>The document below contains activities to help learners understand the story.</p>
+    <p>_______________________________________________</p>
+    <p>Words in This Story</p>
+    <p>Puritan(s) – n. a member of a Protestant group in England and New England in the 16th and 17th centuries that opposed many customs of the Church of England</p>
+    <p>tear(s) – n. a drop of liquid that comes from your eyes especially when you cry</p>
+    <p>bug – n. a usually small insect</p>
+    <p>cent(s) – n. a unit of money that is equal to ¹/₁₀₀ of the basic unit of money in many countries</p>
+    <p>Related</p>
+  </section>
+
+  <section class="chinese">
+    <h2>中文翻译</h2>
+    <p>我们呈现欧·亨利的短篇小说《两位感恩节的绅士》。该故事最初由美国国务院改编并录制。</p>
+    <p>有一个日子是属于我们的。有一个日子，所有美国人回到老家，吃一顿丰盛的晚餐。祝福这个日子吧。总统每年把它赐给我们。</p>
+    <p>有时他会谈起那些度过第一个感恩节的人。他们是清教徒。他们是一群登上我们大西洋海岸的人。我们其实对他们记得不多。</p>
+    <p>但那些人在第一个感恩节吃了一种叫做火鸡的大鸟。所以，如果我们有足够的钱买火鸡，我们的感恩节晚餐就吃火鸡。那是一种传统。</p>
+    <p>是的。感恩节是一年中纯粹属于美国的日子。现在这里有一个故事，向你证明我们在这个新国家也有古老的传统。它们比老国家的传统老得更快。那是因为我们如此年轻、充满活力。我们做一切事情都很快。</p>
+    <p>斯塔菲·皮特坐在纽约市联合广场公园的一条长椅上。那是从东边进入联合广场后右手边的第三条长椅。</p>
+    <p>九年来，每个感恩节的下午一点他都坐在那里。每次，总有些事情发生在他身上。那些都是奇妙的事。它们让他心里充满喜悦——也填充了他身体的另一部分。它们填满了他心脏下方的部分。</p>
+    <p>在过去的那些感恩节，他总是饥肠辘辘。（这是一件奇怪的事。有些富人想要帮助穷人。但他们中的许多人似乎认为穷人只在感恩节那天挨饿。）</p>
+    <p>但今天皮特并不饿。他刚刚吃了一顿大餐，大到他几乎没有力气动弹。他那浅绿色的眼睛从一张灰色的脸上望出来，脸上还沾着一点食物。他呼吸短促。他的身体突然变得太大，撑得衣服快要裂开；似乎随时会撑破它们。衣服都撕裂了。透过衬衫前面的一个洞，你能看到他的皮肤。但夹着雪的寒风，却让他感到惬意的凉爽。</p>
+    <p>因为斯塔菲·皮特吃了太多东西，身上热得厉害。那顿饭实在太过丰盛。在他看来，他的这顿饭包含了全世界所有的火鸡和其他食物。</p>
+    <p>于是他坐在那里，撑得不能再撑。他毫无兴趣地望着外面的世界，仿佛这个世界再也给不了他任何东西。</p>
+    <p>这顿饭本不是他预料之中的。</p>
+    <p>他刚才经过一栋大房子，它靠近那条宽阔的大街——第五大道的起点处。那是古老家族两位老太太的家。这两位老太太深爱传统。有些事情她们总是会做。感恩节中午，她们总是派一名仆人在门口站着。仆人在那里等待第一个经过的饥饿的人。仆人接到命令，要把那个人带进屋里，喂到他再也吃不下为止。斯塔菲·皮特在去公园的路上恰好经过。仆人将他收了进去。传统得到了遵循。</p>
+    <p>斯塔菲·皮特坐在公园里，直视前方十分钟。然后他想看看另一个方向。他费了很大的劲，慢慢地把头转向左边。</p>
+    <p>然后他瞪大了眼睛，屏住了呼吸。他那两条短腿末端穿着破鞋的双脚在地上挪动起来。</p>
+    <p>因为那位老绅士正穿过第四大街朝斯塔菲的座位走来。</p>
+    <p>九年来，每个感恩节，老绅士都会来到这里，在斯塔菲的长椅上找到他。那是老绅士想要把它变成一种传统的事情。九年来，每个感恩节他都会在那儿找到斯塔菲。然后他会带斯塔菲去一家餐馆，看着他吃一顿大餐。</p>
+    <p>在像英格兰这样的老国家，人们做这些事情更轻松自然。他们做这些事情时想都不用想。</p>
+    <p>但是在这个年轻的国家里，我们必须考虑这些。为了建立一种传统，我们必须长时间地一次又一次地做同一件事。老绅士热爱他的国家。他相信自己正在帮助建立一项伟大的美国传统。而且他一直做得很好。九年在这里是一段很长的时间。</p>
+    <p>老绅士挺直而自豪地走向他正在建立的传统。每年喂饱斯塔菲·皮特一次确实算不上什么重要的传统。英国有更伟大、更重要的传统。但这是一个开始。它证明了在美国至少有可能建立一种传统。</p>
+    <p>老绅士又瘦又高，六十岁了。他全身穿着黑衣。他戴着眼镜。他的头发比去年更白、更稀疏了。他的腿似乎也不如去年那么结实了。</p>
+    <p>当这位仁慈的老绅士向他走来时，斯塔菲开始发抖，呼吸变得更加短促。他希望自己能飞走。但他无法从座位上移动。</p>
+    <p>“早上好，”老绅士说。“我很高兴看到又一年的烦恼没有伤害到你。你继续健康地行走在这美丽的世界中。为了这一福分，你和我可以在这个感恩的日子里表示感谢。如果你愿意跟我来，我的伙计，我会给你一顿饭，它必定会让你的身体和你的心灵一样充满感激。”</p>
+    <p>这就是老绅士每次说的话。九年来的每一个感恩节都是如此。这些话本身几乎成了一种传统。以往每一次，它们都是斯塔菲耳中的音乐。但现在他抬头看着老绅士的脸，眼中满含痛苦的泪水。雪花落在他滚烫的脸上，立刻化成了水。但老绅士正冷得发抖。他转过身去，背对着风，没有看到斯塔菲的眼睛。</p>
+    <p>斯塔菲一直想知道，为什么老绅士说话时似乎带着忧伤。他不知道那是因为老绅士希望自己有一个儿子。等他去世之后，会有一个儿子来到这里。那个儿子会骄傲而强壮地站在斯塔菲面前，说道：“纪念我的父亲。”那样这才会真正成为一项传统。</p>
+    <p>但老绅士没有家人。他住在公园附近一栋老房子里的一间屋子里。冬天他在那里种一些花。春天他在第五大道上散步。夏天他住在纽约城外山中的一座农舍里，谈论着一种他希望有一天能找到的奇异虫子。秋天他请斯塔菲吃一顿饭。这些就是填满老绅士生活的事情。</p>
+    <p>斯塔菲·皮特抬头看了他半分钟，无可奈何，也为自己深感难过。老绅士的眼中闪烁着给予的快乐。他的脸一年比一年苍老，但他的衣服非常干净整洁。</p>
+    <p>然后斯塔菲发出了一声奇怪的声响。他在努力说话。由于老绅士之前已经听过这声音九次，他明白它的意思。他知道斯塔菲是在接受。</p>
+    <p>“谢谢你。我真的很饿。”</p>
+    <p>斯塔菲很饱，但他明白自己是一项传统的一部分。他在感恩节对食物的渴望并不是他自己的。它属于这位仁慈的老绅士。的确，美国是自由的。但有些事情是必须做的。</p>
+    <p>老绅士带着斯塔菲去了那家餐馆，来到他们一直坐的那张桌子前。他们在这里是熟面孔。</p>
+    <p>“那个老头来了，”一个侍者说，“就是那个每年感恩节给那个没用的家伙买一顿饭的人。”</p>
+    <p>老绅士坐在桌边，看着。侍者们端来食物，更多的食物。斯塔菲开始吃了起来。</p>
+    <p>没有哪位伟大而著名的士兵与敌人进行过更顽强的战斗。火鸡和所有其他食物几乎一出现就被消灭了。斯塔菲看到了老绅士脸上幸福的神情。他继续吃着，以保持那神情留在那里。</p>
+    <p>一个小时过后，战斗结束了。</p>
+    <p>“谢谢你，”斯塔菲说。“谢谢你给我这顿感恩节晚餐。”然后他沉重地站起身来，朝错误的门口走去。一位侍者把他转向了正确的方向。</p>
+    <p>老先生仔细数出一美元三十美分，又留下十五美分给侍者作为小费。</p>
+    <p>和每年一样，他们在门口道别。老先生往南走，斯塔菲往北走。</p>
+    <p>斯塔菲绕过第一个街角，站了一分钟。然后他倒了下去。</p>
+    <p>他就在那里被发现了。他被扶起来，送进了一家医院。他们把他放到一张床上，开始尝试查明是什么奇怪的疾病让他倒下的。</p>
+    <p>一小时后，老先生也被送到了同一家医院。他们把他放到另一张床上，开始尝试查明他得的是什么病。</p>
+    <p>过了一会儿，一位医生遇到了另一位医生，他们交谈起来。</p>
+    <p>“那边那位可敬的老先生，”他说。“您知道他得了什么病吗？他饿得快死了。我想，是一位非常自尊的老人。他告诉我他已经三天没吃过任何东西了。”</p>
+    <p>现在轮到你来使用这个故事中的词语了。你最喜欢的节日是什么？你们的国家有哪些节日传统？请在评论区或我们的Facebook页面上告诉我们。</p>
+    <p>______________________________________________</p>
+    <p>小测验</p>
+    <p>小测验——两位感恩节绅士</p>
+    <p>_______________________________</p>
+    <p>教师用</p>
+    <p>下面的文件包含帮助学生理解故事的活动。</p>
+    <p>_______________________________________________</p>
+    <p>本故事中的词语</p>
+    <p>清教徒——名词。16世纪和17世纪英格兰和新英格兰新教团体的一员，反对英国国教的许多习俗</p>
+    <p>眼泪——名词。从眼睛里流出的液体，尤其是在哭泣的时候</p>
+    <p>虫子——名词。一种通常很小的昆虫</p>
+    <p>分——名词。在许多国家，等于基本货币单位百分之一的货币单位</p>
+    <p>相关</p>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://learningenglish.voanews.com/a/two-thanksgiving-day-gentlemen-by-o-henry/4656560.html">https://learningenglish.voanews.com/a/two-thanksgiving-day-gentlemen-by-o-henry/4656560.html</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('timeupdate', function () {
+      var si = currentSentenceIndex(player.currentTime);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        lastSentence = si;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
