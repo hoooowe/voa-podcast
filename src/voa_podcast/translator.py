@@ -11,6 +11,7 @@ import hashlib
 import json
 import logging
 import re
+import time
 from pathlib import Path
 from typing import Protocol
 
@@ -34,6 +35,14 @@ Requirements:
 
 DEFAULT_TIMEOUT = 120
 
+# LLM providers (e.g. SenseNova) enforce per-minute token/request quotas, so a
+# burst of batches can be answered with HTTP 429. Retry with backoff instead of
+# failing the whole episode.
+RETRYABLE_STATUS_CODES = {408, 409, 425, 429, 500, 502, 503, 504}
+MAX_RETRIES = 4
+INITIAL_RETRY_DELAY = 5.0
+MAX_RETRY_DELAY = 60.0
+
 SENTENCE_SYSTEM_PROMPT = """You are an English-to-Chinese translator for language learners.
 
 You will receive a JSON array of English sentences. Translate EACH sentence
@@ -49,6 +58,18 @@ Rules:
 
 class TranslationError(Exception):
     """Raised when translation fails."""
+
+
+class ApiError(TranslationError):
+    """Raised when the LLM API itself fails (network/HTTP).
+
+    Callers should not fall back to extra requests on this error: a broken API
+    or an exhausted quota would just fail again and multiply the load.
+    """
+
+
+class RateLimitError(ApiError):
+    """Raised when the LLM API keeps rate limiting after all retries."""
 
 
 class TranslationProvider(Protocol):
@@ -96,8 +117,13 @@ class OpenAICompatibleTranslator:
 
         translated_batches: list[str] = []
         for batch in batches:
-            result = self._call_api(batch)
-            translated_batches.append(result)
+            # Cache each batch separately so a retried run does not re-send
+            # batches that already succeeded.
+            cached_batch = self._load_cache(batch)
+            if cached_batch is None:
+                cached_batch = self._call_api(batch)
+                self._save_cache(batch, cached_batch)
+            translated_batches.append(cached_batch)
 
         full_translation = "\n\n".join(translated_batches)
         self._save_cache(text, full_translation)
@@ -135,6 +161,9 @@ class OpenAICompatibleTranslator:
             ens = [s for _, s in batch]
             try:
                 zhs = self._call_api_sentences(ens)
+            except ApiError:
+                # Rate limits / API failures would only repeat per sentence.
+                raise
             except TranslationError as exc:
                 logger.warning("[TRANSLATE] Batch JSON failed (%s); translating one-by-one.", exc)
                 zhs = [self._translate_single(s) for s in ens]
@@ -170,38 +199,11 @@ class OpenAICompatibleTranslator:
 
     def _call_api_sentences(self, sentences: list[str]) -> list[str]:
         """Translate a batch of sentences via a JSON-array request."""
-        if not self._api_key:
-            raise TranslationError(
-                "LLM_API_KEY is not configured. Set it in .env or repository secrets."
-            )
-        if not self._model:
-            raise TranslationError("LLM_MODEL is not configured.")
-
-        url = f"{self._base_url}/chat/completions"
-        headers = {
-            "Authorization": f"Bearer {self._api_key}",
-            "Content-Type": "application/json",
-        }
-        payload = {
-            "model": self._model,
-            "temperature": self._temperature,
-            "messages": [
-                {"role": "system", "content": SENTENCE_SYSTEM_PROMPT},
-                {"role": "user", "content": json.dumps(sentences, ensure_ascii=False)},
-            ],
-        }
+        payload = self._payload(SENTENCE_SYSTEM_PROMPT, json.dumps(sentences, ensure_ascii=False))
+        data = self._post(payload)
         try:
-            resp = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
-        except requests.RequestException as exc:
-            raise TranslationError(f"LLM API request failed: {exc}") from exc
-        if resp.status_code != 200:
-            raise TranslationError(
-                f"LLM API returned HTTP {resp.status_code}: {resp.text[:300]}"
-            )
-        try:
-            data = resp.json()
             content = data["choices"][0]["message"]["content"].strip()
-        except (KeyError, IndexError, ValueError) as exc:
+        except (KeyError, IndexError, TypeError) as exc:
             raise TranslationError(f"Unexpected LLM API response: {exc}") from exc
 
         cleaned = _strip_code_fences(content)
@@ -245,42 +247,87 @@ class OpenAICompatibleTranslator:
     # ------------------------------------------------------------------ #
     # API call
     # ------------------------------------------------------------------ #
-    def _call_api(self, text: str) -> str:
+    def _payload(self, system_prompt: str, user_content: str) -> dict:
         if not self._api_key:
             raise TranslationError(
                 "LLM_API_KEY is not configured. Set it in .env or repository secrets."
             )
         if not self._model:
             raise TranslationError("LLM_MODEL is not configured.")
+        return {
+            "model": self._model,
+            "temperature": self._temperature,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_content},
+            ],
+        }
 
+    def _post(self, payload: dict) -> dict:
+        """POST to the chat completions endpoint, retrying rate limits/5xx.
+
+        Providers such as SenseNova enforce per-minute token quotas, so a large
+        article can be throttled with HTTP 429 even though the same request
+        succeeds a minute later. Retry instead of failing the episode.
+        """
         url = f"{self._base_url}/chat/completions"
         headers = {
             "Authorization": f"Bearer {self._api_key}",
             "Content-Type": "application/json",
         }
-        payload = {
-            "model": self._model,
-            "temperature": self._temperature,
-            "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": text},
-            ],
-        }
+        for attempt in range(MAX_RETRIES + 1):
+            try:
+                resp = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
+            except requests.RequestException as exc:
+                if attempt == MAX_RETRIES:
+                    raise ApiError(f"LLM API request failed: {exc}") from exc
+                self._wait_before_retry(f"request failed: {exc}", attempt)
+                continue
 
+            if resp.status_code == 200:
+                try:
+                    return resp.json()
+                except ValueError as exc:
+                    raise TranslationError(f"Unexpected LLM API response: {exc}") from exc
+
+            detail = resp.text[:300]
+            if resp.status_code in RETRYABLE_STATUS_CODES and attempt < MAX_RETRIES:
+                self._wait_before_retry(
+                    f"HTTP {resp.status_code}: {detail}",
+                    attempt,
+                    resp.headers.get("Retry-After"),
+                )
+                continue
+
+            message = f"LLM API returned HTTP {resp.status_code}: {detail}"
+            if resp.status_code == 429:
+                raise RateLimitError(message)
+            raise ApiError(message)
+
+        raise ApiError("LLM API request failed after retries.")  # pragma: no cover
+
+    @staticmethod
+    def _wait_before_retry(
+        reason: str, attempt: int, retry_after: str | None = None
+    ) -> None:
+        delay = _retry_after_seconds(retry_after)
+        if delay is None:
+            delay = min(INITIAL_RETRY_DELAY * (2**attempt), MAX_RETRY_DELAY)
+        logger.warning(
+            "[TRANSLATE] %s; retrying in %.1fs (%d/%d).",
+            reason,
+            delay,
+            attempt + 1,
+            MAX_RETRIES,
+        )
+        time.sleep(delay)
+
+    def _call_api(self, text: str) -> str:
+        payload = self._payload(SYSTEM_PROMPT, text)
+        data = self._post(payload)
         try:
-            resp = requests.post(url, json=payload, headers=headers, timeout=DEFAULT_TIMEOUT)
-        except requests.RequestException as exc:
-            raise TranslationError(f"LLM API request failed: {exc}") from exc
-
-        if resp.status_code != 200:
-            raise TranslationError(
-                f"LLM API returned HTTP {resp.status_code}: {resp.text[:300]}"
-            )
-
-        try:
-            data = resp.json()
             return data["choices"][0]["message"]["content"].strip()
-        except (KeyError, IndexError, ValueError) as exc:
+        except (KeyError, IndexError, TypeError) as exc:
             raise TranslationError(f"Unexpected LLM API response: {exc}") from exc
 
     # ------------------------------------------------------------------ #
@@ -322,6 +369,16 @@ class OpenAICompatibleTranslator:
 
 
 _CODE_FENCE_RE = re.compile(r"^```[a-zA-Z]*\s*\n?|\n?```\s*$")
+
+
+def _retry_after_seconds(value: str | None) -> float | None:
+    """Parse a numeric Retry-After header, capped to MAX_RETRY_DELAY."""
+    if not value:
+        return None
+    try:
+        return min(float(value.strip()), MAX_RETRY_DELAY)
+    except ValueError:
+        return None
 
 
 def _strip_code_fences(content: str) -> str:

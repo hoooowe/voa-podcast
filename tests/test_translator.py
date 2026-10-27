@@ -103,3 +103,38 @@ def test_batching_preserves_order(tmp_path, monkeypatch):
     assert "一" in result
     assert "五" in result
     assert result.index("一") < result.index("五")
+
+
+def test_rate_limit_is_retried(tmp_path, monkeypatch):
+    """A 429 must be retried instead of failing the episode (CI regression)."""
+
+    class FakeResponse:
+        def __init__(self, status_code, payload):
+            self.status_code = status_code
+            self._payload = payload
+            self.headers = {"Retry-After": "0"}
+            self.text = json.dumps(payload)
+
+        def json(self):
+            return self._payload
+
+    responses = [
+        FakeResponse(429, {"error": {"message": "inference exceeds tpm/rpm limit"}}),
+        FakeResponse(200, {"choices": [{"message": {"content": "你好，世界。"}}]}),
+    ]
+    calls = []
+
+    def fake_post(url, json=None, headers=None, timeout=None):  # noqa: ANN001
+        calls.append(json)
+        return responses.pop(0)
+
+    monkeypatch.setattr("voa_podcast.translator.requests.post", fake_post)
+
+    translator = OpenAICompatibleTranslator(
+        base_url="https://api.example.com/v1",
+        api_key="test-key",
+        model="test-model",
+        cache_dir=tmp_path,
+    )
+    assert translator.translate("Hello world.") == "你好，世界。"
+    assert len(calls) == 2
