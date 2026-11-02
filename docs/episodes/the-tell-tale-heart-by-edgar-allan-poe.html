@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<title>'The Tell-Tale Heart' by Edgar Allan Poe - Daily English Listening</title>
+<style>
+  :root {
+    --bg: #fafafa;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --text-muted: #6e6e73;
+    --border: #e5e5e7;
+    --accent: #0071e3;
+    --accent-hover: #0077ed;
+    --section-english: #f0f5ff;
+    --section-chinese: #fff5f0;
+    --active-bg: #e8f1ff;
+    --active-border: #0071e3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --card: #1c1c1e;
+      --text: #f5f5f7;
+      --text-muted: #98989d;
+      --border: #2c2c2e;
+      --accent: #0a84ff;
+      --accent-hover: #409cff;
+      --section-english: #0c1a2e;
+      --section-chinese: #2e1c0c;
+      --active-bg: #0a2a4a;
+      --active-border: #0a84ff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+      "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+  .back {
+    display: inline-block;
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 15px;
+    margin: 0 0 32px;
+  }
+  .player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    position: sticky;
+    top: 12px;
+    z-index: 10;
+  }
+  .player-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  audio { width: 100%; }
+  section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .english h2 { color: var(--accent); }
+  .chinese h2 { color: #c64a1e; }
+  .english p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .chinese p {
+    font-size: 17px;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .source {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .source a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  /* Interactive sentence list (click-to-seek) */
+  .hint {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0 0 16px;
+  }
+  .sentence-list { list-style: none; padding: 0; margin: 0; }
+  .sentence {
+    border-left: 3px solid transparent;
+    padding: 14px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .sentence + .sentence { margin-top: 4px; }
+  .sentence:hover { background: var(--active-bg); }
+  .sentence.active {
+    background: var(--active-bg);
+    border-left-color: var(--active-border);
+  }
+  .sentence .en {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0 0 6px;
+  }
+  .sentence .zh {
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--text-muted);
+  }
+  .sentence.active .zh { color: var(--text); }
+  .time-tag {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+    margin-right: 8px;
+    user-select: none;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 48px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="../index.html">← All Episodes</a>
+
+  <h1>'The Tell-Tale Heart' by Edgar Allan Poe</h1>
+  <p class="meta">
+    Nov 08, 2024 · American Stories
+  </p>
+
+  <div class="player">
+    <p class="player-label">▶ VOA Original Audio</p>
+    <audio id="player" controls preload="metadata" src="https://hoooowe.github.io/voa-podcast/audio/045-the-tell-tale-heart-by-edgar-allan-poe.mp3"></audio>
+  </div>
+
+  <section class="english">
+    <h2>English</h2>
+    <p>Today we present the short story "The Tell-Tale Heart" by Edgar Allan Poe. Here is Shep O'Neal with the story.</p>
+    <p>True! Nervous -- very, very nervous I had been and am! But why will you say that I am mad? The disease had sharpened my senses -- not destroyed them.</p>
+    <p>Above all was the sense of hearing. I heard all things in the heaven and in the earth. I heard many things in the underworld. How, then, am I mad? Observe how healthily -- how calmly I can tell you the whole story.</p>
+    <p>It is impossible to say how first the idea entered my brain. I loved the old man. He had never wronged me. He had never given me insult. For his gold I had no desire. I think it was his eye! Yes, it was this! He had the eye of a bird, a vulture -- a pale blue eye, with a film over it. Whenever it fell on me, my blood ran cold; and so -- very slowly -- I made up my mind to take the life of the old man, and free myself of the eye forever.</p>
+    <p>Now this is the point. You think that I am mad. Madmen know nothing. But you should have seen me. You should have seen how wisely and carefully I went to work!</p>
+    <p>I was never kinder to the old man than during the whole week before I killed him. And every night, late at night, I turned the lock of his door and opened it – oh, so gently! And then, when I had made an opening big enough for my head, I put in a dark lantern, all closed that no light shone out, and then I stuck in my head. I moved it slowly, very slowly, so that I might not interfere with the old man's sleep. And then, when my head was well in the room, I undid the lantern just so much that a single thin ray of light fell upon the vulture eye.</p>
+    <p>And this I did for seven long nights -- but I found the eye always closed; and so it was impossible to do the work; for it was not the old man who was a problem for me, but his Evil Eye.</p>
+    <p>On the eighth night, I was more than usually careful in opening the door. I had my head in and was about to open the lantern, when my finger slid on a piece of metal and made a noise. The old man sat up in bed, crying out "Who's there?"</p>
+    <p>I kept still and said nothing. I did not move a muscle for a whole hour. During that time, I did not hear him lie down. He was still sitting up in the bed listening -- just as I have done, night after night.</p>
+    <p>Then I heard a noise, and I knew it was the sound of human terror. It was the low sound that arises from the bottom of the soul. I knew the sound well. Many a night, late at night, when all the world slept, it has welled up from deep within my own chest. I say I knew it well.</p>
+    <p>I knew what the old man felt, and felt sorry for him, although I laughed to myself. I knew that he had been lying awake ever since the first noise, when he had turned in the bed. His fears had been ever since growing upon him.</p>
+    <p>When I had waited a long time, without hearing him lie down, I decided to open a little -- a very, very little -- crack in the lantern. So I opened it. You cannot imagine how carefully, carefully. Finally, a single ray of light shot from out and fell full upon the vulture eye.</p>
+    <p>It was open -- wide, wide open -- and I grew angry as I looked at it. I saw it clearly -- all a dull blue, with a horrible veil over it that chilled my bones; but I could see nothing else of the old man's face or person. For I had directed the light exactly upon the damned spot.</p>
+    <p>And have I not told you that what you mistake for madness is but a kind of over-sensitivity? Now, there came to my ears a low, dull, quick sound, such as a watch makes when inside a piece of cotton. I knew that sound well, too. It was the beating of the old man's heart. It increased my anger.</p>
+    <p>But even yet I kept still. I hardly breathed. I held the lantern motionless. I attempted to keep the ray of light upon the eye. But the beating of the heart increased. It grew quicker and quicker, and louder and louder every second. The old man's terror must have been extreme! The beating grew louder, I say, louder every moment!</p>
+    <p>And now at the dead hour of the night, in the horrible silence of that old house, so strange a noise as this excited me to uncontrollable terror. Yet, for some minutes longer I stood still. But the beating grew louder, louder! I thought the heart must burst.</p>
+    <p>And now a new fear seized me -- the sound would be heard by a neighbor! The old man's hour had come! With a loud shout, I threw open the lantern and burst into the room.</p>
+    <p>He cried once -- once only. Without delay, I forced him to the floor, and pulled the heavy bed over him. I then smiled, to find the action so far done.</p>
+    <p>But, for many minutes, the heart beat on with a quiet sound. This, however, did not concern me; it would not be heard through the wall. At length, it stopped. The old man was dead. I removed the bed and examined the body. I placed my hand over his heart and held it there many minutes. There was no movement. He was stone dead. His eye would trouble me no more.</p>
+    <p>If still you think me mad, you will think so no longer when I describe the wise steps I took for hiding the body. I worked quickly, but in silence. First of all, I took apart the body. I cut off the head and the arms and the legs.</p>
+    <p>I then took up three pieces of wood from the flooring, and placed his body parts under the room. I then replaced the wooden boards so well that no human eye -- not even his -- could have seen anything wrong.</p>
+    <p>There was nothing to wash out -- no mark of any kind -- no blood whatever. I had been too smart for that. A tub had caught all -- ha! ha!</p>
+    <p>When I had made an end of these labors, it was four o'clock in the morning. As a clock sounded the hour, there came a noise at the street door. I went down to open it with a light heart -- for what had I now to fear? There entered three men, who said they were officers of the police. A cry had been heard by a neighbor during the night; suspicion of a crime had been aroused; information had been given at the police office, and the officers had been sent to search the building.</p>
+    <p>I smiled -- for what had I to fear? The cry, I said, was my own in a dream. The old man, I said, was not in the country. I took my visitors all over the house. I told them to search -- search well. I led them, at length, to his room. I brought chairs there, and told them to rest. I placed my own seat upon the very place under which lay the body of the victim.</p>
+    <p>The officers were satisfied. I was completely at ease. They sat, and while I answered happily, they talked of common things. But, after a while, I felt myself getting weak and wished them gone. My head hurt, and I had a ringing in my ears; but still they sat and talked.</p>
+    <p>The ringing became more severe. I talked more freely to do away with the feeling. But it continued until, at length, I found that the noise was not within my ears.</p>
+    <p>I talked more and with a heightened voice. Yet the sound increased -- and what could I do? It was a low, dull, quick sound like a watch makes when inside a piece of cotton. I had trouble breathing -- and yet the officers heard it not. I talked more quickly -- more loudly; but the noise increased. I stood up and argued about silly things, in a high voice and with violent hand movements. But the noise kept increasing.</p>
+    <p>Why would they not be gone? I walked across the floor with heavy steps, as if excited to anger by the observations of the men -- but the noise increased. What could I do? I swung my chair and moved it upon the floor, but the noise continually increased. It grew louder -- louder -- louder! And still the men talked pleasantly, and smiled.</p>
+    <p>Was it possible they heard not? No, no! They heard! They suspected! They knew! They were making a joke of my horror! This I thought, and this I think. But anything was better than this pain! I could bear those smiles no longer! I felt that I must scream or die! And now -- again! Louder! Louder! Louder!</p>
+    <p>"Villains!" I cried, "Pretend no more! I admit the deed! Tear up the floor boards! Here, here! It is the beating of his hideous heart!"</p>
+    <p>You have heard the story "The Tell-Tale Heart" by Edgar Allan Poe. Your storyteller was Shep O'Neal. This story was adapted by Shelley Gollust. It was produced by Lawan Davis.</p>
+    <p>________________________________________________</p>
+    <p>Quiz - The Tell-Tale Heart by Edgar Allen Poe</p>
+    <p>________________________________________________</p>
+    <p>Lesson Plan</p>
+    <p>This lesson plan, based on the CALLA Approach, teaches the strategy, classify, to help students understand the story.</p>
+    <p>________________________________________________</p>
+    <p>Words in This Story</p>
+    <p>nervous - adj. often or easily becoming worried and afraid about what might happen</p>
+    <p>underworld - n. the place where dead people go in Greek myths</p>
+    <p>vulture - n. any one of several large birds that eat dead animals and have a small and featherless head</p>
+    <p>lantern - n. a light that has usually a glass covering and that can be carried by a handle</p>
+    <p>terror- n. a very strong feeling of fear</p>
+    <p>well - v. to rise to a surface and flow out — usually + up</p>
+    <p>horrible - adj. very bad or unpleasant</p>
+    <p>Do you enjoy horror stories like this one? Tell us about your favorite horror story. We want to hear from you. We have a new comment system. Here is how it works:</p>
+    <p>Each time you return to comment on the Learning English site, you can use your account and see your comments and replies to them.</p>
+    <p>Related</p>
+  </section>
+
+  <section class="chinese">
+    <h2>中文翻译</h2>
+    <p>今天我们为大家介绍埃德加·爱伦·坡的短篇小说《泄密的心》。下面由谢普·奥尼尔为大家讲述这个故事。</p>
+    <p>不错！我紧张——非常非常紧张，过去和现在都是如此！可你们为什么说我疯了呢？这种病让我的感官变得敏锐——并没有摧毁它们。</p>
+    <p>尤其是听觉。我能听见天上和地上的一切。我能听见冥界里的许多事情。那么，我怎么会疯呢？看看我多么健康——多么平静地讲述整个故事吧。</p>
+    <p>很难说这个念头最初是怎么钻进我脑子里的。我爱那位老人。他从未亏待过我，从未侮辱过我。对他的金子我毫无贪念。我想是他的眼睛！是的，就是它！他长着一只鸟的眼睛，一只秃鹫的眼睛——一只淡蓝色的眼睛，上面蒙着一层薄膜。每当它落在我身上，我的血液就变冷；于是——非常缓慢地——我下定决心要取老人的性命，永远摆脱那只眼睛。</p>
+    <p>现在关键就在这里。你们以为我疯了。疯子什么都不懂。但你们真该看看我。你们真该看看我干活时是多么明智、多么小心！</p>
+    <p>在杀掉他之前的那整整一周里，我对老人从来没有那么和善过。而每天晚上，深更半夜，我转动他房门的锁，打开门——哦，是那么轻柔！然后，当我开出一条足够容下我脑袋的缝隙时，我放进一盏暗灯，全封闭着，不让一丝光亮透出，接着我把头探进去。我慢慢地、非常非常慢地移动脑袋，以免打扰老人睡觉。然后，当我的头完全进入房间后，我把提灯打开到刚好让一道细细的光线照到那只秃鹫眼睛上。</p>
+    <p>这样的做法我持续了七个漫长的夜晚——但我发现那只眼睛总是闭着；因此无法动手；因为对我来说，问题并不在于老人，而在于他的那只邪恶的眼睛。</p>
+    <p>第八天夜里，我开门时比平时更加小心。我的头已经探进去，正要打开提灯，这时我的手指在一块金属上滑了一下，发出声响。老人在床上坐起来，喊道：“谁在那儿？”</p>
+    <p>我一动不动，什么也没说。整整一个小时，我没有动一下肌肉。在那段时间里，我没有听到他躺下。他仍然坐在床上听着——就像我夜复一夜所做的那样。</p>
+    <p>接着我听到一种声音，我知道那是人类恐惧的声音。那是从灵魂深处涌出的低沉声音。我对这种声音再熟悉不过。多少个夜晚，深更半夜，当全世界都入睡时，它曾从我自己的胸腔深处涌上来。我说我熟悉它。</p>
+    <p>我知道老人感受到的是什么，并为他感到难过，尽管我在心里暗自好笑。我知道自第一声响动以来，他一直没有睡着，在床上翻来覆去。从那时起，他的恐惧就一直在不断加深。</p>
+    <p>我等了很久，一直没有听到他躺下，于是决定把提灯打开一条缝——一条非常非常小的缝。于是我打开了它。你无法想象那是多么小心、多么小心。终于，一道光线射了出来，正好落在那只秃鹫眼睛上。</p>
+    <p>那只眼睛睁着——睁得大大的——我看着它，心中渐渐愤怒起来。我看得很清楚——一片暗蓝，上面蒙着一层可怕的薄膜，令我不寒而栗；但我看不到老人面容或身体的任何其他部分。因为我把光线正好对准了那个该死的地方。</p>
+    <p>我不是告诉过你们，你们误认为是疯狂的东西，不过是一种过度敏感吗？现在，我耳边传来一种低沉、沉闷而急促的声音，就像手表裹在棉花里发出的声音一样。我也很熟悉那种声音。那是老人的心跳声。它使我更加愤怒。</p>
+    <p>但即使到这时，我依然一动不动。我几乎屏住了呼吸。我拿着提灯，一动不动。我努力让光线一直落在那只眼睛上。但心跳声越来越响。它一秒比一秒更快、更响。老人的恐惧一定到了极点！我说，那心跳声越来越响，每一刻都比上一刻更响！</p>
+    <p>此刻已是深夜，在这座老宅可怕的寂静中，这样一种奇怪的声音让我陷入无法控制的恐惧。然而，我又静静地站了几分钟。但那心跳声越来越响，越来越响！我想那颗心脏一定是要炸开了。</p>
+    <p>这时一种新的恐惧攫住了我——这声音会被邻居听到！老人的死期到了！我大喊一声，猛地掀开提灯，冲进了房间。</p>
+    <p>他叫了一声——只叫了一声。我毫不迟疑，把他按倒在地，把沉重的床推过去压在他身上。然后我笑了，发现事情已经做到这一步。</p>
+    <p>但是，好几分钟里，那颗心脏还在轻轻地跳动着。不过这并不让我担心；隔着墙，这声音不会被听到。终于，它停下了。老人死了。我移开床，检查了尸体。我把手按在他的心口上，按了好几分钟。没有动静。他彻底死了。他的那只眼睛不会再烦扰我了。</p>
+    <p>如果你仍认为我疯了，那么等我描述我为藏匿尸体所采取的明智步骤时，你就不会再这么想了。我动作很快，但悄无声息。首先，我把尸体肢解了。我砍下头、胳膊和腿。</p>
+    <p>然后我从地板上撬起三块木板，把他的身体部位放到地板下面。接着我把木板重新装好，装得如此严实，以致任何人的眼睛——甚至他的眼睛——都看不出任何异样。</p>
+    <p>没有什么需要冲刷的——没有任何痕迹——一点血迹都没有。我太聪明了，不会留下那些。一个大桶接住了所有——哈哈！</p>
+    <p>当我干完这些活时，已是凌晨四点钟。时钟敲响这个钟点的时候，街门传来敲门声。我轻快地走下去开门——因为我现在还有什么好怕的呢？进来三个人，他们自称是警察局的警官。夜里有个邻居听到了一声叫喊；这引起了犯罪的怀疑；有人向警察局报了案，警官们被派来搜查这栋房子。</p>
+    <p>我微笑了——因为我有什么好怕的呢？我说，那声叫喊是我自己在梦里发出的。我说，老人不在国内。我带着来访者把整栋房子都看了一遍。我叫他们搜查——仔细搜查。最后，我把他们领到了他的房间。我在那里搬来椅子，叫他们休息。我把自己的座位正好放在那个下面躺着受害者尸体的地方。</p>
+    <p>警官们很满意。我完全安心了。他们坐着，在我愉快地回答时，他们谈论着寻常的事情。但是，过了一会儿，我感到自己开始虚弱，希望他们离开。我的头很痛，耳朵里嗡嗡作响；但他们仍然坐在那里谈话。</p>
+    <p>那嗡嗡声变得更严重了。我更加随意地谈话，想消除这种感觉。但它持续不断，直到最后，我发现那声音不是在我的耳朵里。</p>
+    <p>我说得更多，声音也提高了。然而那声音反而增大了——我又能怎么办呢？那是一种低沉的、沉闷的、急促的声音，就像手表裹在棉花里发出的声音。我呼吸困难——然而那些警官却没有听见。我说得更快、更大声；但那声音反而增大了。我站起来，用很高的声调激烈地挥舞着手臂争论着愚蠢的事情。但那声音一直在增大。</p>
+    <p>他们为什么还不走？我迈着沉重的步伐在房间里走来走去，仿佛被那些人的话语激怒了——但那声音反而增大了。我能怎么办呢？我摇晃着椅子，在地板上推动它，但那声音不断地增大。它越来越响——越来越响——越来越响！而那些男人仍然愉快地说着话，微笑着。</p>
+    <p>他们不可能没听见吧？不，不！他们听见了！他们怀疑了！他们知道了！他们在拿我的恐惧开玩笑！我当时这么想，现在也这么想。但什么也比这种痛苦好受！我再也忍受不了那些微笑了！我觉得我必须喊出来，否则就会死去！而现在——又来了！更响了！更响了！更响了！</p>
+    <p>"恶棍们！"我喊道，"别再装了！我承认这件事是我干的！掀开地板吧！这里，就在这里！是他那颗可怕心脏的跳动声！"</p>
+    <p>你刚刚听到的是埃德加·爱伦·坡的短篇小说《泄密的心》。你的讲述人是谢普·奥尼尔。这个故事由雪莱·戈勒斯特改编。制作人是拉万·戴维斯。</p>
+    <p>________________________________________________</p>
+    <p>测验——《泄密的心》 埃德加·爱伦·坡</p>
+    <p>________________________________________________</p>
+    <p>教案</p>
+    <p>本教案基于CALLA教学法，教授"分类"这一学习策略，帮助学生理解这个故事。</p>
+    <p>________________________________________________</p>
+    <p>本故事中的词汇</p>
+    <p>nervous - 形容词：经常或容易对可能发生的事情感到担心和害怕</p>
+    <p>underworld - 名词：希腊神话中死去的人所去的地方</p>
+    <p>vulture - 名词：几种以死动物为食的大型鸟类之一，头部较小且没有羽毛</p>
+    <p>lantern - 名词：一种通常带有玻璃罩、可以用手提着的灯</p>
+    <p>terror - 名词：一种非常强烈的恐惧感</p>
+    <p>well - 动词：升到表面并流出——通常与up连用</p>
+    <p>horrible - 形容词：非常糟糕或令人不快的</p>
+    <p>你喜欢像这样的恐怖故事吗？告诉我们你最喜欢的恐怖故事。我们希望听到你的意见。我们有一个新的评论系统，使用方法如下：</p>
+    <p>每次你回到学习英语网站发表评论时，都可以使用你的账户查看你的评论以及对它们的回复。</p>
+    <p>相关</p>
+  </section>
+
+  <section>
+    <h2>Source</h2>
+    <p class="source">
+      Original VOA Article: <a href="https://learningenglish.voanews.com/a/the-tell-tale-heat-edgar-allan-poe/3538402.html">https://learningenglish.voanews.com/a/the-tell-tale-heat-edgar-allan-poe/3538402.html</a>
+    </p>
+  </section>
+
+  <footer>For personal study use only · VOA Learning English</footer>
+</div>
+<script>
+  (function () {
+    var player = document.getElementById('player');
+    if (!player) return;
+    var sentences = Array.prototype.slice.call(
+      document.querySelectorAll('.sentence')
+    );
+    if (!sentences.length) return;
+
+    var starts = sentences.map(function (el) {
+      return parseFloat(el.getAttribute('data-start')) || 0;
+    });
+
+    function setActiveSentence(index) {
+      sentences.forEach(function (el, i) {
+        el.classList.toggle('active', i === index);
+      });
+      var active = sentences[index];
+      if (active && active.scrollIntoView) {
+        active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }
+
+    function currentSentenceIndex(t) {
+      var idx = 0;
+      for (var i = 0; i < starts.length; i++) {
+        if (starts[i] <= t + 0.25) idx = i;
+        else break;
+      }
+      return idx;
+    }
+
+    var lastSentence = -1;
+
+    sentences.forEach(function (el, i) {
+      el.addEventListener('click', function () {
+        player.currentTime = starts[i];
+        player.play().catch(function () {});
+        setActiveSentence(i);
+        lastSentence = i;
+      });
+    });
+
+    player.addEventListener('timeupdate', function () {
+      var si = currentSentenceIndex(player.currentTime);
+      if (si !== lastSentence) {
+        setActiveSentence(si);
+        lastSentence = si;
+      }
+    });
+  })();
+</script>
+</body>
+</html>
