@@ -11,7 +11,9 @@ import argparse
 import logging
 import re
 import sys
+from itertools import count
 from pathlib import Path
+from tempfile import TemporaryDirectory
 
 # Make the src package importable when running the script directly.
 _SRC = Path(__file__).resolve().parents[1] / "src"
@@ -108,6 +110,7 @@ def run_pipeline(
     update: bool = False,
     category: str | None = None,
     title: str | None = None,
+    duplicate_audio_urls: set[str] | None = None,
 ) -> int:
     """Process one article URL. Return codes: 0=created/skipped-ok, 2=duplicate, 1=failed."""
     config = load_config()
@@ -159,25 +162,42 @@ def run_pipeline(
         return 1
 
     # 4. Download audio.
+    if duplicate_audio_urls is not None and article.audio_url in duplicate_audio_urls:
+        logger.info("[AUDIO] Already confirmed duplicate in this batch. Skipping.")
+        return 2
     downloader = AudioDownloader()
     episode_title = article.title
     slug = make_slug(episode_title)
     episode_id = repo.next_id()
     filename = audio_filename(episode_id, slug)
-    audio_path = config.audio_dir / filename
-    audio_meta = downloader.download(article.audio_url, audio_path)
+    config.audio_dir.mkdir(parents=True, exist_ok=True)
+    with TemporaryDirectory(dir=config.audio_dir) as staging_dir:
+        download_path = Path(staging_dir) / filename
+        audio_meta = downloader.download(article.audio_url, download_path)
 
-    try:
         # Auxiliary duplicate check via audio SHA256.
         # Same episode often appears under multiple feed URLs — treat as skip, not error.
         dupe_audio = repo.find_by_audio_sha256(audio_meta.sha256)
         if dupe_audio is not None:
+            if duplicate_audio_urls is not None:
+                duplicate_audio_urls.add(article.audio_url)
             logger.warning(
                 "[AUDIO] Duplicate audio (SHA256 matches episode #%d). Skipping.",
                 dupe_audio.id,
             )
             return 2
 
+        # A legacy import may already have left an unreferenced MP3 at this name.
+        # Link the completed download without overwriting any existing file.
+        audio_path = config.audio_dir / filename
+        for suffix in count(2):
+            try:
+                audio_path.hardlink_to(download_path)
+                break
+            except FileExistsError:
+                audio_path = config.audio_dir / audio_filename(episode_id, f"{slug}-{suffix}")
+
+    try:
         # 5. Translate.
         translator = OpenAICompatibleTranslator(
             base_url=config.llm.base_url,
@@ -201,7 +221,7 @@ def run_pipeline(
             chinese_text = translator.translate(article.english_text)
 
         # 6. Create episode.
-        audio_rel = f"audio/{filename}"
+        audio_rel = f"audio/{audio_path.name}"
         episode = repo.create_episode(
             title=article.title,
             slug=slug,
@@ -218,7 +238,7 @@ def run_pipeline(
             sentences=episode_sentences,
         )
     except Exception:
-        # Don't leave half-downloaded audio behind when translation/build fails.
+        # Only the new episode's audio was linked at this path.
         audio_path.unlink(missing_ok=True)
         raise
 

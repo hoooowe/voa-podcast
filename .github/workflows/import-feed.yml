@@ -45,20 +45,18 @@ jobs:
       - name: Import episodes from feed
         env:
           PYTHONUNBUFFERED: "1"
+          FEED: ${{ inputs.feed || 'all' }}
+          LIMIT: ${{ inputs.limit || '3' }}
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
-        run: |
-          python scripts/import_from_feed.py \
-            --feed "${{ github.event.inputs.feed || 'all' }}" \
-            --limit "${{ github.event.inputs.limit || '3' }}"
+        run: python scripts/import_from_feed.py --feed "$FEED" --limit "$LIMIT"
 
       - name: Validate feed
         if: always()
         run: python scripts/validate_feed.py
 
       - name: Commit and push
-        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"

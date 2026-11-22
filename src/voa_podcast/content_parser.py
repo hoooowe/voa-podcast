@@ -99,6 +99,10 @@ class VOAParseError(Exception):
     """Raised when article content cannot be extracted."""
 
 
+class VOAArticleWithoutAudio(VOAParseError):
+    """A recognized VOA article has no audio to import as a podcast."""
+
+
 class VOAContentParser:
     """Parses a BeautifulSoup document into a VOAArticle using fallbacks."""
 
@@ -272,6 +276,18 @@ class VOAContentParser:
             if ".mp3" in val.lower() or val.startswith("http"):
                 return urljoin(base_url, val)
 
+        # VOA also lists text articles in its podcast feeds. Distinguish these
+        # from an unrecognized page or a player whose source we failed to parse.
+        if (
+            jsonld
+            and soup.select_one("#article-content") is not None
+            and not any(key in jsonld for key in ("associatedMedia", "audio", "video"))
+            and soup.select_one(
+                "audio, video, [data-audio], .media-pholder--audio, .media-pholder--video, "
+                "meta[property^='og:audio'], #article-content iframe, .cover-media iframe"
+            ) is None
+        ):
+            raise VOAArticleWithoutAudio("VOA article has no audio.")
         raise VOAParseError("Unable to locate VOA audio file.")
 
     def _extract_category(self, soup: BeautifulSoup, jsonld: dict) -> str | None:

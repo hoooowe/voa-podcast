@@ -9,9 +9,9 @@ Designed to run on GitHub Actions (US servers) where learningenglish.
 voanews.com is directly accessible.
 
 Exit code:
-    0 — no failures, or at least one episode was added (partial success).
-        Duplicate audio / already-imported items are soft skips, not failures.
-    1 — every attempted item failed (nothing new added).
+    0 — rebuild succeeded and either no items failed or some episodes were added.
+        Already-imported items, duplicate audio and text-only articles are skipped.
+    1 — failures prevented all imports, or the final site/RSS rebuild failed.
 
 Usage:
     python scripts/import_from_feed.py --feed american-stories [--limit 3]
@@ -36,6 +36,7 @@ for _p in (_SRC, _SCRIPTS):
 import requests  # noqa: E402
 
 from voa_podcast.config import load_config  # noqa: E402
+from voa_podcast.content_parser import VOAArticleWithoutAudio  # noqa: E402
 from voa_podcast.episode_repository import EpisodeRepository  # noqa: E402
 from voa_podcast.feed_parser import parse_feed  # noqa: E402
 from voa_podcast.rss_generator import RSSGenerator  # noqa: E402
@@ -120,6 +121,7 @@ def main() -> int:
     total_added = 0
     total_skipped = 0
     total_failed = 0
+    duplicate_audio_urls: set[str] = set()
 
     for key in feed_keys:
         feed = FEEDS[key]
@@ -156,7 +158,12 @@ def main() -> int:
                     force=False,
                     update=False,
                     category=_feed_category(key) or (item.categories[0] if item.categories else None),
+                    duplicate_audio_urls=duplicate_audio_urls,
                 )
+            except VOAArticleWithoutAudio as exc:
+                logger.info("[SKIP] %s %s", exc, item.url)
+                total_skipped += 1
+                continue
             except Exception as exc:  # noqa: BLE001
                 logger.error("[IMPORT] FAILED: %s", exc)
                 total_failed += 1
@@ -173,16 +180,18 @@ def main() -> int:
                 logger.warning("[IMPORT] Pipeline returned rc=%d, skipping.", rc)
                 total_failed += 1
 
-    # Final rebuild so site/transcripts/RSS reflect the complete import batch.
-    try:
-        episodes = repo.load_all()
-        if episodes:
+    # A skipped batch should leave the published site byte-for-byte unchanged.
+    rebuild_failed = False
+    if total_added:
+        try:
+            episodes = repo.load_all()
             SiteGenerator(config).generate(episodes)
             TranscriptGenerator(config).generate_all(episodes)
             RSSGenerator(config).generate(episodes)
-    except Exception as exc:  # noqa: BLE001
-        logger.error("[SITE] Final rebuild failed: %s", exc)
-        total_failed += 1
+        except Exception as exc:  # noqa: BLE001
+            logger.error("[SITE] Final rebuild failed: %s", exc)
+            rebuild_failed = True
+            total_failed += 1
 
     logger.info("")
     logger.info("=== Import Summary ===")
@@ -191,9 +200,11 @@ def main() -> int:
     logger.info("Failed:   %d", total_failed)
     sys.stdout.flush()
 
-    # Partial success still exits 0 so the workflow can commit what was imported.
+    if rebuild_failed:
+        return 1
     if total_failed == 0:
         return 0
+    # Partial success still exits 0 so the workflow can commit what was imported.
     if total_added > 0:
         logger.warning(
             "Partial success: %d added, %d failed. Committing progress.",
