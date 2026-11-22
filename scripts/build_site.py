@@ -29,11 +29,11 @@ def main() -> int:
     config = load_config()
 
     repo = EpisodeRepository(config.episodes_file)
-    episodes = repo.load_all()
-
-    SiteGenerator(config).generate(episodes)
-    TranscriptGenerator(config).generate_all(episodes)
-    RSSGenerator(config).generate(episodes)
+    with repo.publication_lock():
+        episodes = repo.load_all()
+        SiteGenerator(config).generate(episodes)
+        TranscriptGenerator(config).generate_all(episodes)
+        RSSGenerator(config).generate(episodes)
 
     print(f"Site rebuilt with {len(episodes)} episode(s).")
     print(f"  Index: docs/index.html")

@@ -7,14 +7,14 @@ persistence, slug/GUID generation, and duplicate detection by source_url.
 from __future__ import annotations
 
 import json
-import logging
 import re
 from datetime import datetime, timezone
 from pathlib import Path
+from tempfile import TemporaryDirectory
+
+from filelock import FileLock
 
 from .models import Episode
-
-logger = logging.getLogger(__name__)
 
 MAX_SLUG_WORDS = 8
 
@@ -28,22 +28,25 @@ class EpisodeRepository:
         if not self._file.exists():
             self._file.write_text("[]", encoding="utf-8")
 
+    def publication_lock(self) -> FileLock:
+        """Serialize changes to the episode records and their published files."""
+        return FileLock(self._file.with_name(".episodes.lock"))
+
     def load_all(self) -> list[Episode]:
         """Load all episodes from the JSON file."""
-        try:
-            data = json.loads(self._file.read_text(encoding="utf-8"))
-        except (json.JSONDecodeError, OSError) as exc:
-            logger.error("[REPO] Failed to read episodes.json: %s", exc)
-            return []
+        # An unreadable catalog must abort a write, even when the caller is adding an episode.
+        data = json.loads(self._file.read_text(encoding="utf-8"))
+        if not isinstance(data, list):
+            raise ValueError("Expected a list of episodes in episodes.json.")
         return [Episode.from_dict(item) for item in data]
 
     def save_all(self, episodes: list[Episode]) -> None:
         """Persist all episodes to the JSON file."""
         data = [ep.to_dict() for ep in episodes]
-        self._file.write_text(
-            json.dumps(data, ensure_ascii=False, indent=2),
-            encoding="utf-8",
-        )
+        with TemporaryDirectory(dir=self._file.parent) as scratch:
+            staged = Path(scratch) / self._file.name
+            staged.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+            staged.replace(self._file)
 
     def find_by_url(self, source_url: str) -> Episode | None:
         """Return an existing episode with the given source_url, if any."""
@@ -52,10 +55,10 @@ class EpisodeRepository:
                 return ep
         return None
 
-    def find_by_audio_sha256(self, sha256: str) -> Episode | None:
+    def find_by_audio_sha256(self, sha256: str, *, exclude_id: int | None = None) -> Episode | None:
         """Return an existing episode with a matching audio SHA256, if any."""
         for ep in self.load_all():
-            if ep.audio_sha256 and ep.audio_sha256 == sha256:
+            if ep.id != exclude_id and ep.audio_sha256 and ep.audio_sha256 == sha256:
                 return ep
         return None
 

@@ -9,6 +9,9 @@ venv/
 # Environment
 .env
 
+# Local writer lock, shared by all commands that publish episodes.
+/data/.episodes.lock
+
 # OS
 .DS_Store
 

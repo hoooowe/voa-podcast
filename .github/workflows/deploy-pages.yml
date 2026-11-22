@@ -32,6 +32,9 @@ jobs:
           pip install -r requirements.txt
           pip install -e .
 
+      - name: Run tests
+        run: python -m pytest -q
+
       - name: Rebuild site
         run: python scripts/build_site.py
 

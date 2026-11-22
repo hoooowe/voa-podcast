@@ -184,10 +184,11 @@ def main() -> int:
     rebuild_failed = False
     if total_added:
         try:
-            episodes = repo.load_all()
-            SiteGenerator(config).generate(episodes)
-            TranscriptGenerator(config).generate_all(episodes)
-            RSSGenerator(config).generate(episodes)
+            with repo.publication_lock():
+                episodes = repo.load_all()
+                SiteGenerator(config).generate(episodes)
+                TranscriptGenerator(config).generate_all(episodes)
+                RSSGenerator(config).generate(episodes)
         except Exception as exc:  # noqa: BLE001
             logger.error("[SITE] Final rebuild failed: %s", exc)
             rebuild_failed = True

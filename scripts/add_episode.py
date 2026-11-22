@@ -11,6 +11,7 @@ import argparse
 import logging
 import re
 import sys
+from dataclasses import replace
 from itertools import count
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -21,13 +22,15 @@ if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
 from voa_podcast.audio_downloader import AudioDownloadError, AudioDownloader
-from voa_podcast.config import load_config
+from voa_podcast.config import AppConfig, load_config
 from voa_podcast.content_parser import VOAParseError
 from voa_podcast.copyright_checker import CopyrightChecker
 from voa_podcast.episode_repository import EpisodeRepository, audio_filename, make_slug
-from voa_podcast.models import CopyrightStatus, Sentence
+from voa_podcast.episode_update import publish_episode_update
+from voa_podcast.models import CopyrightStatus, Sentence, VOAArticle
 from voa_podcast.rss_generator import RSSGenerator
 from voa_podcast.site_generator import SiteGenerator
+from voa_podcast.transcript_generator import TranscriptGenerator
 from voa_podcast.translator import OpenAICompatibleTranslator, TranslationError
 from voa_podcast.voa_fetcher import VOAContentFetcher, VOAFetchError
 
@@ -80,7 +83,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--update",
         action="store_true",
-        help="Re-process an existing episode (deletes the old one and its audio first).",
+        help="Refresh an existing episode, keeping the published version if the update fails.",
     )
     return parser.parse_args()
 
@@ -125,10 +128,7 @@ def run_pipeline(
             print(f"  GUID:  {existing.guid}")
             print("  Use --update to re-process it.")
             return 0
-        logger.info("[UPDATE] Removing existing episode #%d (%s).", existing.id, existing.guid)
-        repo.remove_by_url(url)
-        # Remove the old audio file; stale episode page is overwritten later.
-        (config.docs_dir / existing.audio_file).unlink(missing_ok=True)
+        logger.info("[UPDATE] Preparing an update for episode #%d (%s).", existing.id, existing.guid)
 
     # 2. Fetch + parse.
     fetcher = VOAContentFetcher()
@@ -166,18 +166,18 @@ def run_pipeline(
         logger.info("[AUDIO] Already confirmed duplicate in this batch. Skipping.")
         return 2
     downloader = AudioDownloader()
-    episode_title = article.title
-    slug = make_slug(episode_title)
-    episode_id = repo.next_id()
-    filename = audio_filename(episode_id, slug)
     config.audio_dir.mkdir(parents=True, exist_ok=True)
     with TemporaryDirectory(dir=config.audio_dir) as staging_dir:
-        download_path = Path(staging_dir) / filename
+        download_path = Path(staging_dir) / "download.mp3"
         audio_meta = downloader.download(article.audio_url, download_path)
+        if audio_meta.file_size <= 0:
+            raise AudioDownloadError("The downloaded audio file is empty.")
 
         # Auxiliary duplicate check via audio SHA256.
         # Same episode often appears under multiple feed URLs — treat as skip, not error.
-        dupe_audio = repo.find_by_audio_sha256(audio_meta.sha256)
+        dupe_audio = repo.find_by_audio_sha256(
+            audio_meta.sha256, exclude_id=existing.id if existing else None
+        )
         if dupe_audio is not None:
             if duplicate_audio_urls is not None:
                 duplicate_audio_urls.add(article.audio_url)
@@ -187,72 +187,56 @@ def run_pipeline(
             )
             return 2
 
-        # A legacy import may already have left an unreferenced MP3 at this name.
-        # Link the completed download without overwriting any existing file.
-        audio_path = config.audio_dir / filename
-        for suffix in count(2):
-            try:
-                audio_path.hardlink_to(download_path)
-                break
-            except FileExistsError:
-                audio_path = config.audio_dir / audio_filename(episode_id, f"{slug}-{suffix}")
-
-    try:
-        # 5. Translate.
-        translator = OpenAICompatibleTranslator(
-            base_url=config.llm.base_url,
-            api_key=config.llm.api_key,
-            model=config.llm.model,
-            temperature=config.llm.temperature,
-            max_chars_per_request=config.llm.max_chars_per_request,
-            cache_dir=config.cache_dir,
-        )
-
-        episode_sentences: list[Sentence] = []
-        if article.sentences:
-            en_list = [s.en for s in article.sentences]
-            zh_list = translator.translate_sentences(en_list)
-            episode_sentences = [
-                Sentence(start=s.start, en=s.en, zh=zh)
-                for s, zh in zip(article.sentences, zh_list)
-            ]
-            chinese_text = "\n\n".join(s.zh for s in episode_sentences)
-        else:
-            chinese_text = translator.translate(article.english_text)
-
-        # 6. Create episode.
-        audio_rel = f"audio/{audio_path.name}"
-        episode = repo.create_episode(
+        chinese_text, episode_sentences = _translate_article(config, article)
+        content = dict(
             title=article.title,
-            slug=slug,
-            source_url=article.source_url,
-            published_at=article.published_at,
-            category=article.category,
+            published_at=article.published_at or (existing.published_at if existing else None),
+            category=article.category or (existing.category if existing else None),
             english_text=article.english_text,
             chinese_text=chinese_text,
-            audio_file=audio_rel,
             audio_size=audio_meta.file_size,
             audio_type=audio_meta.mime_type,
             audio_sha256=audio_meta.sha256,
             copyright_status=result.status.value,
             sentences=episode_sentences,
         )
-    except Exception:
-        # Only the new episode's audio was linked at this path.
-        audio_path.unlink(missing_ok=True)
-        raise
+        if existing:
+            episode = replace(existing, **content)
+            episode = publish_episode_update(config, existing, episode, download_path)
+        else:
+            with repo.publication_lock():
+                # A concurrent import may have added the URL or audio while we translated.
+                if repo.find_by_url(url) is not None:
+                    return 0
+                if repo.find_by_audio_sha256(audio_meta.sha256) is not None:
+                    return 2
+                slug = make_slug(article.title)
+                episode_id = repo.next_id()
+                filename = audio_filename(episode_id, slug)
+                # A legacy import may already have left an unreferenced MP3 at this name.
+                audio_path = config.audio_dir / filename
+                for suffix in count(2):
+                    try:
+                        audio_path.hardlink_to(download_path)
+                        break
+                    except FileExistsError:
+                        audio_path = config.audio_dir / audio_filename(episode_id, f"{slug}-{suffix}")
+                try:
+                    episode = repo.create_episode(
+                        source_url=article.source_url, slug=slug, audio_file=f"audio/{audio_path.name}",
+                        **content,
+                    )
+                except Exception:
+                    audio_path.unlink(missing_ok=True)
+                    raise
 
-    # 7. Rebuild site + transcripts + RSS.
-    episodes = repo.load_all()
-    SiteGenerator(config).generate(episodes)
-    from voa_podcast.transcript_generator import TranscriptGenerator
+                episodes = repo.load_all()
+                SiteGenerator(config).generate(episodes)
+                TranscriptGenerator(config).generate_all(episodes)
+                RSSGenerator(config).generate(episodes)
 
-    TranscriptGenerator(config).generate_all(episodes)
-    RSSGenerator(config).generate(episodes)
-
-    # 8. Output.
     print()
-    print("Episode created successfully")
+    print("Episode updated successfully" if existing else "Episode created successfully")
     print()
     print(f"Title:  {episode.title}")
     print(f"Audio:  docs/{episode.audio_file}")
@@ -261,6 +245,30 @@ def run_pipeline(
     print()
     sys.stdout.flush()
     return 0
+
+
+def _translate_article(config: AppConfig, article: VOAArticle) -> tuple[str, list[Sentence]]:
+    translator = OpenAICompatibleTranslator(
+        base_url=config.llm.base_url,
+        api_key=config.llm.api_key,
+        model=config.llm.model,
+        temperature=config.llm.temperature,
+        max_chars_per_request=config.llm.max_chars_per_request,
+        cache_dir=config.cache_dir,
+    )
+
+    episode_sentences: list[Sentence] = []
+    if article.sentences:
+        en_list = [s.en for s in article.sentences]
+        zh_list = translator.translate_sentences(en_list)
+        episode_sentences = [
+            Sentence(start=s.start, en=s.en, zh=zh)
+            for s, zh in zip(article.sentences, zh_list)
+        ]
+        chinese_text = "\n\n".join(s.zh for s in episode_sentences)
+    else:
+        chinese_text = translator.translate(article.english_text)
+    return chinese_text, episode_sentences
 
 
 if __name__ == "__main__":
